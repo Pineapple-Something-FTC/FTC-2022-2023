@@ -1,2 +1,2 @@
-# Pineapple Something - FTC Team #20824
+# Pineapple-Something
 Pineapples are the best.
