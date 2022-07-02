@@ -1,0 +1,45 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+@TeleOp(name = "sure (Blocks to Java)")
+public class sure extends LinearOpMode {
+
+  private DcMotor spinny0AsDcMotor;
+  private DcMotor spinny1AsDcMotor;
+  private DcMotor spinny3AsDcMotor;
+  private DcMotor spinny2AsDcMotor;
+
+  /**
+   * This function is executed when this Op Mode is selected from the Driver Station.
+   */
+  @Override
+  public void runOpMode() {
+    spinny0AsDcMotor = hardwareMap.get(DcMotor.class, "spinny0AsDcMotor");
+    spinny1AsDcMotor = hardwareMap.get(DcMotor.class, "spinny1AsDcMotor");
+    spinny3AsDcMotor = hardwareMap.get(DcMotor.class, "spinny3AsDcMotor");
+    spinny2AsDcMotor = hardwareMap.get(DcMotor.class, "spinny2AsDcMotor");
+
+    // Put initialization blocks here.
+    waitForStart();
+    if (opModeIsActive()) {
+      // Put run blocks here.
+      while (opModeIsActive()) {
+        spinny0AsDcMotor.setPower(gamepad1.left_stick_y + gamepad1.left_stick_x * 0.95);
+        spinny1AsDcMotor.setPower(-(gamepad1.left_stick_y + -(gamepad1.left_stick_x * 0.95)));
+        if (gamepad1.left_trigger > 0) {
+          spinny3AsDcMotor.setPower(-gamepad1.left_trigger);
+          spinny2AsDcMotor.setPower(gamepad1.left_trigger);
+        } else if (gamepad1.right_trigger > 0) {
+          spinny3AsDcMotor.setPower(gamepad1.right_trigger);
+          spinny2AsDcMotor.setPower(-gamepad1.right_trigger);
+        } else {
+          spinny3AsDcMotor.setPower(0);
+          spinny2AsDcMotor.setPower(0);
+        }
+      }
+    }
+  }
+}

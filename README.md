@@ -1,2 +1,2 @@
-# FTC-2022-2023
-## something buh
+# Pineapple Something - FTC Team #20824
+Pineapples are the best.
