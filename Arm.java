@@ -58,11 +58,11 @@ public class Arm extends LinearOpMode {
             telemetry.update();
         }
     }
-    public void move(int distanceArm1, int distanceArm2, int velocityArm1, int velocityArm2){
+    public void move(int distanceArm1, int distanceArm, int velocityArm1, int velocityArm2){
         //distanceArm1 *= -1;
         // Sets Target
         arm1.setTargetPosition(distanceArm1 * arm1IntDeg);
-        arm2.setTargetPosition(distanceArm2 * arm2IntDeg);
+        arm2.setTargetPosition(distanceArm * arm2IntDeg);
 
         // Sets Mode
         arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -73,8 +73,8 @@ public class Arm extends LinearOpMode {
         arm2.setVelocity(velocityArm2);
 
         // Adding Amount to currentPositionDegrees
-        //currentPositionDegrees += distanceArm1 + distanceArm2;
-       // currentPositionDegrees += distanceArm2;
+        //currentPositionDegrees += distanceArm1 + distanceArm;
+       // currentPositionDegrees += distanceArm;
     
         while (opModeIsActive() && arm1.isBusy() && arm2.isBusy()) {
 
