@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class RedRedCones extends LinearOpMode {
+public class AutoLeft extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -161,40 +161,40 @@ public class RedRedCones extends LinearOpMode {
 
 
         move(200, forward, 1169, 500);
-        turn(950, left, speed, 1670);
+        turn(950, right, speed, 1670);
         move(30, back, 1169, 200);
-        strafe(1779, right, speed, 2000);
-        move(248, forward, 1169, 430);
+        strafe(1779, left, speed, 2000);
+        move(255, forward, 1169, 430);
         armThing(742, UP, speed, 600);
         intakeThing(OUT, 200);
         intakeThing(NEUTRAL, 50);
         armThing(842, UP, speed, 700);
         move(209, back, 1169, 430);
 
-        strafe(959, right, speed, 1520);
-        strafe(260, left, speed, 869);
-        turn(2069 + 4 + 2 + 6 + 9 + 3, right, speed, 2900);
+        strafe(959, left, speed, 1520);
+        strafe(269+4, right, speed, 869);
+        turn(2069 + 4 + 2 + 6 + 9 + 3, left, speed, 2900);
 
-        armThing(274, UP, speed, 1480);
-        move(969 + 6 + 9 + 9 + 6, forward, 1169, 1369);
-        armThing(200, UP, speed, 300);
+        armThing(272, UP, speed, 1480);
+        move(969 + 6 + 9 + 9 + 6+9, forward, 1169, 1369);
+        armThing(180, UP, speed, 300);
         intakeThing(IN, 800);
         armThing(369, UP, speed, 1300);
         move(969, back, 1169, 1350);
         armThing(842, UP, speed, 1150);
-        turn(1549, right, speed, 2150);
+        turn(1549, left, speed, 2150);
         move(420, forward, 1169, 750);
         armThing(742, UP, speed, 300);
         intakeThing(OUT, 300);
         intakeThing(NEUTRAL, 10);
         armThing(842, UP, speed, 400);
         move(420, back, 1409, 600);
-        turn(469 + 2 + 2, right, speed, 800);
+        turn(469 + 2 + 2, left, speed, 800);
 
         if (tagOfInterest.id == LEFT) {
-            move(969, forward, speed, 1000);
+            move(942, back, speed, 1000);
         } else if (tagOfInterest.id == RIGHT) {
-            move(969, back, speed, 1000);
+            move(942, forward, speed, 1000);
         } else {
             move(69, forward, speed, 69);
         }

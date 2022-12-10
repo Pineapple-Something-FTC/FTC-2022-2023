@@ -20,7 +20,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class BlueBlueCones extends LinearOpMode {
+public class AutoRight extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -166,7 +166,7 @@ public class BlueBlueCones extends LinearOpMode {
         turn(950, left, speed, 1670);
         move(30, back, 1169, 200);
         strafe(1779, right, speed, 2000);
-        move(248, forward,1169,430);
+        move(255, forward,1169,430);
         armThing(742, UP, speed, 600);
         intakeThing(OUT, 200);
         intakeThing(NEUTRAL, 50);
@@ -174,12 +174,12 @@ public class BlueBlueCones extends LinearOpMode {
         move(209, back, 1169, 430);
 
         strafe(959, right, speed, 1520);
-        strafe(260, left, speed, 869);
+        strafe(269+4, left, speed, 869);
         turn(2069+4+2+6+9+3, right, speed, 2900);
 
-        armThing(274, UP, speed, 1480);
-        move(969+6+9+9+6, forward, 1169, 1369);
-        armThing(200, UP, speed, 300);
+        armThing(272, UP, speed, 1480);
+        move(969+6+9+9+6+9, forward, 1169, 1369);
+        armThing(180, UP, speed, 300);
         intakeThing(IN, 800);
         armThing(369, UP, speed, 1300);
         move(969, back, 1169, 1350);
@@ -194,10 +194,10 @@ public class BlueBlueCones extends LinearOpMode {
         turn(469+2+2, right, speed, 800);
 
         if(tagOfInterest.id==LEFT) {
-            move(969, forward, speed, 1000);
+            move(942, forward, speed, 1000);
         }
         else if (tagOfInterest.id==RIGHT) {
-            move(969, back, speed, 1000);
+            move(942, back, speed, 1000);
         }
         else {
             move(69, forward, speed, 69);
