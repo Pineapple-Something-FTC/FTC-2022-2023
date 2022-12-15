@@ -1,4 +1,4 @@
-# LeXT Pineapple Something 20824
+# LeXT _Pineapple Something_ 20824
 [LeXT Robo Academy](https://www.lextroboacademy.com/) FTC Team based in Agoura Hills, CA
 
 ## Team Records
