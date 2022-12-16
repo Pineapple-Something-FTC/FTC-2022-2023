@@ -6,3 +6,5 @@ https://ftcscores.com/team/20824
 
 ----
 ![sus](https://i.pinimg.com/736x/f7/eb/a0/f7eba03cb0760c7f15d086cdee938bed.jpg)
+
+![wok](https://i.redd.it/c9sm5j3oqei51.jpg)
