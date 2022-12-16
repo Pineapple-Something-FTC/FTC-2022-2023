@@ -37,8 +37,8 @@ public class PineappleOp extends PineappleSomething {
                 backRightPower, gPower;
         double thingPower = 0;
         int intakeState = 0;
-        final double driveSpeedFactor = 0.75;
-        final double armPowerFactor = 0.75;
+        final double driveSpeedFactor = 0.5;
+        final double armPowerFactor = 0.5;
 
         //deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
@@ -64,10 +64,10 @@ public class PineappleOp extends PineappleSomething {
             // double backRightPower  = gamepad1.right_stick_y + gamepad1.right_stick_x;
             // double backLeftPower   = gamepad1.left_stick_y + gamepad1.left_stick_x;
 
-            frontLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            frontRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (gamepad1.left_stick_x) + gamepad1.right_stick_x);
-            backLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (gamepad1.left_stick_x) + gamepad1.right_stick_x);
-            backRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (gamepad1.left_stick_x) - gamepad1.right_stick_x);
+            frontLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x);
+            frontRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x);
+            backLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x);
+            backRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x);
             frontLeft.setPower(frontLeftPower);
             backLeft.setPower(backLeftPower);
             frontRight.setPower(frontRightPower);
@@ -78,8 +78,13 @@ public class PineappleOp extends PineappleSomething {
 
             if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
                 if(g.getCurrentPosition() < 200 && gamepad1.left_trigger > 0) {
+                    if(g.getCurrentPosition() < 200) {
+                        g.setPower(-0.00012*gPower);
+                    }
+                    else {
+                        g.setPower(-0.00008*gPower);
+                    }
                     // g.setPower(-0.0002*g.getCurrentPosition()*gPower); (make continuous later) hi DJ DIAPER
-                    g.setPower(-0.0001*gPower);
                 } else g.setPower(gPower);
             }
             else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() > 1000) {
