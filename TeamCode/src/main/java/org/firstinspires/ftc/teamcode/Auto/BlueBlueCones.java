@@ -442,11 +442,11 @@ public class BlueBlueCones extends LinearOpMode {
 
 
 
-class intake implements Runnable
-    {
-        public void run()
-        {
-            thing.setPower(1);
-        }
-    }
+//class intake implements Runnable
+//    {
+//        public void run()
+//        {
+//            thing.setPower(1);
+//        }
+//    }
 

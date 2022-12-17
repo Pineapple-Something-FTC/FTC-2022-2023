@@ -163,9 +163,9 @@ public class AutoLeft extends LinearOpMode {
         move(200, forward, 1169, 500);
         turn(981, right, speed, 1670);
         move(30, back, 1169, 200);
-        strafe(1869-4, left, speed, 2000);
-        move(270, forward, 1169, 430);
-        armThing(742, UP, speed, 600);
+        strafe(1869-4-6, left, speed, 2000);
+        move(290, forward, 1169, 430);
+        armThing(720, UP, speed, 600);
         intakeThing(OUT, 200);
         intakeThing(NEUTRAL, 50);
         armThing(842, UP, speed, 700);

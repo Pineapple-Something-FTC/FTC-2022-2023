@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.PineappleOp.thing;
 
 import android.annotation.SuppressLint;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 @Autonomous
 public class AutoRight extends LinearOpMode {
+    public static final double FEET_PER_METER = 3.28084;
 //    OpenCvCamera camera;
 //    AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -116,7 +118,7 @@ public class AutoRight extends LinearOpMode {
 
                 if(tagFound) {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    bobot.tagToTelemetry(bobot.tagOfInterest);
+                    tagToTelemetry(bobot.tagOfInterest);
                 } else {
                     telemetry.addLine("Don't see tag of interest :(");
 
@@ -124,7 +126,7 @@ public class AutoRight extends LinearOpMode {
                         telemetry.addLine("(The tag has never been seen)");
                     } else {
                         telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                        bobot.tagToTelemetry(bobot.tagOfInterest);
+                        tagToTelemetry(bobot.tagOfInterest);
                     }
                 }
             } else {
@@ -134,7 +136,7 @@ public class AutoRight extends LinearOpMode {
                     telemetry.addLine("(The tag has never been seen)");
                 } else {
                     telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                    bobot.tagToTelemetry(bobot.tagOfInterest);
+                    tagToTelemetry(bobot.tagOfInterest);
                 }
             }
             telemetry.update();
@@ -149,7 +151,7 @@ public class AutoRight extends LinearOpMode {
         /* Update the telemetry */
         if(bobot.tagOfInterest != null) {
             telemetry.addLine("Tag snapshot:\n");
-            bobot.tagToTelemetry(bobot.tagOfInterest);
+            tagToTelemetry(bobot.tagOfInterest);
             telemetry.update();
         } else {
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
@@ -187,7 +189,7 @@ public class AutoRight extends LinearOpMode {
         armThing(369, bobot.UP, bobot.speed, 1300);
         move(969, bobot.back, 1169, 1350);
         armThing(842, bobot.UP, bobot.speed, 1150);
-        turn(1549, bobot.right, bobot.speed, 2150);
+        turn(1542, bobot.right, bobot.speed, 2150);
         move(420, bobot.forward, 1169, 750);
         armThing(742, bobot.UP, bobot.speed, 300);
         intakeThing(bobot.OUT, 300);
@@ -229,17 +231,14 @@ public class AutoRight extends LinearOpMode {
         bobot.intakeThing(state);
         sleep(sleep);
     }
-
-}
-
-
-
-
-class intake implements Runnable
-    {
-        public void run()
-        {
-            thing.setPower(1);
-        }
+    @SuppressLint("DefaultLocale")
+    void tagToTelemetry(AprilTagDetection detection) {
+        telemetry.addLine("\nDetected tag ID: " + detection.id);
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
-
+}
