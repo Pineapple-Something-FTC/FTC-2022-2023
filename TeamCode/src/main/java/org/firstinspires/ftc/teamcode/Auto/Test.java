@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
-
 @Autonomous
 public class Test extends PineappleSomething {
 
@@ -26,7 +24,7 @@ public class Test extends PineappleSomething {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         
-        resetEncoders();
+        //resetEncoders();
         //// START
         waitForStart();
 

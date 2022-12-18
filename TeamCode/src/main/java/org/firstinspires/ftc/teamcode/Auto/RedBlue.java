@@ -22,7 +22,7 @@ public class RedBlue extends PineappleSomething {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         
-        resetEncoders();
+        //resetEncoders();
         //// START
         waitForStart();
         Move.strafe(1500, left, speed);

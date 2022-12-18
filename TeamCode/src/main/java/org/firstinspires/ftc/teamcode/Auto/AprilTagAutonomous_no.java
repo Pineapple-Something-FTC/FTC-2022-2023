@@ -145,7 +145,7 @@ public class AprilTagAutonomous_no extends PineappleSomething {
 //        }
 
         //// AUTONOMOUS CODE HERE:
-        resetEncoders();
+        //resetEncoders();
         Score.executorFunc();
         sleep(2000);
         Score.low();

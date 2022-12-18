@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.sussy;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -24,13 +24,13 @@ public class PineappleSomething extends LinearOpMode {
 
     public static final int speed = 700;
 
-    public static void resetEncoders() {
-        // Resets Encoders
-        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    }
+//    public static void resetEncoders() {
+//        // Resets Encoders
+//        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//    }
 
     public static void runToPosition(int velocity) {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);

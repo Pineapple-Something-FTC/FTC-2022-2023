@@ -36,7 +36,7 @@ public class RedRed extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         
-        resetEncoders();
+        //resetEncoders();
         //// START
         waitForStart();
         g.setTargetPosition(300);

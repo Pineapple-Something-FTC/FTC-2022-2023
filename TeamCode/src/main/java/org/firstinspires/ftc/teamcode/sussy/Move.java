@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.sussy;
 
+import org.firstinspires.ftc.teamcode.Auto.PineappleSomething;
+
 public class Move extends PineappleSomething {
     public static void straight(int ticks, boolean direction, int velocity) {
-        resetEncoders();
+//        resetEncoders();
         if (direction) {
             // Drive forwards if `direction` is true
             frontLeft.setTargetPosition(-ticks);
@@ -19,7 +21,7 @@ public class Move extends PineappleSomething {
         runToPosition(velocity);
     }
     public static void strafe(int ticks, boolean direction, int velocity) {
-        resetEncoders();
+       // resetEncoders();
         if (direction) {
             // Strafe left if `direction` is true
             frontLeft.setTargetPosition(ticks);
@@ -36,7 +38,7 @@ public class Move extends PineappleSomething {
         runToPosition(velocity);
     }
     public static void turn(int ticks, boolean direction, int velocity) {
-        resetEncoders();
+       // resetEncoders();
         if (direction) {
             // Tank turn left if `direction` is true
             frontLeft.setTargetPosition(ticks);

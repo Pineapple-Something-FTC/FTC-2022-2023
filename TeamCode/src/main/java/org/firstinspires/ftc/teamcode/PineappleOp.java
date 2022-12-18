@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
+import org.firstinspires.ftc.teamcode.Auto.PineappleSomething;
 
 @TeleOp
 public class PineappleOp extends PineappleSomething {

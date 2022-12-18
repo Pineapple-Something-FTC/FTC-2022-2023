@@ -160,7 +160,6 @@ public class AutoRight extends LinearOpMode {
 
 
         // AUTONOMOUS CODE HERE:
-
         bobot.resetEncoders();
 
         intakeThing(bobot.IN, 850);
@@ -168,45 +167,97 @@ public class AutoRight extends LinearOpMode {
 
 
         move(200, bobot.forward, 1169,500);
-        turn(950, bobot.left, bobot.speed, 1670);
-        move(30, bobot.back, 1169, 200);
-        strafe(1779, bobot.right, bobot.speed, 2000);
-        move(255, bobot.forward,1169,430);
-        armThing(742, bobot.UP, bobot.speed, 600);
+        turn(1050, bobot.right, bobot.speed, 1670);
+        move(15, bobot.forward, 1169, 120);
+        strafe(1774, bobot.left, bobot.speed, 2000);
+       // move(240, bobot.forward,1169,400);
+        armThing(1120, bobot.UP, bobot.speed, 590);
         intakeThing(bobot.OUT, 200);
         intakeThing(bobot.NEUTRAL, 50);
-        armThing(842, bobot.UP, bobot.speed, 700);
-        move(209, bobot.back, 1169, 430);
+        armThing(269, bobot.UP, bobot.speed, 700);
+        //move(209, bobot.back, 1169, 430);
 
-        strafe(959, bobot.right, bobot.speed, 1520);
-        strafe(269+4, bobot.left, bobot.speed, 869);
-        turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
+        strafe(959, bobot.left, bobot.speed, 1520);
+        strafe(267, bobot.right, bobot.speed, 869);
+       // turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
 
-        armThing(260, bobot.UP, bobot.speed, 1480);
+        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
         move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
         armThing(175, bobot.UP, bobot.speed, 300);
         intakeThing(bobot.IN, 800);
         armThing(369, bobot.UP, bobot.speed, 1300);
         move(969, bobot.back, 1169, 1350);
-        armThing(842, bobot.UP, bobot.speed, 1150);
-        turn(1542, bobot.right, bobot.speed, 2150);
-        move(420, bobot.forward, 1169, 750);
-        armThing(742, bobot.UP, bobot.speed, 300);
-        intakeThing(bobot.OUT, 300);
-        intakeThing(bobot.NEUTRAL, 10);
-        armThing(842, bobot.UP, bobot.speed, 400);
-        move(420, bobot.back, 1409, 600);
-        turn(469+2+2, bobot.right, bobot.speed, 800);
 
-        if(bobot.tagOfInterest.id==bobot.LEFT) {
-            move(942, bobot.forward, bobot.speed, 1000);
-        }
-        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-            move(942, bobot.back, bobot.speed, 1000);
-        }
-        else {
-            move(69, bobot.forward, bobot.speed, 69);
-        }
+//        armThing(842, bobot.UP, bobot.speed, 1150);
+//        turn(1542, bobot.right, bobot.speed, 2150);
+//        move(420, bobot.forward, 1169, 750);
+//        armThing(742, bobot.UP, bobot.speed, 300);
+//        intakeThing(bobot.OUT, 300);
+//        intakeThing(bobot.NEUTRAL, 10);
+//        armThing(842, bobot.UP, bobot.speed, 400);
+//        move(420, bobot.back, 1409, 600);
+//        turn(469+2+2, bobot.right, bobot.speed, 800);
+//
+//        if(bobot.tagOfInterest.id==bobot.LEFT) {
+//            move(942, bobot.forward, bobot.speed, 1000);
+//        }
+//        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+//            move(942, bobot.back, bobot.speed, 1000);
+//        }
+//        else {
+//            move(69, bobot.forward, bobot.speed, 69);
+//        }
+
+
+
+
+
+//        bobot.resetEncoders();
+//
+//        intakeThing(bobot.IN, 850);
+//        armThing(842, bobot.UP, bobot.speed, 1100);
+//
+//
+//        move(200, bobot.forward, 1169,500);
+//        turn(950, bobot.left, bobot.speed, 1670);
+//        move(15, bobot.back, 1169, 120);
+//        strafe(1774, bobot.right, bobot.speed, 2000);
+//        move(240, bobot.forward,1169,400);
+//        armThing(742, bobot.UP, bobot.speed, 590);
+//        intakeThing(bobot.OUT, 200);
+//        intakeThing(bobot.NEUTRAL, 50);
+//        armThing(842, bobot.UP, bobot.speed, 700);
+//        move(209, bobot.back, 1169, 430);
+//
+//        strafe(959, bobot.right, bobot.speed, 1520);
+//        strafe(267, bobot.left, bobot.speed, 869);
+//        turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
+//
+//        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
+//        move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
+//        armThing(175, bobot.UP, bobot.speed, 300);
+//        intakeThing(bobot.IN, 800);
+//        armThing(369, bobot.UP, bobot.speed, 1300);
+//        move(969, bobot.back, 1169, 1350);
+//        armThing(842, bobot.UP, bobot.speed, 1150);
+//        turn(1542, bobot.right, bobot.speed, 2150);
+//        move(420, bobot.forward, 1169, 750);
+//        armThing(742, bobot.UP, bobot.speed, 300);
+//        intakeThing(bobot.OUT, 300);
+//        intakeThing(bobot.NEUTRAL, 10);
+//        armThing(842, bobot.UP, bobot.speed, 400);
+//        move(420, bobot.back, 1409, 600);
+//        turn(469+2+2, bobot.right, bobot.speed, 800);
+//
+//        if(bobot.tagOfInterest.id==bobot.LEFT) {
+//            move(942, bobot.forward, bobot.speed, 1000);
+//        }
+//        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+//            move(942, bobot.back, bobot.speed, 1000);
+//        }
+//        else {
+//            move(69, bobot.forward, bobot.speed, 69);
+//        }
 
     }
 
@@ -241,4 +292,302 @@ public class AutoRight extends LinearOpMode {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
+
+
 }
+
+/*
+package org.firstinspires.ftc.teamcode.Auto;
+
+import android.annotation.SuppressLint;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+
+
+import java.util.ArrayList;
+
+@Autonomous
+public class Pathing extends LinearOpMode {
+
+    static final double FEET_PER_METER = 3.28084;
+
+    // Lens intrinsics
+    // UNITS ARE PIXELS
+    // NOTE: this calibration is for the C920 webcam at 800x448.
+    // You will need to do your own calibration for other configurations!
+    double fx = 578.272;
+    double fy = 578.272;
+    double cx = 402.145;
+    double cy = 221.506;
+    public static boolean right = false;
+    public static boolean left = true;
+    public static boolean forward = true;
+    public static boolean back = false;
+    int UP = 1;
+    int DOWN = -1;
+    int IN = 1;
+    int OUT = -1;
+    int NEUTRAL = 0;
+    final int speed = 1000;
+    // UNITS ARE METERS
+    double tagSize = 0.044;// Default value: 0.166
+
+    int LEFT = 1;
+    int MIDDLE = 2;
+    int RIGHT = 3;
+
+    // AprilTagDetection tagOfInterest = null;
+    public static DcMotorEx frontLeft;
+    public static DcMotorEx backLeft;
+    public static DcMotorEx frontRight;
+    public static DcMotorEx backRight;
+    public static CRServo thing;
+    public static DcMotorEx g;
+
+    public static AnalogInput deeznuts;
+
+    @Override
+    public void runOpMode() {
+
+
+        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
+        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
+        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
+        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
+        g = hardwareMap.get(DcMotorEx.class, "g");
+        thing = hardwareMap.get(CRServo.class, "thing");
+        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+
+
+        telemetry.setMsTransmissionInterval(50);
+
+        while (!isStarted() && !isStopRequested()) {
+
+            telemetry.addData("L BOZO","");
+            telemetry.update();
+            sleep(20);
+        }
+
+
+        // AUTONOMOUS CODE HERE:
+
+        resetEncoders();
+
+        intakeThing(IN, 850);
+        armThing(1150, UP, 400, 500);
+
+
+        move(200, forward, 1169,500);
+        turn(969+1+4+2+4, right, speed, 1670);
+
+        strafe(1769+4-2, left, speed, 2000);
+       // move(240, forward,1169,400);
+        armThing(1242-6-9-4-4-2-6-3, UP, speed, 1620);
+        intakeThing(OUT, 600);
+        intakeThing(NEUTRAL, 50);
+        armThing(269, UP, 300, 200);
+        //move(209, back, 1169, 430);
+
+        strafe(959, left, speed, 1520);
+        strafe(267-2-6-9-2, right, speed, 869);
+       // turn(2069+4+2+6+9+3, right, speed, 2900);
+
+        armThing(269+4, UP, speed, 500);
+        move(969+6+9+9+6+9+2+6, forward, 1169, 1369);
+        armThing(175, UP, 300, 300);
+        intakeThing(IN, 800);
+        armThing(1275, UP, 300, 500); //369, 1300
+        move(969, back, 1169, 1200);
+        turn(-566, right, speed, 1000);
+        move(250, back, speed, 1000);
+        intakeThing(OUT, 600);
+        intakeThing(NEUTRAL, 50);
+        armThing(269, UP, 750, 1000);
+        // if (tagOfInterest.id == LEFT) {
+        //     move(922, back, speed, 1000);
+        // } else if (tagOfInterest.id == RIGHT) {
+        //     move(942, forward, speed, 1000);
+        // } else {
+        //     move(69, forward, speed, 69);
+        // }
+
+    }
+
+
+    public static void resetDriveEncoders() {
+        // Resets Encoders
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+
+    public static void resetEncoders() {
+        // Resets Encoders
+        g.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+
+    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
+        resetDriveEncoders();
+        if (forwardOrBackward == true) {
+            // Drive forwards if `forwardOrBackward` is true
+            // Set target position
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(-ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        } else if (forwardOrBackward == false) {
+            // Drive backwards if `forwardOrBackward` is false
+            // Set target position
+            frontLeft.setTargetPosition(ticks);
+            frontRight.setTargetPosition(ticks);
+            backLeft.setTargetPosition(ticks);
+            backRight.setTargetPosition(ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        }
+
+        sleep(sleep);
+
+    }
+
+    public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
+        resetDriveEncoders();
+        if (leftOrRight == true) {
+            // Drive left if `leftOrRight` is true
+            // Set target position
+            frontLeft.setTargetPosition(degrees);
+            frontRight.setTargetPosition(-degrees);
+            backLeft.setTargetPosition(degrees);
+            backRight.setTargetPosition(-degrees);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        } else if (leftOrRight == false) {
+            // Drive right if `leftOrRight` is false
+            // Set target position
+            frontLeft.setTargetPosition(-degrees);
+            frontRight.setTargetPosition(degrees);
+            backLeft.setTargetPosition(-degrees);
+            backRight.setTargetPosition(degrees);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        }
+        sleep(sleep);
+    }
+
+    public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
+        resetDriveEncoders();
+        if (leftOrRight == true) {
+            // Strafe left if `leftOrRight` is true
+            // Set target position
+            frontLeft.setTargetPosition(ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        } else if (leftOrRight == false) {
+            // Strafe right if `leftOrRight` is false
+            // Set target position
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(ticks);
+            backLeft.setTargetPosition(ticks);
+            backRight.setTargetPosition(-ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        }
+        sleep(sleep);
+    }
+
+    public void armThing(int ticks, int direction, int speed, int sleep) {
+
+        g.setTargetPosition(direction * ticks);
+        g.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        g.setVelocity(speed);
+        sleep(sleep);
+    }
+
+    public void intakeThing(int state, int sleep) {
+
+        thing.setPower(state);
+        sleep(sleep);
+    }
+}
+ */
