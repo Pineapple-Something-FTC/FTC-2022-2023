@@ -37,7 +37,7 @@ public class PineappleOp extends PineappleSomething {
         double thingPower = 0;
         int intakeState = 0;
         final double driveSpeedFactor = 0.5;
-        final double armPowerFactor = 0.5;
+        final double armPowerFactor = 0.75;
 
         //deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
@@ -73,23 +73,40 @@ public class PineappleOp extends PineappleSomething {
             backRight.setPower(backRightPower);
 
             // Arm motor power
+
             gPower = armPowerFactor * (gamepad1.right_trigger-gamepad1.left_trigger);
 
+
             if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
-                if(g.getCurrentPosition() < 200 && gamepad1.left_trigger > 0) {
+
+                if(g.getCurrentPosition() <= 1000 && gamepad1.left_trigger > 0) {
+
                     if(g.getCurrentPosition() < 200) {
-                        g.setPower(-0.00012*gPower);
+                        g.setPower(-0.65*gPower);
                     }
                     else {
-                        g.setPower(-0.00008*gPower);
+                        g.setPower(-0.52*gPower);
                     }
-                    // g.setPower(-0.0002*g.getCurrentPosition()*gPower); (make continuous later) hi DJ DIAPER
-                } else g.setPower(gPower);
+                      // g.setPower(-0.0002*g.getCurrentPosition()*gPower); (make continuous later) hi DJ DIAPER
+                }
+                if(g.getCurrentPosition() > 1000 && gamepad1.right_trigger > 0) {
+
+                    if(g.getCurrentPosition() > 1690) {
+                        g.setPower(-0.65*gPower);
+                    }
+                    else {
+                        g.setPower(-0.52*gPower);
+                    }
+                }
+                else
+                    g.setPower(gPower);
+
             }
+
             else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() > 1000) {
-                g.setPower(-0.155);
-            } else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() < 1000)
-                g.setPower(0.155);
+                g.setPower(-0.161);
+            } else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() <= 1000)
+                g.setPower(0.161);
 
 
 //            if (gamepad1.dpad_left || gamepad1.dpad_right) {
