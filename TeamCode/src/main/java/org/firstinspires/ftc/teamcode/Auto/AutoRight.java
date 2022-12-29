@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.apriltag.AprilTagDetection;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 @Autonomous
 public class AutoRight extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
+
+
 //    OpenCvCamera camera;
 //    AprilTagDetectionPipeline aprilTagDetectionPipeline;
 

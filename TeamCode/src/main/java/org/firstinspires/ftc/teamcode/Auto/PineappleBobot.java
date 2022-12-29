@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.apriltag.AprilTagDetection;
@@ -22,6 +23,13 @@ public class PineappleBobot extends PineappleSomething {
     public DcMotorEx backRight = null;
     public DcMotorEx g = null;
     public CRServo thing = null;
+    private double lastError = 0;
+    ElapsedTime timer = new ElapsedTime();
+    double integralSum = 0;
+    double kP = 0;
+    double kI = 0;
+    double kD = 0;
+
 
     // Define camera
     OpenCvCamera camera;
@@ -93,6 +101,16 @@ public class PineappleBobot extends PineappleSomething {
         });
 
     }
+    public double pidControl(double reference, double state) {
+        double error = reference - state;
+        integralSum += error * timer.seconds();
+        double derivative = (error - lastError) / timer.seconds();
+        lastError = error;
+
+        timer.reset();
+        double output = (error * kP) + (derivative * kD) + (integralSum * kI);
+        return output;
+    }
     public void resetDriveEncoders() {
 
         // Resets Encoders
@@ -132,16 +150,19 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setTargetPosition(ticks);
 
             // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
+            while(true) {
+                frontLeft.setVelocity(pidControl(1000, frontLeft.getVelocity()));
+                frontRight.setVelocity(pidControl(1000, frontRight.getVelocity()));
+                backLeft.setVelocity(pidControl(1000, backLeft.getVelocity()));
+                backRight.setVelocity(pidControl(1000, backRight.getVelocity()));
+            }
+
         }
 
 
