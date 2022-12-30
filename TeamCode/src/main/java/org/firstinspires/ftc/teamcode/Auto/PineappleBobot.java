@@ -17,16 +17,11 @@ public class PineappleBobot extends PineappleSomething {
     /* Declare OpMode members. */
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    public DcMotorEx frontLeft   = null;
-    public DcMotorEx frontRight  = null;
-    public DcMotorEx backLeft = null;
-    public DcMotorEx backRight = null;
-    public DcMotorEx g = null;
-    public CRServo thing = null;
+
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     double integralSum = 0;
-    double kP = 0;
+    double kP = 1.5;
     double kI = 0;
     double kD = 0;
 
@@ -35,7 +30,7 @@ public class PineappleBobot extends PineappleSomething {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
-    // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
+    // Define Drive constants.  Make them public so they CAN be used by the calling OpMode - no u
 
     public static final double fx = 578.272;
     public static final double fy = 578.272;
@@ -120,29 +115,10 @@ public class PineappleBobot extends PineappleSomething {
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void move(int ticks, boolean forwardOrBackward, int velocity) {
+    public void move(int ticks, boolean forwardOrBackward) {
         resetDriveEncoders();
         if (forwardOrBackward) {
             // Drive forwards if `forwardOrBackward` is true
-            // Set target position
-            frontLeft.setTargetPosition(-ticks);
-            frontRight.setTargetPosition(-ticks);
-            backLeft.setTargetPosition(-ticks);
-            backRight.setTargetPosition(-ticks);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        } else if (!forwardOrBackward) {
-            // Drive backwards if `forwardOrBackward` is false
             // Set target position
             frontLeft.setTargetPosition(ticks);
             frontRight.setTargetPosition(ticks);
@@ -150,17 +126,32 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setTargetPosition(ticks);
 
             // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            setModeNoEncoder();
 
             // Set velocity
-            while(true) {
-                frontLeft.setVelocity(pidControl(1000, frontLeft.getVelocity()));
-                frontRight.setVelocity(pidControl(1000, frontRight.getVelocity()));
-                backLeft.setVelocity(pidControl(1000, backLeft.getVelocity()));
-                backRight.setVelocity(pidControl(1000, backRight.getVelocity()));
+            while(!(frontLeft.getCurrentPosition() > ticks - 100 && frontLeft.getCurrentPosition() < ticks + 100)) {
+                frontLeft.setVelocity(pidControl(ticks, frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(ticks, frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
+            }
+        } else if (!forwardOrBackward) {
+            // Drive backwards if `forwardOrBackward` is false
+            // Set target position
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(-ticks);
+
+            // Set mode
+            setModeNoEncoder();
+
+            // Set velocity
+            while(!(frontLeft.getCurrentPosition() > ticks - 200 && frontLeft.getCurrentPosition() < ticks + 200)) {
+                frontLeft.setVelocity(pidControl(ticks, frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(ticks, frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
             }
 
         }
@@ -268,6 +259,12 @@ public class PineappleBobot extends PineappleSomething {
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+    public void setModeNoEncoder() {
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 }
