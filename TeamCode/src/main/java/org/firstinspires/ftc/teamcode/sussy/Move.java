@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.sussy;
 
-import org.firstinspires.ftc.teamcode.Auto.PineappleSomething;
-
 public class Move extends PineappleSomething {
     public static void straight(int ticks, boolean direction, int velocity) {
 //        resetEncoders();

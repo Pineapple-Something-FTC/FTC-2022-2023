@@ -166,103 +166,30 @@ public class AutoRight extends LinearOpMode {
 
         // AUTONOMOUS CODE HERE:
 
-        bobot.move(2000, bobot.forward);
-
-        /*
-        a
-
-        bobot.resetEncoders();
-
-        intakeThing(bobot.IN, 850);
-        armThing(842, bobot.UP, bobot.speed, 1100);
+        //bobot.move(2000, bobot.forward);
 
 
-        move(200, bobot.forward, 1169,500);
-        turn(1050, bobot.right, bobot.speed, 1670);
-        move(15, bobot.forward, 1169, 120);
-        strafe(1774, bobot.left, bobot.speed, 2000);
-       // move(240, bobot.forward,1169,400);
-        armThing(1120, bobot.UP, bobot.speed, 590);
-        intakeThing(bobot.OUT, 200);
-        intakeThing(bobot.NEUTRAL, 50);
-        armThing(269, bobot.UP, bobot.speed, 700);
-        //move(209, bobot.back, 1169, 430);
-
-        strafe(959, bobot.left, bobot.speed, 1520);
-        strafe(267, bobot.right, bobot.speed, 869);
-       // turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
-
-        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
-        move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
-        armThing(175, bobot.UP, bobot.speed, 300);
-        intakeThing(bobot.IN, 800);
-        armThing(369, bobot.UP, bobot.speed, 1300);
-        move(969, bobot.back, 1169, 1350);
-
-
-        a
-       */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        armThing(842, bobot.UP, bobot.speed, 1150);
-//        turn(1542, bobot.right, bobot.speed, 2150);
-//        move(420, bobot.forward, 1169, 750);
-//        armThing(742, bobot.UP, bobot.speed, 300);
-//        intakeThing(bobot.OUT, 300);
-//        intakeThing(bobot.NEUTRAL, 10);
-//        armThing(842, bobot.UP, bobot.speed, 400);
-//        move(420, bobot.back, 1409, 600);
-//        turn(469+2+2, bobot.right, bobot.speed, 800);
-//
-//        if(bobot.tagOfInterest.id==bobot.LEFT) {
-//            move(942, bobot.forward, bobot.speed, 1000);
-//        }
-//        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-//            move(942, bobot.back, bobot.speed, 1000);
-//        }
-//        else {
-//            move(69, bobot.forward, bobot.speed, 69);
-//        }
-
-
-
-
-
-//        bobot.resetEncoders();
+// code for scoring backwards
+  //      bobot.resetEncoders();
 //
 //        intakeThing(bobot.IN, 850);
 //        armThing(842, bobot.UP, bobot.speed, 1100);
 //
 //
 //        move(200, bobot.forward, 1169,500);
-//        turn(950, bobot.left, bobot.speed, 1670);
-//        move(15, bobot.back, 1169, 120);
-//        strafe(1774, bobot.right, bobot.speed, 2000);
-//        move(240, bobot.forward,1169,400);
-//        armThing(742, bobot.UP, bobot.speed, 590);
+//        turn(1050, bobot.right, bobot.speed, 1670);
+//        move(15, bobot.forward, 1169, 120);
+//        strafe(1774, bobot.left, bobot.speed, 2000);
+//       // move(240, bobot.forward,1169,400);
+//        armThing(1120, bobot.UP, bobot.speed, 590);
 //        intakeThing(bobot.OUT, 200);
 //        intakeThing(bobot.NEUTRAL, 50);
-//        armThing(842, bobot.UP, bobot.speed, 700);
-//        move(209, bobot.back, 1169, 430);
+//        armThing(269, bobot.UP, bobot.speed, 700);
+//        //move(209, bobot.back, 1169, 430);
 //
-//        strafe(959, bobot.right, bobot.speed, 1520);
-//        strafe(267, bobot.left, bobot.speed, 869);
-//        turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
+//        strafe(959, bobot.left, bobot.speed, 1520);
+//        strafe(267, bobot.right, bobot.speed, 869);
+//       // turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
 //
 //        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
 //        move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
@@ -270,6 +197,26 @@ public class AutoRight extends LinearOpMode {
 //        intakeThing(bobot.IN, 800);
 //        armThing(369, bobot.UP, bobot.speed, 1300);
 //        move(969, bobot.back, 1169, 1350);
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //        armThing(842, bobot.UP, bobot.speed, 1150);
 //        turn(1542, bobot.right, bobot.speed, 2150);
 //        move(420, bobot.forward, 1169, 750);
@@ -289,14 +236,65 @@ public class AutoRight extends LinearOpMode {
 //        else {
 //            move(69, bobot.forward, bobot.speed, 69);
 //        }
+// end
+
+
+
+// code for scoring in front
+        bobot.resetEncoders();
+
+        intakeThing(bobot.IN, 850);
+        armThing(842, bobot.UP, bobot.speed, 1100);
+
+
+        move(200, bobot.forward, 1169,500);
+        turn(950, bobot.left, bobot.speed, 1670);
+        move(15, bobot.back, 1169, 120);
+        strafe(1774, bobot.right, bobot.speed, 2000);
+        move(240, bobot.forward,1169,400);
+        armThing(742, bobot.UP, bobot.speed, 590);
+        intakeThing(bobot.OUT, 200);
+        intakeThing(bobot.NEUTRAL, 50);
+        armThing(842, bobot.UP, bobot.speed, 700);
+        move(209, bobot.back, 1169, 430);
+
+        strafe(959, bobot.right, bobot.speed, 1520);
+        strafe(267, bobot.left, bobot.speed, 869);
+        turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
+
+        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
+        move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
+        armThing(175, bobot.UP, bobot.speed, 300);
+        intakeThing(bobot.IN, 800);
+        armThing(369, bobot.UP, bobot.speed, 1300);
+        move(969, bobot.back, 1169, 1350);
+        armThing(842, bobot.UP, bobot.speed, 1150);
+        turn(1542, bobot.right, bobot.speed, 2150);
+        move(420, bobot.forward, 1169, 750);
+        armThing(742, bobot.UP, bobot.speed, 300);
+        intakeThing(bobot.OUT, 300);
+        intakeThing(bobot.NEUTRAL, 10);
+        armThing(842, bobot.UP, bobot.speed, 400);
+        move(420, bobot.back, 1409, 600);
+        turn(469+2+2, bobot.right, bobot.speed, 800);
+
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
+            move(942, bobot.forward, bobot.speed, 1000);
+        }
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+            move(942, bobot.back, bobot.speed, 1000);
+        }
+        else {
+            move(69, bobot.forward, bobot.speed, 69);
+        }
 
     }
 
 
-//    public void move(int ticks, boolean forwardOrBackward, int sleep) {
-//        bobot.move(ticks, forwardOrBackward);
-//        sleep(sleep);
-//    }
+    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
+        bobot.move(ticks, forwardOrBackward, velocity);
+        sleep(sleep);
+    }
     public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
         bobot.turn(degrees, leftOrRight, velocity);
         sleep(sleep);

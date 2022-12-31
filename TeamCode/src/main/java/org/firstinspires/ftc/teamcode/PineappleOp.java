@@ -4,18 +4,10 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Auto.PineappleSomething;
+import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
 
 @TeleOp
 public class PineappleOp extends PineappleSomething {
-    public static DcMotorEx frontLeft;
-    public static DcMotorEx backLeft;
-    public static DcMotorEx frontRight;
-    public static DcMotorEx backRight;
-    public static DcMotorEx g;
-    public static CRServo thing;
-    //  public static AnalogInput deeznuts;
-
     public void intakeControl(CRServo thing, double thingPower) {
         // Set intake power
         thing.setPower(thingPower);
@@ -32,50 +24,33 @@ public class PineappleOp extends PineappleSomething {
             thingPower = -1;
     }
     @Override public void runOpMode() {
-        double frontLeftPower, frontRightPower, backLeftPower,
-                backRightPower, gPower;
+        double gPower;
         double thingPower = 0;
         int intakeState = 0;
         final double driveSpeedFactor = 0.5;
         final double armPowerFactor = 0.75;
 
-        //deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
-        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
-        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
-        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        thing = hardwareMap.get(CRServo.class, "thing");
+        mapHardwareAndReverseMotors();
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-
-//        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        //// START
         waitForStart();
-
         while (opModeIsActive()) {
-            // Drive
-            // double frontRightPower = gamepad1.right_stick_y - gamepad1.right_stick_x;
-            // double frontLeftPower  = gamepad1.left_stick_y - gamepad1.left_stick_x;
-            // double backRightPower  = gamepad1.right_stick_y + gamepad1.right_stick_x;
-            // double backLeftPower   = gamepad1.left_stick_y + gamepad1.left_stick_x;
-
-            frontLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            frontRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x);
-            backLeftPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x);
-            backRightPower = driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x);
-            frontLeft.setPower(frontLeftPower);
-            backLeft.setPower(backLeftPower);
-            frontRight.setPower(frontRightPower);
-            backRight.setPower(backRightPower);
+            // Set power of motors
+            frontLeft.setPower(
+                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x)
+            );
+            backLeft.setPower(driveSpeedFactor * (
+                    (gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x)
+            );
+            frontRight.setPower(
+                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x)
+            );
+            backRight.setPower(
+                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x)
+            );
 
             // Arm motor power
-
             gPower = armPowerFactor * (gamepad1.right_trigger-gamepad1.left_trigger);
-
 
             if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
 
