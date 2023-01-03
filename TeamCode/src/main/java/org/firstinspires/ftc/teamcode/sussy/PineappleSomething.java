@@ -41,6 +41,9 @@ public class PineappleSomething extends LinearOpMode {
 
     public void resetEncoders() {
         // Resets Encoders
+        g.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        h.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        j.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);

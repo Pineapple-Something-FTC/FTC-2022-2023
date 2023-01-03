@@ -31,6 +31,7 @@ public class PineappleBobot extends PineappleSomething {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
+    // tagOfInterest = 2;
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode - no u
 
     public static final double fx = 578.272;
@@ -46,7 +47,7 @@ public class PineappleBobot extends PineappleSomething {
     public static final int IN = 1;
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
-    public static final int speed = 1000;
+    public static final int speed = 800;
     // UNITS ARE METERS
     public static final double tagSize = 0.044;// Default value: 0.166
 
@@ -123,10 +124,10 @@ public class PineappleBobot extends PineappleSomething {
         if (forwardOrBackward) {
             // Drive forwards if `forwardOrBackward` is true
             // Set target position
-            frontLeft.setTargetPosition(ticks);
-            frontRight.setTargetPosition(ticks);
-            backLeft.setTargetPosition(ticks);
-            backRight.setTargetPosition(ticks);
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(-ticks);
 
             // Set mode
             setModeRunToPosition();
@@ -145,10 +146,10 @@ public class PineappleBobot extends PineappleSomething {
         } else if (!forwardOrBackward) {
             // Drive backwards if `forwardOrBackward` is false
             // Set target position
-            frontLeft.setTargetPosition(-ticks);
-            frontRight.setTargetPosition(-ticks);
-            backLeft.setTargetPosition(-ticks);
-            backRight.setTargetPosition(-ticks);
+            frontLeft.setTargetPosition(ticks);
+            frontRight.setTargetPosition(ticks);
+            backLeft.setTargetPosition(ticks);
+            backRight.setTargetPosition(ticks);
 
             // Set mode
             setModeRunToPosition();
@@ -273,6 +274,8 @@ public class PineappleBobot extends PineappleSomething {
     public void resetEncoders() {
         // Resets Encoders
         g.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        h.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        j.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);

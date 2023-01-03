@@ -239,42 +239,54 @@ public class AutoRight extends LinearOpMode {
 // end
 
 
-
+//        while(bobot.frontLeft.getCurrentPosition() > -5000) {
+//            telemetry.addData("Sus: ",bobot.frontLeft.getCurrentPosition());
+//            telemetry.addData("Suss: ",bobot.frontRight.getCurrentPosition());
+//            telemetry.addData("Susss: ",bobot.backLeft.getCurrentPosition());
+//            telemetry.addData("Susssy: ",bobot.backRight.getCurrentPosition());
+//            telemetry.update();
+//        }
+// the numbers, the camera mount, better holding for electronics
 // code for scoring in front
         bobot.resetEncoders();
 
         intakeThing(bobot.IN, 850);
-        armThing(842, bobot.UP, bobot.speed, 1100);
-
-
-        move(200, bobot.forward, 1169,500);
-        turn(950, bobot.left, bobot.speed, 1670);
-        move(15, bobot.back, 1169, 120);
-        strafe(1774, bobot.right, bobot.speed, 2000);
-        move(240, bobot.forward,1169,400);
-        armThing(742, bobot.UP, bobot.speed, 590);
-        intakeThing(bobot.OUT, 200);
+        armThing(442, bobot.UP, 250, 5000);
+        move(2284, bobot.forward, 2000,3000);
+        turn(969/2, bobot.left, bobot.speed, 1670);
+        move(240, bobot.forward,bobot.speed,400);
+        // arm up, move forward and score
+        move(360, bobot.back,bobot.speed,400);
+        intakeThing(bobot.OUT, 50);
         intakeThing(bobot.NEUTRAL, 50);
-        armThing(842, bobot.UP, bobot.speed, 700);
+        turn(969/2+969+4+2+6+9+2+9+6+2, bobot.right, bobot.speed, 2200);
+
+        sleep(1500);
+        move(1069, bobot.forward, 2000, 1000);
+      /*
+   //     armThing(742, bobot.UP, bobot.speed, 590);
+       // intakeThing(bobot.OUT, 200);
+        //intakeThing(bobot.NEUTRAL, 50);
+  //      armThing(842, bobot.UP, bobot.speed, 700);
         move(209, bobot.back, 1169, 430);
 
         strafe(959, bobot.right, bobot.speed, 1520);
         strafe(267, bobot.left, bobot.speed, 869);
         turn(2069+4+2+6+9+3, bobot.right, bobot.speed, 2900);
 
-        armThing(269+3+1, bobot.UP, bobot.speed, 1480);
+     //   armThing(269+3+1, bobot.UP, bobot.speed, 1480);
         move(969+6+9+9+6+9, bobot.forward, 1169, 1369);
-        armThing(175, bobot.UP, bobot.speed, 300);
-        intakeThing(bobot.IN, 800);
-        armThing(369, bobot.UP, bobot.speed, 1300);
+     //   armThing(175, bobot.UP, bobot.speed, 300);
+        //intakeThing(bobot.IN, 800);
+       // armThing(369, bobot.UP, bobot.speed, 1300);
         move(969, bobot.back, 1169, 1350);
-        armThing(842, bobot.UP, bobot.speed, 1150);
+       // armThing(842, bobot.UP, bobot.speed, 1150);
         turn(1542, bobot.right, bobot.speed, 2150);
         move(420, bobot.forward, 1169, 750);
-        armThing(742, bobot.UP, bobot.speed, 300);
-        intakeThing(bobot.OUT, 300);
-        intakeThing(bobot.NEUTRAL, 10);
-        armThing(842, bobot.UP, bobot.speed, 400);
+      //  armThing(742, bobot.UP, bobot.speed, 300);
+        //intakeThing(bobot.OUT, 300);
+        //intakeThing(bobot.NEUTRAL, 10);
+       // armThing(842, bobot.UP, bobot.speed, 400);
         move(420, bobot.back, 1409, 600);
         turn(469+2+2, bobot.right, bobot.speed, 800);
 
@@ -287,6 +299,9 @@ public class AutoRight extends LinearOpMode {
         else {
             move(69, bobot.forward, bobot.speed, 69);
         }
+*/
+
+
 
     }
 
