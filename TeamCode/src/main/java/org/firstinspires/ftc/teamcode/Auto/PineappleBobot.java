@@ -42,8 +42,6 @@ public class PineappleBobot extends PineappleSomething {
     public static final boolean left = true;
     public static final boolean forward = true;
     public static final boolean back = false;
-    public static final int UP = 1;
-    public static final int DOWN = -1;
     public static final int IN = 1;
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
@@ -254,15 +252,15 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setVelocity(velocity);
         }
     }
-    public void armThing(int ticks, int direction, int speed) {
+    public void armThing(int ticks, int speed) {
 
-        g.setTargetPosition(direction*ticks);
+        g.setTargetPosition(ticks);
         g.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         g.setVelocity(speed);
-        h.setTargetPosition(direction*ticks);
+        h.setTargetPosition(ticks);
         h.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         h.setVelocity(speed);
-        j.setTargetPosition(direction*ticks);
+        j.setTargetPosition(ticks);
         j.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         j.setVelocity(speed);
 

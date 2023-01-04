@@ -117,6 +117,13 @@ public class AutoRight extends LinearOpMode {
                         tagFound = true;
                         break;
                     }
+                    else {
+                        tag.id = bobot.MIDDLE;
+                        bobot.tagOfInterest = tag;
+                        telemetry.addLine("Don't see the tag, default is set to center, also sussy balls 69 afaf asoajfoia sLOL HeheheheHAW");
+                        break;
+                    }
+
                 }
 
                 if(tagFound) {
@@ -166,11 +173,96 @@ public class AutoRight extends LinearOpMode {
 
         // AUTONOMOUS CODE HERE:
 
-        //bobot.move(2000, bobot.forward);
+// the numbers, the camera mount, better holding for electronics
+// code for scoring in front
+        bobot.resetEncoders();
 
+        intakeThing(bobot.IN, 800);
+        armThing(1000, 250, 500);
+        move(2284, bobot.forward, 2000,3000);
+        turn(969/2 + 4 + 2 + 6, bobot.left, bobot.speed, 1670);
+        move(240, bobot.forward,bobot.speed,400);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(360, bobot.back,bobot.speed,420);
+        armThing(442, 250, 500);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.right, bobot.speed, 2200);
+
+        sleep(1500);
+        move(1069, bobot.forward, 2000, 1000);
+        armThing(269, 750, 1200);
+        intakeThing(bobot.IN, 800);
+        armThing(1000, 350, 1250);
+        move(1069, bobot.back, 2000, 1000);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.left, bobot.speed, 1690);
+        move(240, bobot.forward, bobot.speed, 400);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(360, bobot.back, bobot.speed, 400);
+        armThing(442, 400, 750);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.right, bobot.speed, 2200);
+        move(1069, bobot.forward, 2000, 1000);
+        armThing(269, 750, 1200);
+        intakeThing(bobot.IN, 800);
+        armThing(1000, 350, 1250);
+        move(1069, bobot.back, 2000, 1000);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.left, bobot.speed, 1690);
+        move(240, bobot.forward, bobot.speed, 400);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 69);
+        move(360, bobot.back, bobot.speed, 400);
+        armThing(442, 400, 750);
+        turn(420, bobot.left, bobot.speed, 1000);
+
+        // drives to correct parking spot
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
+            move(942, bobot.forward, bobot.speed, 1000);
+        }
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+            move(942, bobot.back, bobot.speed, 1000);
+        }
+        else {
+            move(69, bobot.forward, bobot.speed, 69);
+        }
+    }
+
+
+    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
+        bobot.move(ticks, forwardOrBackward, velocity);
+        sleep(sleep);
+    }
+    public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
+        bobot.turn(degrees, leftOrRight, velocity);
+        sleep(sleep);
+    }
+    public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
+        bobot.strafe(ticks, leftOrRight, velocity);
+        sleep(sleep);
+    }
+    public void armThing(int ticks, int speed, int sleep) {
+        bobot.armThing(ticks, speed);
+        sleep(sleep);
+    }
+    public void intakeThing(int state, int sleep) {
+        bobot.intakeThing(state);
+        sleep(sleep);
+    }
+    @SuppressLint("DefaultLocale")
+    void tagToTelemetry(AprilTagDetection detection) {
+        telemetry.addLine("\nDetected tag ID: " + detection.id);
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+    }
+
+
+}
 
 // code for scoring backwards
-  //      bobot.resetEncoders();
+//      bobot.resetEncoders();
 //
 //        intakeThing(bobot.IN, 850);
 //        armThing(842, bobot.UP, bobot.speed, 1100);
@@ -197,26 +289,6 @@ public class AutoRight extends LinearOpMode {
 //        intakeThing(bobot.IN, 800);
 //        armThing(369, bobot.UP, bobot.speed, 1300);
 //        move(969, bobot.back, 1169, 1350);
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //        armThing(842, bobot.UP, bobot.speed, 1150);
 //        turn(1542, bobot.right, bobot.speed, 2150);
 //        move(420, bobot.forward, 1169, 750);
@@ -237,33 +309,7 @@ public class AutoRight extends LinearOpMode {
 //            move(69, bobot.forward, bobot.speed, 69);
 //        }
 // end
-
-
-//        while(bobot.frontLeft.getCurrentPosition() > -5000) {
-//            telemetry.addData("Sus: ",bobot.frontLeft.getCurrentPosition());
-//            telemetry.addData("Suss: ",bobot.frontRight.getCurrentPosition());
-//            telemetry.addData("Susss: ",bobot.backLeft.getCurrentPosition());
-//            telemetry.addData("Susssy: ",bobot.backRight.getCurrentPosition());
-//            telemetry.update();
-//        }
-// the numbers, the camera mount, better holding for electronics
-// code for scoring in front
-        bobot.resetEncoders();
-
-        intakeThing(bobot.IN, 850);
-        armThing(442, bobot.UP, 250, 5000);
-        move(2284, bobot.forward, 2000,3000);
-        turn(969/2, bobot.left, bobot.speed, 1670);
-        move(240, bobot.forward,bobot.speed,400);
-        // arm up, move forward and score
-        move(360, bobot.back,bobot.speed,400);
-        intakeThing(bobot.OUT, 50);
-        intakeThing(bobot.NEUTRAL, 50);
-        turn(969/2+969+4+2+6+9+2+9+6+2, bobot.right, bobot.speed, 2200);
-
-        sleep(1500);
-        move(1069, bobot.forward, 2000, 1000);
-      /*
+ /*
    //     armThing(742, bobot.UP, bobot.speed, 590);
        // intakeThing(bobot.OUT, 200);
         //intakeThing(bobot.NEUTRAL, 50);
@@ -300,43 +346,3 @@ public class AutoRight extends LinearOpMode {
             move(69, bobot.forward, bobot.speed, 69);
         }
 */
-
-
-
-    }
-
-
-    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
-        bobot.move(ticks, forwardOrBackward, velocity);
-        sleep(sleep);
-    }
-    public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
-        bobot.turn(degrees, leftOrRight, velocity);
-        sleep(sleep);
-    }
-    public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
-        bobot.strafe(ticks, leftOrRight, velocity);
-        sleep(sleep);
-    }
-    public void armThing(int ticks, int direction, int speed, int sleep) {
-        bobot.armThing(ticks, direction, speed);
-        sleep(sleep);
-    }
-    public void intakeThing(int state, int sleep) {
-        bobot.intakeThing(state);
-        sleep(sleep);
-    }
-    @SuppressLint("DefaultLocale")
-    void tagToTelemetry(AprilTagDetection detection) {
-        telemetry.addLine("\nDetected tag ID: " + detection.id);
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
-    }
-
-
-}
-

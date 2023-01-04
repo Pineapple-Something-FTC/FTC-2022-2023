@@ -8,32 +8,43 @@ import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
 
 @TeleOp
 public class PineappleOp extends PineappleSomething {
-    public void intakeControl(CRServo thing, double thingPower) {
-        // Set intake power
-        thing.setPower(thingPower);
 
+    public void intakeControl(CRServo thing) {
         // Control intake with buttons
         // A: Intake
         // X: Outtake
         // B: Stop intake/outtake
-        if (gamepad1.b == true)
-            thingPower = 0;
-        else if (gamepad1.a == true)
-            thingPower = 1;
-        else if (gamepad1.x == true)
-            thingPower = -1;
+        if (gamepad2.b || gamepad1.b)
+            thing.setPower(0);
+        else if (gamepad2.a || gamepad1.a)
+            thing.setPower(1);
+        else if (gamepad2.x || gamepad1.x)
+            thing.setPower(-1);
     }
     @Override public void runOpMode() {
-        double gPower;
         double thingPower = 0;
         int intakeState = 0;
         final double driveSpeedFactor = 0.5;
-        final double armPowerFactor = 0.75;
+        final double armPowerFactor = 0.5;
 
         mapHardwareAndReverseMotors();
-
+// 182 - pick up, 401 - ground cone, 1269 - low, 1947 - medium,2609 - high
         //// START
+
         waitForStart();
+        resetEncoders();
+
+        g.setTargetPosition(0);
+        h.setTargetPosition(0);
+        j.setTargetPosition(0);
+
+        g.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        h.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        j.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        g.setPower(armPowerFactor);
+        h.setPower(armPowerFactor);
+        j.setPower(armPowerFactor);
         while (opModeIsActive()) {
             // Set power of motors
             frontLeft.setPower(
@@ -50,130 +61,96 @@ public class PineappleOp extends PineappleSomething {
             );
 
             // Arm motor power
-            gPower = armPowerFactor * (gamepad1.right_trigger-gamepad1.left_trigger);
-
-            if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
-
-                if(g.getCurrentPosition() <= 1000 && gamepad1.left_trigger > 0) {
-
-                    if(g.getCurrentPosition() < 200) {
-                        g.setPower(-0.65*gPower);
-                    }
-                    else {
-                        g.setPower(-0.52*gPower);
-                    }
-                      // g.setPower(-0.0002*g.getCurrentPosition()*gPower); (make continuous later) hi DJ DIAPER
-                }
-                if(g.getCurrentPosition() > 1000 && gamepad1.right_trigger > 0) {
-
-                    if(g.getCurrentPosition() > 1690) {
-                        g.setPower(-0.65*gPower);
-                    }
-                    else {
-                        g.setPower(-0.52*gPower);
-                    }
-                }
-                else
-                    g.setPower(gPower);
-
-            }
-
-            else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() > 1000) {
-                g.setPower(-0.161);
-            } else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0 && g.getCurrentPosition() <= 1000)
-                g.setPower(0.161);
-
-
-//            if (gamepad1.dpad_left || gamepad1.dpad_right) {
-//                double lowGoal = 1.24;
-//                double deadzone = 0.002;
-//                if (deeznuts.getVoltage() >= lowGoal) {
-//                    g.setPower(-0.3);
-//                } else if (deeznuts.getVoltage() < lowGoal) {
-//                    g.setPower(0.5);
-//                } else {
-//                    g.setPower(-0.1);
-//                }
-//            }
-
-//                double pLimit = 1.455;
-//                if(deeznuts.getVoltage() > pLimit) {
-//                    if(deeznuts.getVoltage() > 1.63) {
-//                        //while (deeznuts.getVoltage() > pLimit) {
-//                            g.setPower(-0.5);
-//                       // }
-//                    }
-//                    else if(deeznuts.getVoltage() <=1.62) {
-//                        //while (deeznuts.getVoltage() > pLimit) {
-//                            g.setPower(-0.1);
-//                        //}
-//                    }
-//                }
-//                else if(deeznuts.getVoltage() < pLimit) {
-//                    while (deeznuts.getVoltage() < pLimit) {
-//                        g.setPower(0.5);
-//                    }
-//                }
-//            }
-
-            // if (gamepad1.dpad_down || gamepad1.dpad_up) {
-            //     double pLimit = 1.25;
-            //     if(deeznuts.getVoltage() > pLimit) {
-            //         if(deeznuts.getVoltage() > 1.62) {
-            //             while (deeznuts.getVoltage() > pLimit) {
-            //                 g.setPower(-0.5);
-            //             }
-            //         }
-            //         if(deeznuts.getVoltage() <=1.62) {
-            //             while (deeznuts.getVoltage() > pLimit) {
-            //                 g.setPower(0.01);
-            //             }
-            //         }
-            //     }
-            //     if(deeznuts.getVoltage() < pLimit) {
-            //         while (deeznuts.getVoltage() < pLimit) {
-            //             g.setPower(0.5);
-            //         }
-            //     }
-            // }
-
-//            if (gamepad1.dpad_up) {
-//                g.setTargetPosition(750);
-//                g.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//                g.setVelocity(1400);
-//                sleep(100);
-//            }
-            switch (intakeState) {
-                case 0:
-                    thingPower = 0;
-                    break;
-                case 1:
-                    thingPower = 1;
-                    break;
-                case 2:
-                    thingPower = -1;
-                    break;
-            }
-            if (gamepad1.b == true)
-                intakeState = 0;
-            else if (gamepad1.a == true)
-                intakeState = 1;
-            else if (gamepad1.x == true)
-                intakeState = 2;
-
+            armMotorPower();
             // Control intake with X,A,B
-            intakeControl(thing, thingPower);
-
+            intakeControl(thing);
             // Turn off encoder limit when trigger pressed
-            if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0)
-                g.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
+//                g.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                h.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                j.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            }
+
+            if(gamepad2.dpad_up ||gamepad1.dpad_up) {
+                scoreGround();
+            }
+
+            else if(gamepad2.dpad_down || gamepad1.dpad_down) {
+                scoreLow();
+            }
+
+            else if(gamepad2.dpad_right || gamepad1.dpad_right) {
+                scoreMedium();
+            }
+
+            else if (gamepad2.dpad_left || gamepad1.dpad_left) {
+                scoreHigh();
+            }
+
+            else if (gamepad2.y || gamepad1.y) {
+                intakeHeight();
+            }
+
+
 
             // Telemetry
             telemetry.addData("Arm position", g.getCurrentPosition());
             telemetry.addData("Arm Power", g.getPower());
             telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
             telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+            telemetry.addData("Right Trigger", gamepad2.right_trigger);
+            telemetry.addData("Left Trigger", gamepad2.left_trigger);
+            telemetry.addData("THING", frontLeft.getPower());
             telemetry.update();
         }
+
     }
+    public void armMotorPower() {
+
+        int MAX_HEIGHT = 2690;
+
+        if(g.getCurrentPosition() >= MAX_HEIGHT) {
+            g.setTargetPosition(MAX_HEIGHT);
+            h.setTargetPosition(MAX_HEIGHT);
+            j.setTargetPosition(MAX_HEIGHT);
+        }
+
+        else {
+            g.setTargetPosition(g.getTargetPosition() + (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger)));
+            h.setTargetPosition(h.getTargetPosition() + (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger)));
+            j.setTargetPosition(j.getTargetPosition() + (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger)));
+        }
+
+
+
+    }
+
+
+    public void scoreGround() {
+        g.setTargetPosition(401);
+        h.setTargetPosition(401);
+        j.setTargetPosition(401);
+    }
+    public void scoreLow() {
+        g.setTargetPosition(1269);
+        h.setTargetPosition(1269);
+        j.setTargetPosition(1269);
+    }
+    public void scoreMedium() {
+        g.setTargetPosition(1947);
+        h.setTargetPosition(1947);
+        j.setTargetPosition(1947);
+    }
+    public void scoreHigh() {
+        g.setTargetPosition(2609);
+        h.setTargetPosition(2609);
+        j.setTargetPosition(2609);
+    }
+    public void intakeHeight() {
+        g.setTargetPosition(182);
+        h.setTargetPosition(182);
+        j.setTargetPosition(182);
+    }
+
+
 }
