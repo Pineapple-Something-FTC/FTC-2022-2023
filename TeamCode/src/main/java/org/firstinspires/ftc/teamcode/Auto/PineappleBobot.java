@@ -45,7 +45,7 @@ public class PineappleBobot extends PineappleSomething {
     public static final int IN = 1;
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
-    public static final int speed = 800;
+    public static final int speed = 900;
     // UNITS ARE METERS
     public static final double tagSize = 0.044;// Default value: 0.166
 

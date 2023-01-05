@@ -120,7 +120,7 @@ public class AutoRight extends LinearOpMode {
                     else {
                         tag.id = bobot.MIDDLE;
                         bobot.tagOfInterest = tag;
-                        telemetry.addLine("Don't see the tag, default is set to center, also sussy balls 69 afaf asoajfoia sLOL HeheheheHAW");
+                        telemetry.addData("Don't see the tag, default is set to center, also sussy balls 69 afaf asoajfoia sLOL HeheheheHAW", " hi");
                         break;
                     }
 
@@ -177,52 +177,57 @@ public class AutoRight extends LinearOpMode {
 // code for scoring in front
         bobot.resetEncoders();
 
-        intakeThing(bobot.IN, 800);
-        armThing(1000, 250, 500);
-        move(2284, bobot.forward, 2000,3000);
-        turn(969/2 + 4 + 2 + 6, bobot.left, bobot.speed, 1670);
-        move(240, bobot.forward,bobot.speed,400);
+        intakeThing(bobot.IN, 690);
+        armThing(2636, 690+69+42, 100);
+        move(2284+250, bobot.forward, 2000,2469);
+        move(250, bobot.back, 1000, 469);
+        turn(969/2 + 4 + 2 + 6+4, bobot.left, bobot.speed, 1500);
+        move(569, bobot.forward,bobot.speed,1000);
         intakeThing(bobot.OUT, 100);
         intakeThing(bobot.NEUTRAL, 50);
-        move(360, bobot.back,bobot.speed,420);
-        armThing(442, 250, 500);
-        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.right, bobot.speed, 2200);
+        move(569, bobot.back,bobot.speed,420);
+        armThing(569+69+4+6+2+6, 690+69+42, 250);
+        turn(969/2+969+4+2+6+9+2+9+6, bobot.right, bobot.speed, 2000);
 
-        sleep(1500);
-        move(1069, bobot.forward, 2000, 1000);
+        intakeThing(bobot.IN, 150);
+        move(1120, bobot.forward, 1200, 1000);
         armThing(269, 750, 1200);
-        intakeThing(bobot.IN, 800);
-        armThing(1000, 350, 1250);
+
+        armThing(2630, 750, 1969);
         move(1069, bobot.back, 2000, 1000);
-        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.left, bobot.speed, 1690);
-        move(240, bobot.forward, bobot.speed, 400);
-        intakeThing(bobot.OUT, 100);
+        turn((969/2+969+4+2+6+9+6+42+42+21+6), bobot.left, bobot.speed, 2900);
+        move(569+2, bobot.forward, bobot.speed, 869);
+        move(69+42, bobot.back, bobot.speed, 300);
+        sleep(250);
+        intakeThing(bobot.OUT, 150);
         intakeThing(bobot.NEUTRAL, 50);
-        move(360, bobot.back, bobot.speed, 400);
-        armThing(442, 400, 750);
-        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.right, bobot.speed, 2200);
-        move(1069, bobot.forward, 2000, 1000);
+        move(542-69-42, bobot.back, bobot.speed, 869);
+        armThing(569+69+4+2+6, 690+69, 250);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4+42+6+9+2, bobot.right, bobot.speed, 2000);
+        intakeThing(bobot.IN, 150);
+        move(1100, bobot.forward, 1200, 1069);
+
         armThing(269, 750, 1200);
-        intakeThing(bobot.IN, 800);
-        armThing(1000, 350, 1250);
+
+        armThing(1670, 750, 1969);
         move(1069, bobot.back, 2000, 1000);
-        turn(969/2+969+4+2+6+9+2+9+6+2+4, bobot.left, bobot.speed, 1690);
-        move(240, bobot.forward, bobot.speed, 400);
+        turn(420+69+69, bobot.right, bobot.speed, 969);
+        move(569, bobot.forward, bobot.speed, 690);
         intakeThing(bobot.OUT, 100);
         intakeThing(bobot.NEUTRAL, 69);
-        move(360, bobot.back, bobot.speed, 400);
-        armThing(442, 400, 750);
+        move(420, bobot.back, bobot.speed, 469);
+        //armThing(169, 969, 150);
         turn(420, bobot.left, bobot.speed, 1000);
 
         // drives to correct parking spot
         if(bobot.tagOfInterest.id==bobot.LEFT) {
-            move(942, bobot.forward, bobot.speed, 1000);
-        }
-        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
             move(942, bobot.back, bobot.speed, 1000);
         }
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+            move(942, bobot.forward, bobot.speed, 1000);
+        }
         else {
-            move(69, bobot.forward, bobot.speed, 69);
+            move(69, bobot.back, bobot.speed, 69);
         }
     }
 
