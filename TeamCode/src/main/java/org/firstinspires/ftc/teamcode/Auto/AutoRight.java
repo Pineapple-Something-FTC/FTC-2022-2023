@@ -177,39 +177,39 @@ public class AutoRight extends LinearOpMode {
 // code for scoring in front
         bobot.resetEncoders();
 
-        intakeThing(bobot.IN, 690);
-        armThing(2636, 690+69+42, 100);
+        intakeThing(bobot.IN, 800);
+        armThing(-2636, 690+69+42, 100);
         move(2284+250, bobot.forward, 2000,2469);
         move(250, bobot.back, 1000, 469);
         turn(969/2 + 4 + 2 + 6+4, bobot.left, bobot.speed, 1500);
-        move(569, bobot.forward,bobot.speed,1000);
+        move(342, bobot.forward,bobot.speed,1000);
         intakeThing(bobot.OUT, 100);
         intakeThing(bobot.NEUTRAL, 50);
-        move(569, bobot.back,bobot.speed,420);
-        armThing(569+69+4+6+2+6, 690+69+42, 250);
-        turn(969/2+969+4+2+6+9+2+9+6, bobot.right, bobot.speed, 2000);
+        move(442 , bobot.back,bobot.speed,420);
+        armThing(-(569+69+4+6+2+6), 690+69+42, 250);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2, bobot.right, bobot.speed, 2000);
 
         intakeThing(bobot.IN, 150);
         move(1120, bobot.forward, 1200, 1000);
-        armThing(269, 750, 1200);
+        armThing(-269, 750, 1200);
 
-        armThing(2630, 750, 1969);
+        armThing(-2630, 750, 1969);
         move(1069, bobot.back, 2000, 1000);
-        turn((969/2+969+4+2+6+9+6+42+42+21+6), bobot.left, bobot.speed, 2900);
+        turn((969/2+969+4+2+6+9+6+42+42+21+6+9), bobot.left, bobot.speed, 2900);
         move(569+2, bobot.forward, bobot.speed, 869);
         move(69+42, bobot.back, bobot.speed, 300);
         sleep(250);
         intakeThing(bobot.OUT, 150);
         intakeThing(bobot.NEUTRAL, 50);
         move(542-69-42, bobot.back, bobot.speed, 869);
-        armThing(569+69+4+2+6, 690+69, 250);
-        turn(969/2+969+4+2+6+9+2+9+6+2+4+42+6+9+2, bobot.right, bobot.speed, 2000);
+        armThing(-(569+69+4+2+6), 690+69, 250);
+        turn(969/2+969+4+2+6+9+2+9+6+2+4+42+6+9+2+6+9+4+2, bobot.right, bobot.speed, 2000);
         intakeThing(bobot.IN, 150);
         move(1100, bobot.forward, 1200, 1069);
 
-        armThing(269, 750, 1200);
+        armThing(-269, 750, 1200);
 
-        armThing(1670, 750, 1969);
+        armThing(-690, 569, 969);
         move(1069, bobot.back, 2000, 1000);
         turn(420+69+69, bobot.right, bobot.speed, 969);
         move(569, bobot.forward, bobot.speed, 690);

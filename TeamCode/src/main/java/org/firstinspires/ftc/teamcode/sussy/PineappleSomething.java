@@ -50,6 +50,14 @@ public class PineappleSomething extends LinearOpMode {
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    public void resetDriveEncoders() {
+        // Resets Drive Encoders
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
     public void mapHardwareAndReverseMotors() {
         deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
