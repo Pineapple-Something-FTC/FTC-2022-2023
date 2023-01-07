@@ -210,6 +210,7 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setVelocity(velocity);
         }
     }
+
     public void strafe(int ticks, boolean leftOrRight, int velocity) {
         resetDriveEncoders();
         if (leftOrRight) {

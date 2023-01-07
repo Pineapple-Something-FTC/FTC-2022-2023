@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static org.firstinspires.ftc.teamcode.PineappleOp.thing;
+
 import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,6 +11,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.apriltag.AprilTagDetection;
@@ -15,77 +20,21 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+
+
+
 import java.util.ArrayList;
 
 @Autonomous
 public class AutoLeft extends LinearOpMode {
-    OpenCvCamera camera;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    public static final double FEET_PER_METER = 3.28084;
 
-    static final double FEET_PER_METER = 3.28084;
-
-    // Lens intrinsics
-    // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
-    // You will need to do your own calibration for other configurations!
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
-    public static boolean right = false;
-    public static boolean left = true;
-    public static boolean forward = true;
-    public static boolean back = false;
-    int UP = 1;
-    int DOWN = -1;
-    int IN = 1;
-    int OUT = -1;
-    int NEUTRAL = 0;
-    final int speed = 1000;
-    // UNITS ARE METERS
-    double tagSize = 0.044;// Default value: 0.166
-
-    int LEFT = 1;
-    int MIDDLE = 2;
-    int RIGHT = 3;
-
-    AprilTagDetection tagOfInterest = null;
-    public static DcMotorEx frontLeft;
-    public static DcMotorEx backLeft;
-    public static DcMotorEx frontRight;
-    public static DcMotorEx backRight;
-    public static CRServo thing;
-    public static DcMotorEx g;
-
-    public static AnalogInput deeznuts;
-
+    PineappleBobot bobot = new PineappleBobot();
     @Override
     public void runOpMode() {
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
-        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
-        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
-        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
-        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        thing = hardwareMap.get(CRServo.class, "thing");
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        bobot.init(hardwareMap);
 
-        camera.setPipeline(aprilTagDetectionPipeline);
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                camera.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT);
-            }
-
-            @Override
-            public void onError(int errorCode) {
-            }
-        });
         telemetry.setMsTransmissionInterval(50);
 
         /*
@@ -93,46 +42,54 @@ public class AutoLeft extends LinearOpMode {
          * This REPLACES waitForStart!
          */
         while (!isStarted() && !isStopRequested()) {
-            telemetry.addData("Potentiometer Voltage:", deeznuts.getVoltage());
 
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+            ArrayList<AprilTagDetection> currentDetections = bobot.aprilTagDetectionPipeline.getLatestDetections();
 
-            if (currentDetections.size() != 0) {
+            if(currentDetections.size() != 0) {
                 boolean tagFound = false;
 
-                for (AprilTagDetection tag : currentDetections) {
+                for(AprilTagDetection tag : currentDetections) {
                     //// CHANGE FROM ORIGINAL
                     //if(tag.id == ID_TAG_OF_INTEREST)
-                    if (tag.id == LEFT || tag.id == MIDDLE || tag.id == RIGHT) {
-                        tagOfInterest = tag;
+                    if(tag.id == bobot.LEFT || tag.id == bobot.MIDDLE || tag.id == bobot.RIGHT) {
+                        bobot.tagOfInterest = tag;
                         tagFound = true;
                         break;
                     }
+                    else {
+                        tag.id = bobot.MIDDLE;
+                        bobot.tagOfInterest = tag;
+                        telemetry.addData("Don't see the tag, default is set to center, also sussy balls 69 afaf asoajfoia sLOL HeheheheHAW", " hi");
+                        break;
+                    }
+
                 }
 
-                if (tagFound) {
+                if(tagFound) {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    tagToTelemetry(tagOfInterest);
+                    tagToTelemetry(bobot.tagOfInterest);
                 } else {
                     telemetry.addLine("Don't see tag of interest :(");
 
-                    if (tagOfInterest == null) {
+                    if(bobot.tagOfInterest == null) {
                         telemetry.addLine("(The tag has never been seen)");
                     } else {
                         telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                        tagToTelemetry(tagOfInterest);
+                        tagToTelemetry(bobot.tagOfInterest);
                     }
                 }
             } else {
                 telemetry.addLine("Don't see tag of interest :(");
 
-                if (tagOfInterest == null) {
+                if(bobot.tagOfInterest == null) {
                     telemetry.addLine("(The tag has never been seen)");
                 } else {
                     telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                    tagToTelemetry(tagOfInterest);
+                    tagToTelemetry(bobot.tagOfInterest);
                 }
             }
+            telemetry.addData("L BOZO: ", bobot.frontLeft.getCurrentPosition());
+
             telemetry.update();
             sleep(20);
         }
@@ -143,9 +100,9 @@ public class AutoLeft extends LinearOpMode {
          */
 
         /* Update the telemetry */
-        if (tagOfInterest != null) {
+        if(bobot.tagOfInterest != null) {
             telemetry.addLine("Tag snapshot:\n");
-            tagToTelemetry(tagOfInterest);
+            tagToTelemetry(bobot.tagOfInterest);
             telemetry.update();
         } else {
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
@@ -155,227 +112,125 @@ public class AutoLeft extends LinearOpMode {
 
         // AUTONOMOUS CODE HERE:
 
-        resetEncoders();
-        intakeThing(IN, 850);
-        armThing(842, UP, speed, 1100);
+// the numbers, the camera mount, better holding for electronics
+// code for scoring in front
+
+        bobot.resetEncoders();
+
+        intakeThing(bobot.IN, 1200);
+        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
+        move(2284+250, bobot.forward, 2000,2469);
+        move(250, bobot.back, 2000, 369);
+        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.right, bobot.speed, 1242);
+        move(310, bobot.forward,bobot.speed,690);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(410, bobot.back,bobot.speed,420);
+        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3, bobot.left, bobot.speed, 2000);
+
+        intakeThing(bobot.IN, 150);
+        move(1169, bobot.forward, 1200, 1269);
+        armThing(-269, 750, 1200);
+
+        armThing(-2630, 1690, 640);
+        move(2169, bobot.back, 969, 2969);
+        turn((420+69+20), bobot.right, 2000, 690);
+        move(569-4-2+9+6+4, bobot.forward, bobot.speed, 690);
+
+        sleep(1000);
+        intakeThing(bobot.OUT, 150);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(342, bobot.back, 2000, 469);
+        armThing(-(569+69+4+2+6+9), 690+69, 10);
+        turn(420+69+6+9+6+9+4+1+22, bobot.left, 2000, 690);
+        intakeThing(bobot.IN, 150);
+        move(2169+69+6+9, bobot.forward, 1142, 1690);
+
+        armThing(-269, 500, 1690);
 
 
-        move(200, forward, 1169, 500);
-        turn(981, right, speed, 1670);
-        move(30, back, 1169, 200);
-        strafe(1869-4-6, left, speed, 2000);
-        move(290, forward, 1169, 430);
-        armThing(720, UP, speed, 600);
-        intakeThing(OUT, 200);
-        intakeThing(NEUTRAL, 50);
-        armThing(842, UP, speed, 700);
-        move(209, back, 1169, 430);
 
-        strafe(959, left, speed, 1520);
-        strafe(269+4+2, right, speed, 869);
-        turn(2069-4-2, left, speed, 2900);
+        if(bobot.tagOfInterest.id==bobot.RIGHT) {
+            armThing(-1699, 1690, 690);
+            move(2169, bobot.back, 2000, 2000);
+            turn(420+69+69, bobot.left, 2000, 690);
+            move(420, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(369, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 10);
+            turn(420+69+69, bobot.right, 2000, 690);
+            move(200, bobot.back, 2000, 420);
 
-        armThing(266, UP, speed, 1480);
-        move(969 + 6 + 9 + 9 + 6+9, forward, 1169, 1369);
-        armThing(185, UP, speed, 300);
-        intakeThing(IN, 800);
-        armThing(369, UP, speed, 1300);
-        move(969, back, 1169, 1350);
-        armThing(842, UP, speed, 1150);
-        turn(1549, left, speed, 2150);
-        move(420, forward, 1169, 750);
-        armThing(742, UP, speed, 300);
-        intakeThing(OUT, 300);
-        intakeThing(NEUTRAL, 10);
-        armThing(842, UP, speed, 400);
-        move(420, back, 1409, 600);
-        turn(469 -4, left, speed, 800);
+        }
+        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+            armThing(-1069, 1690, 690);
+            move(242, bobot.back, 2000,690);
+            turn(969/2+969+4+2+6+9+2+9+6, bobot.left, bobot.speed, 2000);
+            move(420, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(369, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 10);
+            turn(420, bobot.right, 2000, 2000);
+//            bobot.resetDriveEncoders();
+//            bobot.frontLeft.setTargetPosition(1690);
+//            bobot.frontRight.setTargetPosition(-1690);
+//
+//            // Set mode
+//            bobot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            bobot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//            // Set velocity
+//            bobot.frontLeft.setVelocity(2000);
+//            bobot.frontRight.setVelocity(2000);
 
-        if (tagOfInterest.id == LEFT) {
-            move(922, back, speed, 1000);
-        } else if (tagOfInterest.id == RIGHT) {
-            move(942, forward, speed, 1000);
-        } else {
-            move(69, forward, speed, 69);
+        }
+        else {
+            armThing(-1069, 1690, 690);
+            move(1169, bobot.back, 2000, 1069);
+            strafe(690, bobot.left, 2000, 969);
+            move(469, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(269+4+2, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 2000);
+
+
         }
 
     }
 
 
-    public static void resetDriveEncoders() {
-        // Resets Encoders
-        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
+        bobot.move(ticks, forwardOrBackward, velocity);
+        sleep(sleep);
     }
-
-
-    public static void resetEncoders() {
-        // Resets Encoders
-        g.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
+        bobot.turn(degrees, leftOrRight, velocity);
+        sleep(sleep);
     }
-
+    public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
+        bobot.strafe(ticks, leftOrRight, velocity);
+        sleep(sleep);
+    }
+    public void armThing(int ticks, int speed, int sleep) {
+        bobot.armThing(ticks, speed);
+        sleep(sleep);
+    }
+    public void intakeThing(int state, int sleep) {
+        bobot.intakeThing(state);
+        sleep(sleep);
+    }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {
         telemetry.addLine("\nDetected tag ID: " + detection.id);
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y * FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z * FEET_PER_METER));
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 
-    public void move(int ticks, boolean forwardOrBackward, int velocity, int sleep) {
-        resetDriveEncoders();
-        if (forwardOrBackward == true) {
-            // Drive forwards if `forwardOrBackward` is true
-            // Set target position
-            frontLeft.setTargetPosition(-ticks);
-            frontRight.setTargetPosition(-ticks);
-            backLeft.setTargetPosition(-ticks);
-            backRight.setTargetPosition(-ticks);
 
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        } else if (forwardOrBackward == false) {
-            // Drive backwards if `forwardOrBackward` is false
-            // Set target position
-            frontLeft.setTargetPosition(ticks);
-            frontRight.setTargetPosition(ticks);
-            backLeft.setTargetPosition(ticks);
-            backRight.setTargetPosition(ticks);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        }
-
-        sleep(sleep);
-
-    }
-
-    public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
-        resetDriveEncoders();
-        if (leftOrRight == true) {
-            // Drive left if `leftOrRight` is true
-            // Set target position
-            frontLeft.setTargetPosition(degrees);
-            frontRight.setTargetPosition(-degrees);
-            backLeft.setTargetPosition(degrees);
-            backRight.setTargetPosition(-degrees);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        } else if (leftOrRight == false) {
-            // Drive right if `leftOrRight` is false
-            // Set target position
-            frontLeft.setTargetPosition(-degrees);
-            frontRight.setTargetPosition(degrees);
-            backLeft.setTargetPosition(-degrees);
-            backRight.setTargetPosition(degrees);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        }
-        sleep(sleep);
-    }
-
-    public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
-        resetDriveEncoders();
-        if (leftOrRight == true) {
-            // Strafe left if `leftOrRight` is true
-            // Set target position
-            frontLeft.setTargetPosition(ticks);
-            frontRight.setTargetPosition(-ticks);
-            backLeft.setTargetPosition(-ticks);
-            backRight.setTargetPosition(ticks);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        } else if (leftOrRight == false) {
-            // Strafe right if `leftOrRight` is false
-            // Set target position
-            frontLeft.setTargetPosition(-ticks);
-            frontRight.setTargetPosition(ticks);
-            backLeft.setTargetPosition(ticks);
-            backRight.setTargetPosition(-ticks);
-
-            // Set mode
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
-        }
-        sleep(sleep);
-    }
-
-    public void armThing(int ticks, int direction, int speed, int sleep) {
-
-        g.setTargetPosition(direction * ticks);
-        g.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        g.setVelocity(speed);
-        sleep(sleep);
-    }
-
-    public void intakeThing(int state, int sleep) {
-
-        thing.setPower(state);
-        sleep(sleep);
-    }
 }
+

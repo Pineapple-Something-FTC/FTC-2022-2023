@@ -24,7 +24,7 @@ public class PineappleOp extends PineappleSomething {
     @Override public void runOpMode() {
         double thingPower = 0;
         int intakeState = 0;
-        final double driveSpeedFactor = 0.62;
+        final double driveSpeedFactor = 0.67;
         final double armPowerFactor = 0.75;
         final double holdPower = .1;
         boolean state = false;
@@ -62,6 +62,7 @@ public class PineappleOp extends PineappleSomething {
 
             }
             armMotorPower();
+
             // Control intake with X,A,B
             intakeControl(thing);
             // Set power of motors
@@ -79,15 +80,7 @@ public class PineappleOp extends PineappleSomething {
             );
 
             // Arm motor power
-
-
-            // Turn off encoder limit when trigger pressed
-//            if (gamepad1.right_trigger > 0 || gamepad1.left_trigger > 0) {
-//                g.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                h.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                j.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//            }
-
+//
             if(gamepad2.dpad_down ||gamepad1.dpad_down) {
                 scoreGround();
             }
@@ -138,9 +131,9 @@ public class PineappleOp extends PineappleSomething {
 
     public void armMotorPower() {
 
-        int MAX_HEIGHT = -2690;
+        int MAX_HEIGHT = -2542;
 
-        int MIN_HEIGHT = -10;
+        int MIN_HEIGHT = -1;
 
         if(g.getCurrentPosition() <= MAX_HEIGHT) {
             g.setTargetPosition(MAX_HEIGHT);
@@ -157,10 +150,16 @@ public class PineappleOp extends PineappleSomething {
 //        }
 
         else {
-            if(gamepad2.right_trigger > 0 || gamepad2.left_trigger > 0) {
-                g.setTargetPosition((g.getTargetPosition() - (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger))));
-                h.setTargetPosition((h.getTargetPosition() - (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger))));
-                j.setTargetPosition((j.getTargetPosition() - (int) (69 * (gamepad2.right_trigger - gamepad2.left_trigger))));
+            if(gamepad2.right_trigger > 0) {
+                g.setTargetPosition((g.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
+                h.setTargetPosition((h.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
+                j.setTargetPosition((j.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
+
+            }
+            else if(gamepad2.left_trigger > 0) {
+                g.setTargetPosition((g.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
+                h.setTargetPosition((h.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
+                j.setTargetPosition((j.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
 
             }
 
@@ -176,9 +175,10 @@ public class PineappleOp extends PineappleSomething {
 //            j.setPower(0.75);
 //        }
         int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
-        g.setPower(-0.001*Math.abs(average-g.getTargetPosition()) / 2.6);
-        h.setPower(-0.001*Math.abs(average-g.getTargetPosition()) / 2.6);
-        j.setPower(-0.001*Math.abs(average-g.getTargetPosition()) / 2.6);
+        g.setPower(-0.0069*(average-g.getTargetPosition()) / 1);
+        h.setPower(-0.0069*(average-g.getTargetPosition()) / 1);
+        j.setPower(-0.0069*(average-g.getTargetPosition()) / 1);
+
 
     }
 
@@ -210,9 +210,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-300);
     }
     public void scoreCone() {
-        g.setTargetPosition(-10);
-        h.setTargetPosition(-10);
-        j.setTargetPosition(-10);
+        g.setTargetPosition(-6);
+        h.setTargetPosition(-6);
+        j.setTargetPosition(-6);
     }
     public void resetLiftEncoders() {
         g.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
