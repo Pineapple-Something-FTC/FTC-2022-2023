@@ -112,7 +112,7 @@ public class AutoRight extends LinearOpMode {
                 for(AprilTagDetection tag : currentDetections) {
                     //// CHANGE FROM ORIGINAL
                     //if(tag.id == ID_TAG_OF_INTEREST)
-                    if(tag.id == bobot.LEFT || tag.id == bobot.MIDDLE || tag.id == bobot.RIGHT) {
+                    if (tag.id == bobot.LEFT || tag.id == bobot.MIDDLE || tag.id == bobot.RIGHT) {
                         bobot.tagOfInterest = tag;
                         tagFound = true;
                         break;
@@ -226,12 +226,12 @@ public class AutoRight extends LinearOpMode {
         else if (bobot.tagOfInterest.id==bobot.RIGHT) {
             armThing(-1069, 1690, 690);
             move(242, bobot.back, 2000,690);
-            turn(969/2+969+4+2+6+9+2+9+6, bobot.right, bobot.speed, 2000);
+            turn(969/2+969+4+2+6+9+9, bobot.right, bobot.speed, 2000);
             move(420, bobot.forward, bobot.speed, 690);
             intakeThing(bobot.OUT, 150);
             move(369, bobot.back, bobot.speed, 550);
             armThing(-1, 2000, 10);
-            turn(420, bobot.left, 2000, 2000);
+            turn(469+4+2+8, bobot.left, 2000, 2000);
 //            bobot.resetDriveEncoders();
 //            bobot.frontLeft.setTargetPosition(1690);
 //            bobot.frontRight.setTargetPosition(-1690);
