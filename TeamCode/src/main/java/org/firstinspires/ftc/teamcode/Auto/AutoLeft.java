@@ -25,7 +25,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous
+@Autonomous(name = "Something")
 public class AutoLeft extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
 

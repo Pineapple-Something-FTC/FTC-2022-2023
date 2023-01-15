@@ -188,7 +188,7 @@ public class AutoRight extends LinearOpMode {
         intakeThing(bobot.NEUTRAL, 50);
         move(410, bobot.back,bobot.speed,420);
         armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3, bobot.right, bobot.speed, 2000);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+5, bobot.right, bobot.speed, 2000);
 
         intakeThing(bobot.IN, 150);
         move(1169, bobot.forward, 1200, 1269);
@@ -203,7 +203,7 @@ public class AutoRight extends LinearOpMode {
         intakeThing(bobot.NEUTRAL, 50);
         move(342, bobot.back, 2000, 469);
         armThing(-(569+69+4+2+6+9), 690+69, 10);
-        turn(420+69+6+9+6+9+4+1+22, bobot.right, 2000, 690);
+        turn(420+69+6+9+6+9+4+1+22+6+5, bobot.right, 2000, 690);
         intakeThing(bobot.IN, 150);
         move(2169+69+6+9, bobot.forward, 1142, 1690);
 
@@ -212,14 +212,14 @@ public class AutoRight extends LinearOpMode {
 
 
         if(bobot.tagOfInterest.id==bobot.LEFT) {
-            armThing(-1699, 1690, 690);
+            armThing(-1869+42, 1690, 690);
             move(2169, bobot.back, 2000, 2000);
-            turn(420+69+69, bobot.right, 2000, 690);
+            turn(420+69+69+4+2+6+9, bobot.right, 2000, 690);
             move(420, bobot.forward, bobot.speed, 690);
             intakeThing(bobot.OUT, 150);
             move(369, bobot.back, bobot.speed, 550);
             armThing(-1, 2000, 10);
-            turn(420+69+69, bobot.left, 2000, 690);
+            turn(420+69+69+4+2+6+9, bobot.left, 2000, 690);
             move(200, bobot.back, 2000, 420);
 
         }
@@ -248,7 +248,7 @@ public class AutoRight extends LinearOpMode {
         else {
             armThing(-1069, 1690, 690);
             move(1169, bobot.back, 2000, 1069);
-            strafe(690, bobot.right, 2000, 969);
+            strafe(769, bobot.right, 2000, 969);
             move(469, bobot.forward, bobot.speed, 690);
             intakeThing(bobot.OUT, 150);
             move(269+4+2, bobot.back, bobot.speed, 550);
