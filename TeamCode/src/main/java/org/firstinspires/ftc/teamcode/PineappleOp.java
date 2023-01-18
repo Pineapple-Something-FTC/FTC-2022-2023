@@ -194,9 +194,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-1042);
     }
     public void scoreMedium() {
-        g.setTargetPosition(-1669-4-69);
-        h.setTargetPosition(-1669-4-69);
-        j.setTargetPosition(-1669-4-69);
+        g.setTargetPosition(-1669-4-42-6-9);
+        h.setTargetPosition(-1669-4-42-6-9);
+        j.setTargetPosition(-1669-4-42-6-9);
     }
     public void scoreHigh() {
         g.setTargetPosition(-2620);

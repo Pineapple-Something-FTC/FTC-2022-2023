@@ -268,7 +268,7 @@ public class PineappleBobot extends PineappleSomething {
     }
     public void intakeThing(int state) {
 
-        thing.setPower(state);
+        thing.setPower(100*state);
     }
     public void resetEncoders() {
         // Resets Encoders
