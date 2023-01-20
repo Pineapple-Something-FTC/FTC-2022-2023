@@ -151,15 +151,15 @@ public class PineappleOp extends PineappleSomething {
 
         else {
             if(gamepad2.right_trigger > 0) {
-                g.setTargetPosition((g.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
-                h.setTargetPosition((h.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
-                j.setTargetPosition((j.getTargetPosition() - (int) (39 * (gamepad2.right_trigger))));
+                g.setTargetPosition((g.getTargetPosition() - (int) (69+4+2+6+9+6+9+6 * (gamepad2.right_trigger))));
+                h.setTargetPosition((h.getTargetPosition() - (int) (69+4+2+6+9+6+9+6 * (gamepad2.right_trigger))));
+                j.setTargetPosition((j.getTargetPosition() - (int) (69+4+2+6+9+6+9+6 * (gamepad2.right_trigger))));
 
             }
             else if(gamepad2.left_trigger > 0) {
-                g.setTargetPosition((g.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
-                h.setTargetPosition((h.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
-                j.setTargetPosition((j.getTargetPosition() + (int) (39 * (gamepad2.left_trigger))));
+                g.setTargetPosition((g.getTargetPosition() + (int) (69+4+2+6+9+6+9+6 * (gamepad2.left_trigger))));
+                h.setTargetPosition((h.getTargetPosition() + (int) (69+4+2+6+9+6+9+6 * (gamepad2.left_trigger))));
+                j.setTargetPosition((j.getTargetPosition() + (int) (69+4+2+6+9+6+9+6 * (gamepad2.left_trigger))));
 
             }
 

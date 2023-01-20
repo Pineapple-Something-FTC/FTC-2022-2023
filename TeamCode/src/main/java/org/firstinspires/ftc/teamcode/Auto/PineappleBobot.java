@@ -22,9 +22,9 @@ public class PineappleBobot extends PineappleSomething {
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     double integralSum = 0;
-    double kP = 1.5;
-    double kI = 0;
-    double kD = 0;
+    double kP = 69;
+    double kI = 0.01;
+    double kD = 2;
 
 
     // Define camera
@@ -185,10 +185,14 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
+            while(frontLeft.getCurrentPosition() < frontLeft.getTargetPosition()){
+                frontLeft.setVelocity(pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+
+            }
+
         } else if (!leftOrRight) {
             // Drive right if `leftOrRight` is false
             // Set target position
@@ -204,10 +208,14 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Set velocity
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
+            while(frontLeft.getCurrentPosition() > frontLeft.getTargetPosition()){
+                frontLeft.setVelocity(pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+
+            }
+
         }
     }
 
@@ -228,6 +236,7 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Set velocity
+
             frontLeft.setVelocity(velocity);
             frontRight.setVelocity(velocity);
             backLeft.setVelocity(velocity);
