@@ -197,14 +197,14 @@ public class AutoRight extends LinearOpMode {
         //strafe(642, bobot.left, 1500, 969);
 
         turn(969/2 + 4 + 2 + 6+4+6+9+6+9+6+9, bobot.left, bobot.speed, 69);
-        move(269-1, bobot.forward,bobot.speed,690);
+        move(269-1+9, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 100);
         intakeThing(bobot.NEUTRAL, 50);
-        move(269-1, bobot.back, bobot.speed, 690);
+        move(269-1+9, bobot.back, bobot.speed, 690);
        // strafe(642, bobot.right, 1000, 969);
         armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
        // turn(969+6+9+6, bobot.right, 969, 1690);
-        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+5+6+9+2+1+6+9, bobot.right, bobot.speed, 69);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+5+6+9+2+1+6+9+9+6, bobot.right, bobot.speed, 69);
 
         intakeThing(bobot.IN, 150);
         move(1269, bobot.forward, 1200, 1300);

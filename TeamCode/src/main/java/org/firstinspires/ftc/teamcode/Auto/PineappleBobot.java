@@ -31,7 +31,7 @@ public class PineappleBobot extends PineappleSomething {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
-    // tagOfInterest = 2;
+
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode - no u
 
     public static final double fx = 578.272;
@@ -46,8 +46,8 @@ public class PineappleBobot extends PineappleSomething {
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
     public static final int speed = 900;
-    // UNITS ARE METERS
-    public static final double tagSize = 0.044;// Default value: 0.166
+    // tagSize calibrated for the signal sleeve, units are meters
+    public static final double tagSize = 0.044;
 
     public static final int LEFT = 1;
     public static final int MIDDLE = 2;
@@ -57,6 +57,7 @@ public class PineappleBobot extends PineappleSomething {
     public PineappleBobot () {
     }
 
+    // Initializes robot's motors and servos
     public void init(HardwareMap hwMap)    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         frontLeft = hwMap.get(DcMotorEx.class, "motor1");
@@ -70,18 +71,12 @@ public class PineappleBobot extends PineappleSomething {
 
 
 
-
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
-        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+        //Reverses front and back right to make all motors spin same direction
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
-        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-        // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Camera things
+        //Initializes camera
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hwMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
@@ -98,6 +93,7 @@ public class PineappleBobot extends PineappleSomething {
         });
 
     }
+    //PID control function that takes in a current and a target state
     public double pidControl(double reference, double state) {
         double error = reference - state;
         integralSum += error * timer.seconds();
@@ -108,6 +104,8 @@ public class PineappleBobot extends PineappleSomething {
         double output = (error * kP) + (derivative * kD) + (integralSum * kI);
         return output;
     }
+
+    //Function resets only the drive encoders
     public void resetDriveEncoders() {
 
         // Resets Encoders
@@ -117,6 +115,7 @@ public class PineappleBobot extends PineappleSomething {
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    //Moves the robot forward or backward a set number of ticks, for a set speed
     public void move(int ticks, boolean forwardOrBackward, int velocity) {
         resetDriveEncoders();
         if (forwardOrBackward) {
@@ -168,6 +167,8 @@ public class PineappleBobot extends PineappleSomething {
 
 
     }
+
+    //Turns the robot left or right a certain number of degrees
     public void turn(int degrees, boolean leftOrRight, int velocity) {
         resetDriveEncoders();
         if(leftOrRight) {
@@ -219,6 +220,7 @@ public class PineappleBobot extends PineappleSomething {
         }
     }
 
+    //Strafe
     public void strafe(int ticks, boolean leftOrRight, int velocity) {
         resetDriveEncoders();
         if (leftOrRight) {
