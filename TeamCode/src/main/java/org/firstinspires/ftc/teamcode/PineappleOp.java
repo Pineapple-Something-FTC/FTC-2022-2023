@@ -104,6 +104,10 @@ public class PineappleOp extends PineappleSomething {
             telemetry.addData("Left Trigger", gamepad2.left_trigger);
             telemetry.addData("THING", frontLeft.getPower());
             telemetry.addData("left stick button", gamepad2.left_stick_button);
+            telemetry.addData("left stick button", frontRight.getCurrentPosition());
+            telemetry.addData("left stick button", frontLeft.getCurrentPosition());
+            telemetry.addData("left stick button", backRight.getCurrentPosition());
+            telemetry.addData("left stick button", backLeft.getCurrentPosition());
             telemetry.update();
         }
 
@@ -138,7 +142,7 @@ public class PineappleOp extends PineappleSomething {
 //        }
 
         //Updates the lift's target position using the triggers
-        else {
+        else if (gamepad2.right_bumper == false){
             if(gamepad2.right_trigger > 0) {
                 g.setTargetPosition((g.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
                 h.setTargetPosition((h.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
@@ -152,13 +156,20 @@ public class PineappleOp extends PineappleSomething {
 
             }
 
+
+        }
+        if(gamepad2.right_bumper == true){
+            shutUpNathan.setPower(gamepad2.right_trigger*5);
+            shutUpNathan.setPower(-5*(gamepad2.left_trigger));
         }
 
         //Sets the lift motors' power proportionally to its current-target position
         int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
+
         g.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
         h.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
         j.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
+
 
 
     }

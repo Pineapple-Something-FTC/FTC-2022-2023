@@ -200,28 +200,28 @@ public class AutoRight extends LinearOpMode {
         move(269-1+9, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 100);
         intakeThing(bobot.NEUTRAL, 50);
-        move(269-1+9, bobot.back, bobot.speed, 690);
-       // strafe(642, bobot.right, 1000, 969);
-        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-       // turn(969+6+9+6, bobot.right, 969, 1690);
+        move(269-1+9-42-6, bobot.back, bobot.speed, 690);
+//       // strafe(642, bobot.right, 1000, 969);
+        armThing(-(569+69+4+6+2+6+9), 690, 250);
+//       // turn(969+6+9+6, bobot.right, 969, 1690);
         turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+5+6+9+2+1+6+9+9+6, bobot.right, bobot.speed, 69);
 
         intakeThing(bobot.IN, 150);
-        move(1269, bobot.forward, 1200, 1300);
+        move(1369, bobot.forward, 1200, 1300);
         armThing(-269+42-6-9, 750, 696+42);
 
         armThing(-2630, 1690, 640);
         move(2169, bobot.back, 2069, 2490);
-        strafe(642,bobot.left,1000,969);
-//        turn((420+69+20), bobot.left, 2000, 690);
+//       // strafe(642,bobot.left,1000,969);
+        turn((420+69+20), bobot.left, 2000, 690);
         move(269, bobot.forward, bobot.speed, 420);
 
         intakeThing(bobot.OUT, 150);
         intakeThing(bobot.NEUTRAL, 50);
         move(269, bobot.back, 2000, 420);
-        strafe(642, bobot.right, 1000, 969);
+//    //    strafe(642, bobot.right, 1000, 969);
         armThing(-(569+69+4+2+6+9), 690+69, 10);
-      //  turn(420+69+6+9+6+9+4+1+22+6+5, bobot.right, 2000, 690);
+        turn(420+69+6+9+6+9+4+1, bobot.right, 2000, 690);
         intakeThing(bobot.IN, 150);
         move(2169+69+6+9+69+42+69, bobot.forward, 1142, 1690);
 

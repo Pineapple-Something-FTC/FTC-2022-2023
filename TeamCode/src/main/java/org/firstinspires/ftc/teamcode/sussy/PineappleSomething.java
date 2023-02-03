@@ -22,6 +22,8 @@ public class PineappleSomething extends LinearOpMode {
     public static DcMotorEx g;
     public static DcMotorEx h;
     public static DcMotorEx j;
+    // Tape Measure Motor
+    public static DcMotorEx shutUpNathan;
     // Intake
     public static CRServo thing;
     // Potentiometer
@@ -64,6 +66,7 @@ public class PineappleSomething extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
         frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
         backRight = hardwareMap.get(DcMotorEx.class, "motor4");
+        shutUpNathan = hardwareMap.get(DcMotorEx.class, "compliiiiant");
         g = hardwareMap.get(DcMotorEx.class, "g");
         h = hardwareMap.get(DcMotorEx.class, "h");
         j = hardwareMap.get(DcMotorEx.class, "j");

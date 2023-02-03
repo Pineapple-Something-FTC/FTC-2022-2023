@@ -22,9 +22,9 @@ public class PineappleBobot extends PineappleSomething {
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     double integralSum = 0;
-    double kP = 69;
-    double kI = 0.01;
-    double kD = 2;
+    double kP = 1.3;
+    double kI = 0;
+    double kD = 0;
 
 
     // Define camera
@@ -136,10 +136,18 @@ public class PineappleBobot extends PineappleSomething {
 //                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
 //                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
 //            }
-            frontLeft.setVelocity(velocity);
-            frontRight.setVelocity(velocity);
-            backLeft.setVelocity(velocity);
-            backRight.setVelocity(velocity);
+//            frontLeft.setVelocity(velocity);
+//            frontRight.setVelocity(velocity);
+//            backLeft.setVelocity(velocity);
+//            backRight.setVelocity(velocity);
+                frontLeft.setVelocity(pidControl(ticks, frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(ticks, frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
+//            frontLeft.setVelocity(0.8*(frontLeft.getCurrentPosition()-ticks));
+//            frontRight.setVelocity(0.8*(frontRight.getCurrentPosition()-ticks));
+//            backLeft.setVelocity(0.8*(backLeft.getCurrentPosition()-ticks));
+//            backRight.setVelocity(0.8*(backRight.getCurrentPosition()-ticks));
         } else if (!forwardOrBackward) {
             // Drive backwards if `forwardOrBackward` is false
             // Set target position
@@ -158,10 +166,15 @@ public class PineappleBobot extends PineappleSomething {
 //                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
 //                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
 //            }
-                frontLeft.setVelocity(velocity);
-                frontRight.setVelocity(velocity);
-                backLeft.setVelocity(velocity);
-                backRight.setVelocity(velocity);
+//            frontLeft.setVelocity(velocity);
+//            frontRight.setVelocity(velocity);
+//            backLeft.setVelocity(velocity);
+//            backRight.setVelocity(velocity);
+////
+                            frontLeft.setVelocity(pidControl(ticks, frontLeft.getCurrentPosition()));
+                frontRight.setVelocity(pidControl(ticks, frontRight.getCurrentPosition()));
+                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
+                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
 
         }
 
