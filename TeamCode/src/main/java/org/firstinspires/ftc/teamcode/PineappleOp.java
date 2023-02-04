@@ -116,7 +116,7 @@ public class PineappleOp extends PineappleSomething {
     //Sets the lift power based on the trigger value
     public void liftMotorPower() {
         int lastPosition = g.getCurrentPosition();
-        int MAX_HEIGHT = -2542;
+        int MAX_HEIGHT = -2420 ;
 
        // int MIN_HEIGHT = -1;
 
@@ -201,9 +201,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-1669-4-42-6-9-9);
     }
     public void scoreHigh() {
-        g.setTargetPosition(-2620);
-        h.setTargetPosition(-2620);
-        j.setTargetPosition(-2620);
+        g.setTargetPosition(-2360);
+        h.setTargetPosition(-2360);
+        j.setTargetPosition(-2360);
     }
     public void intakeHeight() {
         g.setTargetPosition(-300);
