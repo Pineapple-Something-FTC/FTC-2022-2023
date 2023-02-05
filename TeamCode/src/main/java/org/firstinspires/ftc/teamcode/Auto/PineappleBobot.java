@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
 import org.openftc.apriltag.AprilTagDetection;
@@ -22,13 +23,15 @@ public class PineappleBobot extends PineappleSomething {
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     double integralSum = 0;
-    double kP = 1;
+    double kP = 0.08;
     double kI = 0;
-    double kD = 0;
+    double kD = 0.0000001;
 
 
     // Define camera
     OpenCvCamera camera;
+
+
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
 
@@ -38,8 +41,8 @@ public class PineappleBobot extends PineappleSomething {
     public static final double fy = 578.272;
     public static final double cx = 402.145;
     public static final double cy = 221.506;
-    public static final boolean right = false;
-    public static final boolean left = true;
+    public static final boolean right = true;
+    public static final boolean left = false;
     public static final boolean forward = true;
     public static final boolean back = false;
     public static final int IN = 1;
@@ -68,7 +71,7 @@ public class PineappleBobot extends PineappleSomething {
         h = hwMap.get(DcMotorEx.class, "h");
         j = hwMap.get(DcMotorEx.class, "j");
         thing = hwMap.get(CRServo.class, "thing");
-
+        telemetry.setMsTransmissionInterval(50);
 
 
         //Reverses front and back right to make all motors spin same direction
@@ -141,17 +144,21 @@ public class PineappleBobot extends PineappleSomething {
 //            backLeft.setVelocity(velocity);
 //            backRight.setVelocity(velocity);
             while(Math.abs(frontLeft.getCurrentPosition()-ticks)>50) {
-                frontLeft.setVelocity(pidControl(ticks, frontLeft.getCurrentPosition()));
-                frontRight.setVelocity(pidControl(ticks, frontRight.getCurrentPosition()));
-                backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
-                backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
+                frontLeft.setPower(pidControl(ticks, frontLeft.getCurrentPosition()));
+                frontRight.setPower(pidControl(ticks, frontRight.getCurrentPosition()));
+                backLeft.setPower(pidControl(ticks, backLeft.getCurrentPosition()));
+                backRight.setPower(pidControl(ticks, backRight.getCurrentPosition()));
                 telemetry.addData("thing: ", ticks-frontLeft.getCurrentPosition());
                 telemetry.addData("thing1: ", ticks);
                 telemetry.addData("thing2: ", frontLeft.getCurrentPosition());
 
 
-                telemetry.update();
+             //   telemetry.update();
             }
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
 
 
 //            frontLeft.setVelocity(0.8*(frontLeft.getCurrentPosition()-ticks));
@@ -186,7 +193,7 @@ public class PineappleBobot extends PineappleSomething {
                 backLeft.setVelocity(pidControl(ticks, backLeft.getCurrentPosition()));
                 backRight.setVelocity(pidControl(ticks, backRight.getCurrentPosition()));
 
-        }
+           }
 
 
     }
@@ -194,6 +201,7 @@ public class PineappleBobot extends PineappleSomething {
     //Turns the robot left or right a certain number of degrees
     public void turn(int degrees, boolean leftOrRight, int velocity) {
         resetDriveEncoders();
+        double timeInRange = 0;
         if(leftOrRight) {
             // Drive left if `leftOrRight` is true
             // Set target position
@@ -206,13 +214,34 @@ public class PineappleBobot extends PineappleSomething {
            setModeRunEncoders();
 
             // Set velocity
-            while(frontLeft.getCurrentPosition() < frontLeft.getTargetPosition()){
-                frontLeft.setVelocity(pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
-                frontRight.setVelocity(pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
-                backLeft.setVelocity(pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
-                backRight.setVelocity(pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+            while(Math.abs(frontRight.getCurrentPosition()- degrees) > 40){
+                if(Math.abs(frontRight.getCurrentPosition()- degrees) <40) {
+                    timeInRange += timer.seconds();
+                }
+                else {
+                    timeInRange = 0;
+                }
+                if(frontRight.getCurrentPosition() > degrees) {
+                    frontLeft.setVelocity(-pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+                    frontRight.setVelocity(-pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+                    backLeft.setVelocity(-pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+                    backRight.setVelocity(-pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+                }
+                else {
+                    frontLeft.setVelocity(pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+                    frontRight.setVelocity(pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+                    backLeft.setVelocity(pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+                    backRight.setVelocity(pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+                }
+               timer.reset();
+                telemetry.addData("",  69);
 
             }
+
+            frontLeft.setVelocity(0*pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+            frontRight.setVelocity(0*pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+            backLeft.setVelocity(0*pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+            backRight.setVelocity(0*pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
 
         } else if (!leftOrRight) {
             // Drive right if `leftOrRight` is false
@@ -226,13 +255,18 @@ public class PineappleBobot extends PineappleSomething {
            setModeRunEncoders();
 
             // Set velocity
-            while(frontLeft.getCurrentPosition() > frontLeft.getTargetPosition()){
+            while(Math.abs(frontLeft.getCurrentPosition() - degrees) >1){
                 frontLeft.setVelocity(pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
                 frontRight.setVelocity(pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
                 backLeft.setVelocity(pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
                 backRight.setVelocity(pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
+                telemetry.addData("",  69);
 
             }
+            frontLeft.setVelocity(0*pidControl(frontLeft.getTargetPosition(), frontLeft.getCurrentPosition()));
+            frontRight.setVelocity(0*pidControl(frontRight.getTargetPosition(), frontRight.getCurrentPosition()));
+            backLeft.setVelocity(0*pidControl(backLeft.getTargetPosition(), backLeft.getCurrentPosition()));
+            backRight.setVelocity(0*pidControl(backRight.getTargetPosition(), backRight.getCurrentPosition()));
 
         }
     }

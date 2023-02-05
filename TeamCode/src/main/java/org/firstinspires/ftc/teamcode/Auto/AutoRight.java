@@ -185,16 +185,21 @@ public class AutoRight extends LinearOpMode {
 //
 //
 //        }
+
+
 //          bobot.resetEncoders();
 //          turn(1032, bobot.left, 6900, 5000);
 //          turn(1032, bobot.right, 6900, 20000);
         bobot.resetEncoders();
 
-        intakeThing(bobot.IN, 969);
-        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
+//        intakeThing(bobot.IN, 969);
+//        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
 
        // move(2284+250, bobot.forward, 2000,2269);
-        move(420, bobot.forward, 2000,20000);
+       // move(420, bobot.forward, 2000,20000); p
+
+        turn((1)*(4200-690-69-4-9+69+20-6-4-2+2+69+420+42), bobot.right, 2000,20000);
+
 //        move(250, bobot.back, 2000, 369);
 //
 //        turn(969/2 + 4 + 2 + 6+4+6+9+6+9+6+9, bobot.left, bobot.speed, 69);
