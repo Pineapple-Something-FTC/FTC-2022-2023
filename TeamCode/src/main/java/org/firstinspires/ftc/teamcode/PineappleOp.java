@@ -102,7 +102,7 @@ public class PineappleOp extends PineappleSomething {
             telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
             telemetry.addData("Right Trigger", gamepad2.right_trigger);
             telemetry.addData("Left Trigger", gamepad2.left_trigger);
-            telemetry.addData("THING", frontLeft.getPower());
+            telemetry.addData("THING", thing.getPower());
             telemetry.addData("left stick button", gamepad2.left_stick_button);
             telemetry.addData("left stick button", frontRight.getCurrentPosition());
             telemetry.addData("left stick button", frontLeft.getCurrentPosition());
@@ -116,7 +116,7 @@ public class PineappleOp extends PineappleSomething {
     //Sets the lift power based on the trigger value
     public void liftMotorPower() {
         int lastPosition = g.getCurrentPosition();
-        int MAX_HEIGHT = -2420 ;
+        int MAX_HEIGHT = -2369;
 
        // int MIN_HEIGHT = -1;
 
@@ -126,7 +126,7 @@ public class PineappleOp extends PineappleSomething {
 //            resetLiftEncoders();
 //
 //        }
-        if(g.getCurrentPosition() <= MAX_HEIGHT && !(gamepad2.left_stick_button)) {
+        if(g.getCurrentPosition() <= MAX_HEIGHT && gamepad2.right_trigger > 0) {
             g.setTargetPosition(MAX_HEIGHT);
             h.setTargetPosition(MAX_HEIGHT);
             j.setTargetPosition(MAX_HEIGHT);
@@ -165,10 +165,11 @@ public class PineappleOp extends PineappleSomething {
 
         //Sets the lift motors' power proportionally to its current-target position
         int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
+        g.setPower(-0.005*(average-g.getTargetPosition()) / 1);
+        h.setPower(-0.005*(average-g.getTargetPosition()) / 1);
+        j.setPower(-0.005*(average-g.getTargetPosition()) / 1);
 
-        g.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
-        h.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
-        j.setPower(-0.0067*(average-g.getTargetPosition()) / 1);
+
 
 
 
@@ -179,9 +180,9 @@ public class PineappleOp extends PineappleSomething {
         if (gamepad2.b || gamepad1.b)
             thing.setPower(0);
         else if (gamepad2.a || gamepad1.a)
-            thing.setPower(1);
+            thing.setPower(0.5);
         else if (gamepad2.x || gamepad1.x)
-            thing.setPower(-1);
+            thing.setPower(-0.5);
     }
 
     //Sets lift motors' target position to junction height
@@ -201,9 +202,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-1669-4-42-6-9-9);
     }
     public void scoreHigh() {
-        g.setTargetPosition(-2360);
-        h.setTargetPosition(-2360);
-        j.setTargetPosition(-2360);
+        g.setTargetPosition(-2269);
+        h.setTargetPosition(-2269);
+        j.setTargetPosition(-2269);
     }
     public void intakeHeight() {
         g.setTargetPosition(-300);

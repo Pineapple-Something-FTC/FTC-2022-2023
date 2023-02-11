@@ -33,7 +33,7 @@ public class AutoRight extends LinearOpMode {
 //    OpenCvCamera camera;
 //    AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
-   // static final double FEET_PER_METER = 3.28084;
+    // static final double FEET_PER_METER = 3.28084;
 
     // Lens intrinsics
     // UNITS ARE PIXELS
@@ -68,7 +68,7 @@ public class AutoRight extends LinearOpMode {
 //    public static CRServo thing;
 //    public static DcMotorEx g;
 
-   // public static AnalogInput deeznuts;
+    // public static AnalogInput deeznuts;
 //   private DcMotorEx frontLeft   = null;
 //    private DcMotorEx frontRight  = null;
 //    private DcMotorEx backLeft = null;
@@ -88,7 +88,7 @@ public class AutoRight extends LinearOpMode {
 
 //        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
 //        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-       // aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
+        // aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
 //        frontLeft = robot.frontLeft;
 //        backLeft = robot.backLeft;
 //        backRight = robot.backRight;
@@ -176,101 +176,174 @@ public class AutoRight extends LinearOpMode {
 // the numbers, the camera mount, better holding for electronics
 // code for scoring in front
 
-//        while(opModeIsActive()) {
-//            telemetry.addData("motor:", bobot.frontLeft.getCurrentPosition());
-//            telemetry.addData("motor:", bobot.frontRight.getCurrentPosition());
-//            telemetry.addData("motor:", bobot.backLeft.getCurrentPosition());
-//            telemetry.addData("motor:", bobot.backRight.getCurrentPosition());
-//            telemetry.update();
-//
-//
-//        }
-
-
-//          bobot.resetEncoders();
-//          turn(1032, bobot.left, 6900, 5000);
-//          turn(1032, bobot.right, 6900, 20000);
         bobot.resetEncoders();
 
-//        intakeThing(bobot.IN, 969);
-//        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
+        intakeThing(bobot.IN, 1200);
+        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
+        move(2284+250, bobot.forward, 2000,2469);
+        move(250, bobot.back, 2000, 369);
+        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, bobot.speed, 1242);
+        move(310, bobot.forward,bobot.speed,690);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(415, bobot.back,bobot.speed,420);
+        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9, bobot.right, bobot.speed, 2000);
 
-       // move(2284+250, bobot.forward, 2000,2269);
-       // move(420, bobot.forward, 2000,20000); p
+        intakeThing(bobot.IN, 150);
+        move(1169, bobot.forward, 1200, 1269);
+        armThing(-269, 750, 1200);
 
-        turn((1)*(4200-690-69-4-9+69+20-6-4-2+2+69+420+42), bobot.right, 2000,20000);
+        armThing(-2630, 1690, 640);
+        move(2169, bobot.back, 969, 2969);
+        turn((420+69+20+6+9), bobot.left, 2000, 690);
+        move(569-4-2+9+6+4, bobot.forward, bobot.speed, 690);
+        sleep(1000);
+        intakeThing(bobot.OUT, 150);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(342, bobot.back, 2000, 469);
+        armThing(-(569+69+4+2+6+9), 690+69, 10);
+        turn(420+69+6+9+6+9+4+1+22, bobot.right, 2000, 690);
+        intakeThing(bobot.IN, 150);
+        move(2169+69+6+9, bobot.forward, 1142, 1690);
 
-//        move(250, bobot.back, 2000, 369);
+        armThing(-269, 500, 1690);
+
+
+
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
+            armThing(-1699, 1690, 690);
+            move(2169, bobot.back, 2000, 2000);
+            turn(420+69+69, bobot.right, 2000, 690);
+            move(420, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(369, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 10);
+            turn(420+69+69, bobot.left, 2000, 690);
+            move(200, bobot.back, 2000, 420);
+
+        }
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+            armThing(-1069, 1690, 690);
+            move(242, bobot.back, 2000,690);
+            turn(969/2+969+4+2+6+9+9, bobot.right, bobot.speed, 2000);
+            move(420, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(369, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 10);
+            turn(469+4+2+8, bobot.left, 2000, 2000);
+//            bobot.resetDriveEncoders();
+//            bobot.frontLeft.setTargetPosition(1690);
+//            bobot.frontRight.setTargetPosition(-1690);
 //
-//        turn(969/2 + 4 + 2 + 6+4+6+9+6+9+6+9, bobot.left, bobot.speed, 69);
-//        move(269-1+9, bobot.forward,bobot.speed,690);
+//            // Set mode
+//            bobot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            bobot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//            // Set velocity
+//            bobot.frontLeft.setVelocity(2000);
+//            bobot.frontRight.setVelocity(2000);
+
+        }
+        else {
+            armThing(-1069, 1690, 690);
+            move(1169, bobot.back, 2000, 1069);
+            strafe(690, bobot.right, 2000, 969);
+            move(469, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 150);
+            move(269+4+2, bobot.back, bobot.speed, 550);
+            armThing(-1, 2000, 2000);
+
+
+        }
+
+//        bobot.resetEncoders();
+//
+//        intakeThing(bobot.IN, 800);
+//        armThing(-2636, 690+69+42, 100);
+//        move(2284+250, bobot.forward, 2000,2469);
+//        move(250, bobot.back, 1000, 469);
+//        turn(969/2 + 4 + 2 + 6+4, bobot.left, bobot.speed, 1500);
+//        move(342, bobot.forward,bobot.speed,1000);
 //        intakeThing(bobot.OUT, 100);
 //        intakeThing(bobot.NEUTRAL, 50);
-//        move(269-1+9-42-6, bobot.back, bobot.speed, 690);
-//
-//        armThing(-(569+69+4+6+2+6+9), 690, 250);
-//
-//        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+5+6+9+2+1+6+9+9+6, bobot.right, bobot.speed, 69);
+//        move(442 , bobot.back,bobot.speed,420);
+//        armThing(-(569+69+4+6+2+6), 690+69+42, 250);
+//        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2, bobot.right, bobot.speed, 2000);
 //
 //        intakeThing(bobot.IN, 150);
-//        move(1369, bobot.forward, 1200, 1300);
-//        armThing(-269+42-6-9, 750, 696+42);
+//        move(1120, bobot.forward, 1200, 1000);
+//        armThing(-269, 750, 1200);
 //
-//        armThing(-2630, 1690, 640);
-//        move(2169, bobot.back, 2069, 2490);
-//
-//        turn((420+69+20), bobot.left, 2000, 690);
-//        move(269, bobot.forward, bobot.speed, 420);
-//
+//        armThing(-2630, 1000, 420);
+//        move(1069, bobot.back, 2000, 1000);
+//        turn((969/2+969+4+2+6+9+6+42+42+21+6+9), bobot.left, bobot.speed, 2900);
+//        move(569+2, bobot.forward, bobot.speed, 869);
+//        move(69+42, bobot.back, bobot.speed, 300);
+//        sleep(250);
 //        intakeThing(bobot.OUT, 150);
 //        intakeThing(bobot.NEUTRAL, 50);
-//        move(269, bobot.back, 2000, 420);
-//
-//        armThing(-(569+69+4+2+6+9), 690+69, 10);
-//        turn(420+69+6+9+6+9+4+1, bobot.right, 2000, 690);
+//        move(542-69-42, bobot.back, bobot.speed, 869);
+//        armThing(-(569+69+4+2+6), 690+69, 250);
+//        turn(969/2+969+4+2+6+9+2+9+6+2+4+42+6+9+2+6+9+4+2, bobot.right, bobot.speed, 2000);
 //        intakeThing(bobot.IN, 150);
-//        move(2169+69+6+9+69+42+69, bobot.forward, 1142, 1690);
+//        move(1100, bobot.forward, 1200, 1069);
 //
-//        armThing(-269, 500, 1690);
+//        armThing(-269, 750, 690);
 //
+//        armThing(-1069, 1690, 690);
+//        intakeThing(bobot.OUT, 150);
+//        armThing(-6, 769, 10);
 //
 //
 //        if(bobot.tagOfInterest.id==bobot.LEFT) {
-//            armThing(-1869+42, 1690, 690);
 //            move(2169, bobot.back, 2000, 2000);
-//            turn(420+69+69+4+2+6+9, bobot.right, 2000, 690);
-//            move(420, bobot.forward, bobot.speed, 690);
-//            intakeThing(bobot.OUT, 150);
-//            move(369, bobot.back, bobot.speed, 550);
-//            armThing(-1, 2000, 10);
-//            turn(420+69+69+4+2+6+9, bobot.left, 2000, 690);
-//            move(200, bobot.back, 2000, 420);
-//
 //        }
 //        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-//            armThing(-1069, 1690, 690);
-//            move(242, bobot.back, 2000,690);
-//            turn(969/2+969+4+2+6+9+9, bobot.right, bobot.speed, 2000);
-//            move(420, bobot.forward, bobot.speed, 690);
-//            intakeThing(bobot.OUT, 150);
-//            move(369, bobot.back, bobot.speed, 550);
-//            armThing(-1, 2000, 10);
-//            turn(469+4+2+8, bobot.left, 2000, 2000);
-//
-//
+//            move(69, bobot.back, 2000, 2000);
 //        }
 //        else {
-//            armThing(-1069, 1690, 690);
-//            move(1169, bobot.back, 2000, 1069);
-//            strafe(690, bobot.right, 2000, 969);
-//            move(369, bobot.forward, bobot.speed, 420);
-//            intakeThing(bobot.OUT, 150);
-//            move(242, bobot.back, bobot.speed, 469);
-//            armThing(-1, 2000, 2000);
-//
-//
+//            move(1169, bobot.back, 2000, 2000);
 //        }
 
+
+
+
+
+        /*
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
+            armThing(-1669-4, 569, 969);
+            move(1690, bobot.back, bobot.speed, 1000);
+            turn(420+69+69, bobot.right, bobot.speed, 969);
+            move(569, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 100);
+            intakeThing(bobot.NEUTRAL, 69);
+            move(420, bobot.back, bobot.speed, 469);
+        }
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
+            armThing(-690, 569, 969);
+        }
+        else {
+            armThing(-1669-4, 569, 969);
+            move(1069, bobot.back, 2000, 1000);
+            turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2, bobot.right, bobot.speed, );
+            move(569, bobot.forward, bobot.speed, 690);
+            intakeThing(bobot.OUT, 100);
+            intakeThing(bobot.NEUTRAL, 69);
+            move(420, bobot.back, bobot.speed, 469);
+        }
+        */
+
+        /*
+        move(1069, bobot.back, 2000, 1000);
+        turn(420+69+69, bobot.right, bobot.speed, 969);
+        move(569, bobot.forward, bobot.speed, 690);
+        intakeThing(bobot.OUT, 100);
+        intakeThing(bobot.NEUTRAL, 69);
+        move(420, bobot.back, bobot.speed, 469);
+        //armThing(169, 969, 150);
+        turn(420, bobot.left, bobot.speed, 1000);
+       */
     }
 
 
