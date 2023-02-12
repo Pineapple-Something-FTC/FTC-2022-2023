@@ -179,7 +179,7 @@ public class AutoRight extends LinearOpMode {
         bobot.resetEncoders();
 
         intakeThing(bobot.IN, 1200);
-        armThing(-2636, 690+69+42+69+69+69+69+69, 100);
+        armThing(-2315, 690+69+42+69+69+69+69+69, 100);
         move(2284+250, bobot.forward, 2000,2469);
         move(250, bobot.back, 2000, 369);
         turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, bobot.speed, 1242);
@@ -194,7 +194,7 @@ public class AutoRight extends LinearOpMode {
         move(1169, bobot.forward, 1200, 1269);
         armThing(-269, 750, 1200);
 
-        armThing(-2630, 1690, 640);
+        armThing(-2315, 1690, 640);
         move(2169, bobot.back, 969, 2969);
         turn((420+69+20+6+9), bobot.left, 2000, 690);
         move(569-4-2+9+6+4, bobot.forward, bobot.speed, 690);
@@ -212,7 +212,7 @@ public class AutoRight extends LinearOpMode {
 
 
         if(bobot.tagOfInterest.id==bobot.LEFT) {
-            armThing(-1699, 1690, 690);
+            armThing(-1669-4-42-6-9-9, 1690, 690);
             move(2169, bobot.back, 2000, 2000);
             turn(420+69+69, bobot.right, 2000, 690);
             move(420, bobot.forward, bobot.speed, 690);
@@ -224,7 +224,7 @@ public class AutoRight extends LinearOpMode {
 
         }
         else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-            armThing(-1069, 1690, 690);
+            armThing(-1017, 1690, 690);
             move(242, bobot.back, 2000,690);
             turn(969/2+969+4+2+6+9+9, bobot.right, bobot.speed, 2000);
             move(420, bobot.forward, bobot.speed, 690);
@@ -246,7 +246,7 @@ public class AutoRight extends LinearOpMode {
 
         }
         else {
-            armThing(-1069, 1690, 690);
+            armThing(-1017, 1690, 690);
             move(1169, bobot.back, 2000, 1069);
             strafe(690, bobot.right, 2000, 969);
             move(469, bobot.forward, bobot.speed, 690);

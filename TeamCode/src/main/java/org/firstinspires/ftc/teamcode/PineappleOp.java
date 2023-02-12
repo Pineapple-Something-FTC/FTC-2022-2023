@@ -118,7 +118,7 @@ public class PineappleOp extends PineappleSomething {
         int lastPosition = g.getCurrentPosition();
         int MAX_HEIGHT = -2369;
 
-       // int MIN_HEIGHT = -1;
+       int MIN_HEIGHT = -2;
 
 
         //Sets a max height, so the lift does not pull the string too much
@@ -132,9 +132,13 @@ public class PineappleOp extends PineappleSomething {
             j.setTargetPosition(MAX_HEIGHT);
             telemetry.addData("no", "jo");
         }
-
+        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
+            g.setTargetPosition(MIN_HEIGHT);
+            h.setTargetPosition(MIN_HEIGHT);
+            j.setTargetPosition(MIN_HEIGHT);
+        }
         //Sets a min height, so the intake does not slam into the ground
-//        else if(g.getCurrentPosition() >= MIN_HEIGHT && !(gamepad2.right_stick_button)) {
+//        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
 //            g.setTargetPosition(MIN_HEIGHT);
 //            h.setTargetPosition(MIN_HEIGHT);
 //            j.setTargetPosition(MIN_HEIGHT);
@@ -155,19 +159,15 @@ public class PineappleOp extends PineappleSomething {
                 j.setTargetPosition((j.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
 
             }
+//oiasdflkd salfs  fkdsal slkj adljldsa dslsdalf jds fasas ldajlajkllkaekdsf;djs fjlkdsklfadlkhewlkaflasdjdsakle  oiaslkdoeaejfwojsadf saio hsadufje waijfjksajfkldsjajfjsdkaljflksdalwelodlkjfkdslaf lkadskn sdkaljf kls oweajiesf slkafnlksdkfdsfjopsdfhiwekisjfldksfj aer hej
 
-
-        }
-        if(gamepad2.right_bumper == true){
-            shutUpNathan.setPower(gamepad2.right_trigger*5);
-            shutUpNathan.setPower(-5*(gamepad2.left_trigger));
         }
 
         //Sets the lift motors' power proportionally to its current-target position
         int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
-        g.setPower(-0.005*(average-g.getTargetPosition()) / 1);
-        h.setPower(-0.005*(average-g.getTargetPosition()) / 1);
-        j.setPower(-0.005*(average-g.getTargetPosition()) / 1);
+        g.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
+        h.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
+        j.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
 
 
 
@@ -179,8 +179,15 @@ public class PineappleOp extends PineappleSomething {
     public void intakeControl(CRServo thing) {
         if (gamepad2.b || gamepad1.b)
             thing.setPower(0);
-        else if (gamepad2.a || gamepad1.a)
+        else if (gamepad2.a || gamepad1.a){
+            if(g.getTargetPosition()<g.getCurrentPosition()-20){
+                thing.setPower(0.4);
+            }
+            else
             thing.setPower(0.5);
+        }
+
+
         else if (gamepad2.x || gamepad1.x)
             thing.setPower(-0.5);
     }
@@ -192,9 +199,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-401);
     }
     public void scoreLow() {
-        g.setTargetPosition(-1042);
-        h.setTargetPosition(-1042);
-        j.setTargetPosition(-1042);
+        g.setTargetPosition(-1017);
+        h.setTargetPosition(-1017);
+        j.setTargetPosition(-1017);
     }
     public void scoreMedium() {
         g.setTargetPosition(-1669-4-42-6-9-9);
@@ -202,9 +209,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-1669-4-42-6-9-9);
     }
     public void scoreHigh() {
-        g.setTargetPosition(-2269);
-        h.setTargetPosition(-2269);
-        j.setTargetPosition(-2269);
+        g.setTargetPosition(-2315);
+        h.setTargetPosition(-2315);
+        j.setTargetPosition(-2315);
     }
     public void intakeHeight() {
         g.setTargetPosition(-300);
