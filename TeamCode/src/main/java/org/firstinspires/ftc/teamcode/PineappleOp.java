@@ -79,7 +79,7 @@ public class PineappleOp extends PineappleSomething {
                 scoreMedium();
             }
 
-            else if (gamepad2.dpad_up || gamepad1.dpad_up) {
+             else if (gamepad2.dpad_up || gamepad1.dpad_up) {
                 scoreHigh();
             }
 
@@ -88,7 +88,13 @@ public class PineappleOp extends PineappleSomething {
             }
 
             else if (gamepad1.y || gamepad2.y) {
+                if(g.getTargetPosition()<g.getCurrentPosition()-20){
+                    thing.setPower(0.4);
+                }
+                else
+                    thing.setPower(0.5);
                 scoreCone();
+
             }
 
             // Manual control of the lift
@@ -184,12 +190,12 @@ public class PineappleOp extends PineappleSomething {
                 thing.setPower(0.4);
             }
             else
-            thing.setPower(0.5);
+                thing.setPower(0.5);
         }
 
 
         else if (gamepad2.x || gamepad1.x)
-            thing.setPower(-0.5);
+            thing.setPower(-1);
     }
 
     //Sets lift motors' target position to junction height
