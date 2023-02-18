@@ -167,26 +167,27 @@ public class AutoRight11 extends LinearOpMode {
         move(2284+300, bobot.forward, 1700,2690);
         move(300, bobot.back, 2000, 690);
         turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
-        move(333, bobot.forward,bobot.speed,690);
+        move(369, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(435, bobot.back,bobot.speed,690);
+        move(436, bobot.back,bobot.speed,690);
         armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+19+19+1, bobot.right, 691, 5690);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+19+19+6+2+3-1, bobot.right, 769, 3690);
 
         intakeThing(bobot.IN, 150);
         move(1149, bobot.forward, 869, 1690+42);
       //  move(200, bobot.forward, 690, 300);
         armThing(-269, 750, 1200);
+        armThing(-669, 969, 640);
 
-        armThing(-2350, 1690, 640);
-        move(2169, bobot.back, 1369, 2420);
+        move(2169, bobot.back, 769, 3690);
+        armThing(-2350, 1690, 569);
         turn((420+69+20+6+19+21+19+9), bobot.left, 2000, 690);
         move(290, bobot.forward, bobot.speed, 542);
 
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(300, bobot.back, 2000, 469);
+        move(342, bobot.back, 2000, 469);
         armThing(-(1), 969, 10);
         turn(420+69+69+21, bobot.right, 569, 2690);
 

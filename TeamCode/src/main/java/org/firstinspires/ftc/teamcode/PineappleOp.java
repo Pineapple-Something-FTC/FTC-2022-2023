@@ -138,11 +138,11 @@ public class PineappleOp extends PineappleSomething {
             j.setTargetPosition(MAX_HEIGHT);
             telemetry.addData("no", "jo");
         }
-        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
-            g.setTargetPosition(MIN_HEIGHT);
-            h.setTargetPosition(MIN_HEIGHT);
-            j.setTargetPosition(MIN_HEIGHT);
-        }
+//        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
+//            g.setTargetPosition(MIN_HEIGHT);
+//            h.setTargetPosition(MIN_HEIGHT);
+//            j.setTargetPosition(MIN_HEIGHT);
+//        }
         //Sets a min height, so the intake does not slam into the ground
 //        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
 //            g.setTargetPosition(MIN_HEIGHT);
