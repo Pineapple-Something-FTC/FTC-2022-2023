@@ -17,7 +17,6 @@ public class PineappleOp extends PineappleSomething {
         mapHardwareAndReverseMotors();
 
         //// START
-
         waitForStart();
         resetEncoders();
 
@@ -101,19 +100,23 @@ public class PineappleOp extends PineappleSomething {
 
 
             liftMotorPower();
-            telemetry.addData("Arm position", g.getCurrentPosition());
-            telemetry.addData("Target: ", g.getTargetPosition());
-            telemetry.addData("Arm Power", g.getPower());
-            telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-            telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
-            telemetry.addData("Right Trigger", gamepad2.right_trigger);
-            telemetry.addData("Left Trigger", gamepad2.left_trigger);
-            telemetry.addData("THING", thing.getPower());
-            telemetry.addData("left stick button", gamepad2.left_stick_button);
-            telemetry.addData("left stick button", frontRight.getCurrentPosition());
-            telemetry.addData("left stick button", frontLeft.getCurrentPosition());
-            telemetry.addData("left stick button", backRight.getCurrentPosition());
-            telemetry.addData("left stick button", backLeft.getCurrentPosition());
+//            telemetry.addData("Arm position", g.getCurrentPosition());
+//            telemetry.addData("Target: ", g.getTargetPosition());
+//            telemetry.addData("Arm Power", g.getPower());
+//            telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+//            telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+//            telemetry.addData("Right Trigger", gamepad2.right_trigger);
+//            telemetry.addData("Left Trigger", gamepad2.left_trigger);
+//            telemetry.addData("THING", thing.getPower());
+//            telemetry.addData("left stick button", gamepad2.left_stick_button);
+//            telemetry.addData("left stick button", frontRight.getCurrentPosition());
+//            telemetry.addData("left stick button", frontLeft.getCurrentPosition());
+//            telemetry.addData("left stick button", backRight.getCurrentPosition());
+//            telemetry.addData("left stick button", backLeft.getCurrentPosition());
+            telemetry.addData("Sensor 1: red value", colorSensor1.red());
+            telemetry.addData("Sensor 1: blue value", colorSensor1.blue());
+            telemetry.addData("Sensor 2: red value", colorSensor2.red());
+            telemetry.addData("Sensor 2: blue value", colorSensor2.blue());
             telemetry.update();
         }
 
@@ -165,8 +168,6 @@ public class PineappleOp extends PineappleSomething {
                 j.setTargetPosition((j.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
 
             }
-//oiasdflkd salfs  fkdsal slkj adljldsa dslsdalf jds fasas ldajlajkllkaekdsf;djs fjlkdsklfadlkhewlkaflasdjdsakle  oiaslkdoeaejfwojsadf saio hsadufje waijfjksajfkldsjajfjsdkaljflksdalwelodlkjfkdslaf lkadskn sdkaljf kls oweajiesf slkafnlksdkfdsfjopsdfhiwekisjfldksfj aer hej
-
         }
 
         //Sets the lift motors' power proportionally to its current-target position
@@ -174,11 +175,6 @@ public class PineappleOp extends PineappleSomething {
         g.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
         h.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
         j.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
-
-
-
-
-
     }
 
     //Controls the state of the intake using a, b, x
@@ -240,8 +236,6 @@ public class PineappleOp extends PineappleSomething {
         h.setTargetPosition(0);
         j.setTargetPosition(0);
     }
-
-
 }
 
 

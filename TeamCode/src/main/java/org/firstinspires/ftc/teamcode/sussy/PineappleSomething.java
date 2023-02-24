@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.sussy;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -29,6 +30,9 @@ public class PineappleSomething extends LinearOpMode {
     // Potentiometer
     public static AnalogInput deeznuts;
     public static ElapsedTime runtime = new ElapsedTime();
+    // Color Sensor
+    public static ColorSensor colorSensor1;
+    public static ColorSensor colorSensor2;
 
     public static void runToPosition(int velocity) {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -71,6 +75,8 @@ public class PineappleSomething extends LinearOpMode {
         h = hardwareMap.get(DcMotorEx.class, "h");
         j = hardwareMap.get(DcMotorEx.class, "j");
         thing = hardwareMap.get(CRServo.class, "thing");
+        colorSensor1 = hardwareMap.get(ColorSensor.class, "sensor1");
+        colorSensor2 = hardwareMap.get(ColorSensor.class, "sensor2");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);

@@ -210,7 +210,48 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setVelocity(velocity);
         }
     }
+    public void forwardDiagonal(int ticks, boolean leftOrRight, int velocity) {
+        resetDriveEncoders();
+        if (leftOrRight) {
+            // Strafe left if `leftOrRight` is true
+            // Set target position
+            frontLeft.setTargetPosition(ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(ticks);
 
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        } else if (!leftOrRight) {
+            // Strafe right if `leftOrRight` is false
+            // Set target position
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(ticks);
+            backLeft.setTargetPosition(ticks);
+            backRight.setTargetPosition(-ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(velocity);
+        }
+    }
     public void strafe(int ticks, boolean leftOrRight, int velocity) {
         resetDriveEncoders();
         if (leftOrRight) {
@@ -253,6 +294,49 @@ public class PineappleBobot extends PineappleSomething {
             backRight.setVelocity(velocity);
         }
     }
+    public void diagonal(int ticks, boolean leftOrRight, int velocity) {
+        resetDriveEncoders();
+        if (leftOrRight) {
+            // Strafe left if `leftOrRight` is true
+            // Set target position
+            frontLeft.setTargetPosition(ticks);
+            frontRight.setTargetPosition(-ticks);
+            backLeft.setTargetPosition(-ticks);
+            backRight.setTargetPosition(ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(0.2*velocity);
+            frontRight.setVelocity(velocity);
+            backLeft.setVelocity(velocity);
+            backRight.setVelocity(0.2*velocity);
+        } else if (!leftOrRight) {
+            // Strafe right if `leftOrRight` is false
+            // Set target position
+            frontLeft.setTargetPosition(-ticks);
+            frontRight.setTargetPosition(ticks);
+            backLeft.setTargetPosition(ticks);
+            backRight.setTargetPosition(-ticks);
+
+            // Set mode
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set velocity
+            frontLeft.setVelocity(velocity);
+            frontRight.setVelocity(0.2*velocity);
+            backLeft.setVelocity(0.2*velocity);
+            backRight.setVelocity(velocity);
+        }
+    }
+
     public void armThing(int ticks, int speed) {
 
         g.setTargetPosition(ticks);

@@ -10,7 +10,7 @@ import org.openftc.apriltag.AprilTagDetection;
 import java.util.ArrayList;
 
 @Autonomous
-public class AutoRight11 extends LinearOpMode {
+public class AutoRightONLYPARK extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
 
 
@@ -161,50 +161,19 @@ public class AutoRight11 extends LinearOpMode {
 // code for scoring in front
 
         bobot.resetEncoders();
+       move(1169, bobot.forward, 2000, 2000);
 
-        intakeThing(bobot.IN, 1200);
-        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
-        move(2284+300, bobot.forward, 1500,2969);
-        move(300, bobot.back, 2000, 690);
-        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
-        move(365, bobot.forward,bobot.speed,690);
-        intakeThing(bobot.OUT, 500);
-        intakeThing(bobot.NEUTRAL, 50);
-        move(436-4, bobot.back,bobot.speed,690);
-        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        turn((969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+4+2+1), bobot.right, 769, 3690);
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
 
-        intakeThing(bobot.IN, 150);
-        move(1242, bobot.forward, 869, 1690+42);
-      //  move(200, bobot.forward, 690, 300);
-        armThing(-269, 750, 1200);
-        armThing(-769, 969, 742);
-
-        move(2169, bobot.back, 769, 3690);
-        armThing(-2350, 1690, 569);
-        turn((420+69+20+6+19+21+19+9), bobot.left, 2000, 690);
-        move(348, bobot.forward, bobot.speed, 542);
-
-        intakeThing(bobot.OUT, 500);
-        intakeThing(bobot.NEUTRAL, 50);
-        move(400, bobot.back, 2000, 469);
-        armThing(-(1), 969, 10);
-        turn(420+69+69, bobot.right, 569, 2690);
-
-
-
-
-        if(bobot.tagOfInterest.id==bobot.MIDDLE) {
-
-            move(969, bobot.forward, 2000, 6690);
+            strafe(1296, bobot.left, 2000, 6690);
 
         }
         else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-            move(2169, bobot.forward, 2000, 6690);
+            strafe(1296, bobot.right, 2000, 6690);
 
         }
         else {
-            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
+            move(0, bobot.back, 2000, 6690);
         }
 
 //        bobot.resetEncoders();
