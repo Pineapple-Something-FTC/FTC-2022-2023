@@ -159,8 +159,8 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
       xButtonPreviouslyPressed = xButtonCurrentlyPressed;
 
       // Get the normalized colors from the sensor
-      NormalizedRGBA colors = colorSensor.getNormalizedColors();
 
+      NormalizedRGBA colors = colorSensor.getNormalizedColors();
       /* Use telemetry to display feedback on the driver station. We show the red, green, and blue
        * normalized values from the sensor (in the range of 0 to 1), as well as the equivalent
        * HSV (hue, saturation and value) values. See http://web.archive.org/web/20190311170843/https://infohost.nmt.edu/tcc/help/pubs/colortheory/web/hsv.html
@@ -168,28 +168,36 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
 
       // Update the hsvValues array by passing it to Color.colorToHSV()
       Color.colorToHSV(colors.toColor(), hsvValues);
-      if(colors.blue>0.21) {
-        thing.setPower(1);
+      bobot.setModeNoEncoder();
+
+      while(colors.blue<=0.20 || colors.blue>=0.22) {
+        colors = colorSensor.getNormalizedColors();
+        bobot.frontLeft.setVelocity(-(350+(0.21-colors.blue)*1500));
+        bobot.frontRight.setVelocity(-(350-(0.21-colors.blue)*1500));
 
       }
-      else {
-        thing.setPower(0);
-      }
-      if(colors.red>0.12 && colors.green<0.191) {
-        thing.setPower(1);
-      }
-      else {
-        thing.setPower(0);
-      }
-      if(colors.blue>0.22) {
-        diagonal(69,bobot.left, 2000, 169);
-      }
-      else if(colors.blue<0.2) {
-        diagonal(69, bobot.right, 2000, 169);
-      }
-      else {
-        move(69,bobot.forward, 2000, 169);
-      }
+//      if(colors.blue>0.21) {
+//        thing.setPower(1);
+//
+//      }
+//      else {
+//        thing.setPower(0);
+//      }
+//      if(colors.red>0.12 && colors.green<0.191) {
+//        thing.setPower(1);
+//      }
+//      else {
+//        thing.setPower(0);
+//      }
+//      if(colors.blue>0.22) {
+//        diagonal(69,bobot.left, 2000, 169);
+//      }
+//      else if(colors.blue<0.2) {
+//        diagonal(69, bobot.right, 2000, 169);
+//      }
+//      else {
+//        move(69,bobot.forward, 2000, 169);
+//      }
       telemetry.addLine()
               .addData("Red", "%.3f", colors.red)
               .addData("Green", "%.3f", colors.green)

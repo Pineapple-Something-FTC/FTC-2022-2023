@@ -113,11 +113,7 @@ public class PineappleOp extends PineappleSomething {
 //            telemetry.addData("left stick button", frontLeft.getCurrentPosition());
 //            telemetry.addData("left stick button", backRight.getCurrentPosition());
 //            telemetry.addData("left stick button", backLeft.getCurrentPosition());
-            telemetry.addData("Sensor 1: red value", colorSensor1.red());
-            telemetry.addData("Sensor 1: blue value", colorSensor1.blue());
-            telemetry.addData("Sensor 2: red value", colorSensor2.red());
-            telemetry.addData("Sensor 2: blue value", colorSensor2.blue());
-            telemetry.update();
+
         }
 
     }
