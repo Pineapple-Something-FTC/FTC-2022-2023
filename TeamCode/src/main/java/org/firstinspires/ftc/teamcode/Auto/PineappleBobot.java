@@ -114,21 +114,30 @@ public class PineappleBobot extends PineappleSomething {
         double output = (error * kP) + (derivative * kD) + (integralSum * kI);
         return output;
     }
-    public void followLine(double redOrBlue, NormalizedRGBA colorsL, NormalizedRGBA colorsR, double maxTime) {
+    public void followLine(double redOrBlue, double maxTime) {
+        NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
+        NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
+        maxTimer.reset();
         if(redOrBlue == BLUE) {
             while(maxTimer.seconds()<maxTime) {
-                ttuurrnn((200-colorsL.blue)*kPLine);
 
+                colorsL = leftCSensor.getNormalizedColors();
+                colorsR = rightCSensor.getNormalizedColors();
+
+                frontLeft.setVelocity(-(420-(0.157-colorsR.blue)*kP+(0.21-colorsL.blue)*kP));
+                frontRight.setVelocity(-(420+(0.157-colorsR.blue)*kP-(0.21-colorsL.blue)*kP));
+                sleep(10);
 
             }
 
         }
         else if(redOrBlue == RED){
+
             while(maxTimer.seconds()<maxTime) {
                 ttuurrnn(pidControl(colorsL.red, colorsR.red));
             }
         }
-         maxTimer.reset();
+
     }
     public void ttuurrnn(double velocity) {
         setModeNoEncoder();

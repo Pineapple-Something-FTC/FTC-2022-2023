@@ -166,10 +166,32 @@ public class AutoRight11 extends LinearOpMode {
 // the numbers, the camera mount, better holding for electronics
 // code for scoring in front
 
+      //  armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
+        followLine(bobot.BLUE, 5);
 
-        followLine(bobot.BLUE, colorsL, colorsR, 10);
+//        while(encoderCounts >= -1369) {
+//
+//            encoderCounts = 0.25 * (bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
+//            colorsL = colorL.getNormalizedColors();
+//            colorsR = colorR.getNormalizedColors();
+//            double errorR = 0.155 - colorsR.blue;
+//            double errorL = 0.252 - colorsL.blue;
+//
+//            double derivativeR = (errorR - lastErrorR) / timerD.seconds();
+//            double derivativeL = (errorL - lastErrorL) / timerD.seconds();
+//
+//            lastErrorL = errorL;
+//            lastErrorR = errorR;
+//            timerD.reset();
+//            bobot.frontLeft.setVelocity(-(420 - ((errorR) * kPR + derivativeR * kD) + ((errorL) * kPL + derivativeL * kD)));
+//            bobot.frontRight.setVelocity(-(420 + ((errorR) * kPR + derivativeR * kD) - ((errorL) * kPL + derivativeL * kD)));
+//        }
 
 
+//        intakeThing(bobot.IN, 50);
+//        armThing(-269, 750, 1200);
+//        armThing(-769, 969, 742);
+//        move(690, bobot.back, 769, 3690);
 //        bobot.resetEncoders();
 //
 //        intakeThing(bobot.IN, 1200);
@@ -243,8 +265,8 @@ public class AutoRight11 extends LinearOpMode {
     public void ttuurrnn(double velocity) {
         bobot.ttuurrnn(velocity);
     }
-    public void followLine(double redOrBlue, NormalizedRGBA colorsL, NormalizedRGBA colorsR, double maxTime) {
-        bobot.followLine(redOrBlue, colorsL, colorsR, maxTime);
+    public void followLine(double redOrBlue, double maxTime) {
+        bobot.followLine(redOrBlue, maxTime);
     }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {

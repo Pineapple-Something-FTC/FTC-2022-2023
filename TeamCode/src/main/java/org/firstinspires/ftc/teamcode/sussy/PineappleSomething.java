@@ -76,8 +76,8 @@ public class PineappleSomething extends LinearOpMode {
         h = hardwareMap.get(DcMotorEx.class, "h");
         j = hardwareMap.get(DcMotorEx.class, "j");
         thing = hardwareMap.get(CRServo.class, "thing");
-        leftCSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor1");
-        rightCSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor2");
+        leftCSensor = hardwareMap.get(NormalizedColorSensor.class, "deez");
+        rightCSensor = hardwareMap.get(NormalizedColorSensor.class, "nuts");
 
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
