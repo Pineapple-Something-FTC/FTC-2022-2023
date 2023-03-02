@@ -24,12 +24,17 @@ public class PineappleBobot extends PineappleSomething {
     private double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime maxTimer = new ElapsedTime();
+    ElapsedTime timerD = new ElapsedTime();
     double integralSum = 0;
     double kP = 1.5;
     double kI = 0;
     double kD = 0;
+    float kPL = 2100;
+    float kPR = 2100;
 
     double kPLine = 10;
+    double lastErrorL;
+    double lastErrorR;
 
     // Define camera
     OpenCvCamera camera;
@@ -58,6 +63,7 @@ public class PineappleBobot extends PineappleSomething {
     public static final int LEFT = 1;
     public static final int MIDDLE = 2;
     public static final int RIGHT = 3;
+
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public PineappleBobot () {
@@ -114,26 +120,39 @@ public class PineappleBobot extends PineappleSomething {
         double output = (error * kP) + (derivative * kD) + (integralSum * kI);
         return output;
     }
-    public void followLine(double redOrBlue, double maxTime) {
+    public void followLine(double redOrBlue, double maxDistance) {
+        double encoderCounts = 0;
+        resetDriveEncoders();
+        leftCSensor.setGain(20);
+        rightCSensor.setGain(20);
         NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
         NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
-        maxTimer.reset();
-        if(redOrBlue == BLUE) {
-            while(maxTimer.seconds()<maxTime) {
 
+        if(redOrBlue == BLUE) {
+
+            while(encoderCounts >= maxDistance) {
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
                 colorsL = leftCSensor.getNormalizedColors();
                 colorsR = rightCSensor.getNormalizedColors();
+                double errorR = 0.155 - colorsR.blue;
+                double errorL = 0.252 - colorsL.blue;
 
-                frontLeft.setVelocity(-(420-(0.157-colorsR.blue)*kP+(0.21-colorsL.blue)*kP));
-                frontRight.setVelocity(-(420+(0.157-colorsR.blue)*kP-(0.21-colorsL.blue)*kP));
-                sleep(10);
+                double derivativeR = (errorR - lastErrorR) / timerD.seconds();
+                double derivativeL = (errorL - lastErrorL) / timerD.seconds();
+
+                lastErrorL = errorL;
+                lastErrorR = errorR;
+                timerD.reset();
+                frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*10)+((errorL)*kPL + derivativeL*10)));
+                frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*10)-((errorL)*kPL + derivativeL*10)));
+
 
             }
-
         }
         else if(redOrBlue == RED){
 
-            while(maxTimer.seconds()<maxTime) {
+            while(encoderCounts >= maxDistance) {
                 ttuurrnn(pidControl(colorsL.red, colorsR.red));
             }
         }

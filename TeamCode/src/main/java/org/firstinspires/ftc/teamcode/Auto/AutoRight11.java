@@ -14,57 +14,12 @@ import java.util.ArrayList;
 @Autonomous
 public class AutoRight11 extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
-
-
-//    OpenCvCamera camera;
-//    AprilTagDetectionPipeline aprilTagDetectionPipeline;
-
-    // static final double FEET_PER_METER = 3.28084;
-
-    // Lens intrinsics
-    // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
-    // You will need to do your own calibration for other configurations!
-//    double fx = 578.272;
-//    double fy = 578.272;
-//    double cx = 402.145;
-//    double cy = 221.506;
-//    public static boolean right = false;
-//    public static boolean left = true;
-//    public static boolean forward = true;
-//    public static boolean back = false;
-//    int UP = 1;
-//    int DOWN = -1;
-//    int IN = 1;
-//    int OUT = -1;
-//    int NEUTRAL = 0;
-//    final int speed = 1000;
-//    // UNITS ARE METERS
-//    double tagSize = 0.044;// Default value: 0.166
-//
-//    int LEFT = 1;
-//    int MIDDLE = 2;
-//    int RIGHT = 3;
-
-//    AprilTagDetection tagOfInterest = null;
-//    public static DcMotorEx frontLeft;
-//    public static DcMotorEx backLeft;
-//    public static DcMotorEx frontRight;
-//    public static DcMotorEx backRight;
-//    public static CRServo thing;
-//    public static DcMotorEx g;
-
-    // public static AnalogInput deeznuts;
-//   private DcMotorEx frontLeft   = null;
-//    private DcMotorEx frontRight  = null;
-//    private DcMotorEx backLeft = null;
-//    private DcMotorEx backRight = null;
-//    private DcMotorEx g = null;
-//    private CRServo thing = null;
-//    OpenCvCamera camera;
-//    AprilTagDetectionPipeline aprilTagDetectionPipeline;
-//    AprilTagDetection tagOfInterest = null;
-
+    double encoderCounts = 0;
+    float kPL = 3000;
+    float kPR = 3000;
+    double lastErrorL;
+    double lastErrorR;
+    ElapsedTime timerD = new ElapsedTime();
     PineappleBobot bobot = new PineappleBobot();
 
     @Override
@@ -74,18 +29,8 @@ public class AutoRight11 extends LinearOpMode {
         NormalizedRGBA colorsL = bobot.leftCSensor.getNormalizedColors();
         NormalizedRGBA colorsR = bobot.rightCSensor.getNormalizedColors();
 
-
-
-//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-//        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        // aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
-//        frontLeft = robot.frontLeft;
-//        backLeft = robot.backLeft;
-//        backRight = robot.backRight;
-//        frontRight = robot.frontRight;
-//        g = robot.g;
-//        thing = robot.thing;
-//        camera = robot.camera;
+        bobot.leftCSensor.setGain(20);
+        bobot.rightCSensor.setGain(20);
         telemetry.setMsTransmissionInterval(50);
 
         /*
@@ -166,78 +111,68 @@ public class AutoRight11 extends LinearOpMode {
 // the numbers, the camera mount, better holding for electronics
 // code for scoring in front
 
-      //  armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        followLine(bobot.BLUE, 5);
 
-//        while(encoderCounts >= -1369) {
-//
-//            encoderCounts = 0.25 * (bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
-//            colorsL = colorL.getNormalizedColors();
-//            colorsR = colorR.getNormalizedColors();
-//            double errorR = 0.155 - colorsR.blue;
-//            double errorL = 0.252 - colorsL.blue;
-//
-//            double derivativeR = (errorR - lastErrorR) / timerD.seconds();
-//            double derivativeL = (errorL - lastErrorL) / timerD.seconds();
-//
-//            lastErrorL = errorL;
-//            lastErrorR = errorR;
-//            timerD.reset();
-//            bobot.frontLeft.setVelocity(-(420 - ((errorR) * kPR + derivativeR * kD) + ((errorL) * kPL + derivativeL * kD)));
-//            bobot.frontRight.setVelocity(-(420 + ((errorR) * kPR + derivativeR * kD) - ((errorL) * kPL + derivativeL * kD)));
-//        }
+        bobot.resetEncoders();
+
+        intakeThing(bobot.IN, 1200);
+        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
+        move(2284+300, bobot.forward, 1500,2669);
+        move(300, bobot.back, 2000, 690);
+        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
+        move(365, bobot.forward,bobot.speed,690);
+        intakeThing(bobot.OUT, 500);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(436-4, bobot.back,bobot.speed,690);
+        armThing(-(769), 1500, 20);
+        turn((969/2+969+4+2), bobot.right, 1500, 1690);
+        move(142, bobot.forward, bobot.speed, 690);
+        intakeThing(bobot.IN, 150);
+        followLine(bobot.BLUE, -699);
 
 
-//        intakeThing(bobot.IN, 50);
-//        armThing(-269, 750, 1200);
-//        armThing(-769, 969, 742);
-//        move(690, bobot.back, 769, 3690);
-//        bobot.resetEncoders();
-//
-//        intakeThing(bobot.IN, 1200);
-//        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
-//        move(2284+300, bobot.forward, 1500,2969);
-//        move(300, bobot.back, 2000, 690);
-//        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
-//        move(365, bobot.forward,bobot.speed,690);
-//        intakeThing(bobot.OUT, 500);
-//        intakeThing(bobot.NEUTRAL, 50);
-//        move(436-4, bobot.back,bobot.speed,690);
-//        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-//        turn((969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+4+2+1), bobot.right, 769, 3690);
-//
-//        intakeThing(bobot.IN, 150);
-//        move(1242, bobot.forward, 869, 1690+42);
-//      //  move(200, bobot.forward, 690, 300);
-//        armThing(-269, 750, 1200);
-//        armThing(-769, 969, 742);
-//
-//        move(2169, bobot.back, 769, 3690);
-//        armThing(-2350, 1690, 569);
-//        turn((420+69+20+6+19+21+19+9), bobot.left, 2000, 690);
-//        move(348, bobot.forward, bobot.speed, 542);
-//
-//        intakeThing(bobot.OUT, 500);
-//        intakeThing(bobot.NEUTRAL, 50);
-//        move(400, bobot.back, 2000, 469);
-//        armThing(-(1), 969, 10);
-//        turn(420+69+69, bobot.right, 569, 2690);
-//
-//
-//
-//
-//        if(bobot.tagOfInterest.id==bobot.MIDDLE) {
-//
-//            move(969, bobot.forward, 2000, 6690);
-//
-//        }
-//        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-//            move(2169, bobot.forward, 2000, 6690);
-//
-//        }
-//        else {
-//            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
-//        }
+        armThing(-420, 1269, 569);
+        armThing(-769, 1269, 742);
+
+        move(2169, bobot.back, 769, 3690);
+        armThing(-2350, 1690, 569);
+        turn((420+69+20+6+19+21+19+9+9+42), bobot.left, 2000, 769);
+        move(369, bobot.forward, 2000, 542);
+
+        intakeThing(bobot.OUT, 350);
+        intakeThing(bobot.NEUTRAL, 50);
+        move(400-48+69, bobot.back, 2000, 469);
+        armThing(-(769), 1500, 10);
+        turn(420+69+69+9+42, bobot.right, 569, 1690);
+        move(1669, bobot.forward, 2000, 1069);
+        intakeThing(bobot.IN, 150);
+        followLine(bobot.BLUE, -342);
+
+        armThing(-290, 1269, 642);
+        armThing(-769, 1269, 742);
+
+        move(869, bobot.back, 2000, 1069);
+        turn(690, bobot.right, 2000, 969);
+        move(269, bobot.forward, 2000, 369);
+        intakeThing(bobot.OUT, 500);
+        intakeThing(bobot.NEUTRAL, 50);
+
+        move(269, bobot.back, 2000, 369);
+        turn(690, bobot.left, 2000, 969);
+        if(bobot.tagOfInterest.id==bobot.RIGHT) {
+
+            move(969, bobot.forward, 2000, 6690);
+
+        }
+        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+            move(969, bobot.back, 2000, 6690);
+
+        }
+        else {
+            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
+        }
+
+
+
 
     }
 
@@ -265,8 +200,8 @@ public class AutoRight11 extends LinearOpMode {
     public void ttuurrnn(double velocity) {
         bobot.ttuurrnn(velocity);
     }
-    public void followLine(double redOrBlue, double maxTime) {
-        bobot.followLine(redOrBlue, maxTime);
+    public void followLine(double redOrBlue, double maxDistance) {
+        bobot.followLine(redOrBlue, maxDistance);
     }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {
@@ -281,3 +216,4 @@ public class AutoRight11 extends LinearOpMode {
 
 
 }
+
