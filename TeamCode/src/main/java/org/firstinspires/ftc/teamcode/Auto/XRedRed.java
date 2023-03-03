@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 
 @Autonomous
-public class RedRed extends LinearOpMode {
+public class XRedRed extends LinearOpMode {
     private DcMotorEx frontLeft;
     private DcMotorEx backLeft;
     private DcMotorEx frontRight;

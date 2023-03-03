@@ -11,7 +11,7 @@ import org.openftc.apriltag.AprilTagDetection;
 import java.util.ArrayList;
 
 @Autonomous(name = "Something")
-public class AutoLeftDONTRUN extends LinearOpMode {
+public class XAutoLeftDONTRUN extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
 
     PineappleBobot bobot = new PineappleBobot();

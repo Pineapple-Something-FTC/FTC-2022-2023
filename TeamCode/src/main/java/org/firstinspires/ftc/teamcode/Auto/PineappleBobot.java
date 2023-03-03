@@ -38,7 +38,7 @@ public class PineappleBobot extends PineappleSomething {
 
     // Define camera
     OpenCvCamera camera;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    XAprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
     // tagOfInterest = 2;
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode - no u
@@ -96,7 +96,7 @@ public class PineappleBobot extends PineappleSomething {
         // Camera things
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hwMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
+        aprilTagDetectionPipeline = new XAprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -131,7 +131,11 @@ public class PineappleBobot extends PineappleSomething {
         rightCSensor.setGain(20);
         NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
         NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
-        double blueRight = 0.155;
+//        double blueRight = 0.155;
+//        double blueLeft = 0.252;
+//        double redRight = 0.14;
+//        double redLeft = 0.23;
+         double blueRight = 0.155;
         double blueLeft = 0.252;
         double redRight = 0.14;
         double redLeft = 0.23;

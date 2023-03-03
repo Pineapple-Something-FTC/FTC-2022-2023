@@ -21,6 +21,9 @@ public class AutoLeft11BLUE extends LinearOpMode {
     double lastErrorR;
     ElapsedTime timerD = new ElapsedTime();
     PineappleBobot bobot = new PineappleBobot();
+    //20824 - RC
+    //ctrl alt t
+    //adb connect 192,168.43.1
 
     @Override
     public void runOpMode() {
@@ -146,16 +149,16 @@ public class AutoLeft11BLUE extends LinearOpMode {
 
 
 
-        if(bobot.tagOfInterest.id==bobot.LEFT) {
+        if(bobot.tagOfInterest.id==bobot.LEFT) {//1
 
             move(1869+42-2-4+19, bobot.forward, 2000, 6690);
 
         }
-        else if (bobot.tagOfInterest.id==bobot.MIDDLE) {
+        else if (bobot.tagOfInterest.id==bobot.MIDDLE) {//2
             move(869+19+4+2, bobot.forward, 2000, 6690);
 
         }
-        else {
+        else {//3
             move(100-4-2-6+1, bobot.back, 2000, 6690);
         }
 

@@ -184,7 +184,8 @@ public class COLORSENSORVALUETEST extends LinearOpMode {
       // cycle between right and left sensors
       // change the values of redRight, redLeft, blueRight, and blueLeft IFFFFF needed
       while(opModeIsActive()) {
-
+        colorsL = colorL.getNormalizedColors();
+        colorsR = colorR.getNormalizedColors();
 
         telemetry.addLine()
                 .addData("Red RIGHT:", "%.3f", colorsR.red)
@@ -194,8 +195,6 @@ public class COLORSENSORVALUETEST extends LinearOpMode {
                 .addData("Hue", "%.3f", hsvValues[0])
                 .addData("Saturation", "%.3f", hsvValues[1])
                 .addData("Value", "%.3f", hsvValues[2]);
-        telemetry.update();
-        sleep(2000);
         telemetry.addLine()
                 .addData("Red LEFT:", "%.3f", colorsL.red)
                 .addData("Green", "%.3f", colorsL.green)
@@ -205,7 +204,7 @@ public class COLORSENSORVALUETEST extends LinearOpMode {
                 .addData("Saturation", "%.3f", hsvValues[1])
                 .addData("Value", "%.3f", hsvValues[2]);
         telemetry.update();
-        sleep(2000);
+
       }
 
       telemetry.addData("Alpha", "%.3f", colorsR.alpha);

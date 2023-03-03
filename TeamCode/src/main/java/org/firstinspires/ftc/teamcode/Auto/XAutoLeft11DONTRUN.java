@@ -7,11 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.openftc.apriltag.AprilTagDetection;
 
-
 import java.util.ArrayList;
 
 @Autonomous
-public class AutoRightDONTRUN extends LinearOpMode {
+public class XAutoLeft11DONTRUN extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
 
 
@@ -164,85 +163,48 @@ public class AutoRightDONTRUN extends LinearOpMode {
         bobot.resetEncoders();
 
         intakeThing(bobot.IN, 1200);
-        armThing(-2320, 690+69+42+69+69+69+69+69, 100);
-        move(2284+300, bobot.forward, 1700,2690);
-        move(300, bobot.back, 2000, 369);
-        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, bobot.speed, 1242);
-        move(333, bobot.forward,bobot.speed,690);
-        intakeThing(bobot.OUT, 150);
+        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
+        move(2284+300, bobot.forward, 1500,2969);
+        move(300, bobot.back, 2000, 690);
+        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.right, 500, 2000);
+        move(369, bobot.forward,bobot.speed,690);
+        intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(435, bobot.back,bobot.speed,420);
+        move(436, bobot.back,bobot.speed,690);
         armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+14+42, bobot.right, bobot.speed, 2000);
+        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+9+2, bobot.left, 769, 3690);
 
         intakeThing(bobot.IN, 150);
-        move(1149, bobot.forward, 1000, 1420);
-      //  move(200, bobot.forward, 690, 300);
+        move(1242, bobot.forward, 869, 1690+42);
+        //  move(200, bobot.forward, 690, 300);
         armThing(-269, 750, 1200);
+        armThing(-769, 969, 640);
 
-        armThing(-2315, 1690, 640);
-        move(2169, bobot.back, 1369, 2420);
-        turn((420+69+20+6+19+21+19+9), bobot.left, 2000, 690);
-        move(290, bobot.forward, bobot.speed, 542);
+        move(2169, bobot.back, 769, 3690);
+        armThing(-2350, 1690, 569);
+        turn((420+69+20+6+19+21+19+9), bobot.right, 2000, 690);
+        move(348, bobot.forward, bobot.speed, 542);
 
-        intakeThing(bobot.OUT, 250);
+        intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(369, bobot.back, 2000, 469);
-        armThing(-(569+69+4+2+6+9), 560, 10);
-        turn(420+69+6+9+6+9+4+1+1+19+4+1+2+6+4+9+3, bobot.right, 2000, 710);
-        intakeThing(bobot.IN, 150);
-        move(2169+69+6+9+9+9+19+9, bobot.forward, 1142, 1700);
-        //move(200, bobot.forward, 690, 300);
-
-        armThing(-269, 500, 1690);
+        move(400, bobot.back, 2000, 469);
+        armThing(-(1), 969, 10);
+        turn(420+69+69, bobot.left, 569, 2690);
 
 
 
-        if(bobot.tagOfInterest.id==bobot.LEFT) {
-            armThing(-1669-4-42-6-9-9, 1690, 690);
-            move(2169, bobot.back, 2000, 2000);
-            turn(420+69+69, bobot.right, 2000, 690);
-            move(420, bobot.forward, bobot.speed, 690);
-            intakeThing(bobot.OUT, 150);
-            move(369, bobot.back, bobot.speed, 550);
-            armThing(-1, 2000, 10);
-            turn(420+69+69, bobot.left, 2000, 690);
-            move(200, bobot.back, 2000, 420);
+
+        if(bobot.tagOfInterest.id==bobot.MIDDLE) {
+
+            move(969, bobot.forward, 2000, 6690);
 
         }
-        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
-            armThing(-1017, 1690, 690);
-            move(242, bobot.back, 2000,690);
-            turn(969/2+969+4, bobot.right, 2000, 1690);
-            move(420, bobot.forward, bobot.speed, 690);
-            intakeThing(bobot.OUT, 150);
-            move(300, bobot.back, bobot.speed, 469);
-            armThing(-1, 2000, 10);
-            turn(469, bobot.left, 2000, 869);
-            move(269, bobot.forward, 2000, 690);
-//            bobot.resetDriveEncoders();
-//            bobot.frontLeft.setTargetPosition(1690);
-//            bobot.frontRight.setTargetPosition(-1690);
-//
-//            // Set mode
-//            bobot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            bobot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//            // Set velocity
-//            bobot.frontLeft.setVelocity(2000);
-//            bobot.frontRight.setVelocity(2000);
+        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+            move(2169, bobot.forward, 2000, 6690);
 
         }
         else {
-            armThing(-1017, 1690, 690);
-            move(1169, bobot.back, 2000, 1069);
-            strafe(690, bobot.right, 2000, 969);
-            move(469, bobot.forward, bobot.speed, 690);
-            intakeThing(bobot.OUT, 150);
-            move(269+4+2, bobot.back, bobot.speed, 550);
-            armThing(-1, 2000, 2000);
-
-
+            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
         }
 
 //        bobot.resetEncoders();

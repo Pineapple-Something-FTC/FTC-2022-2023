@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import org.firstinspires.ftc.teamcode.sussy.*;
 
 @Autonomous
-public class AprilTagAutonomous_no extends PineappleSomething {
+public class XAprilTagAutonomous_no extends PineappleSomething {
     OpenCvCamera camera;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    XAprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -47,7 +47,7 @@ public class AprilTagAutonomous_no extends PineappleSomething {
     public void runOpMode() {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
+        aprilTagDetectionPipeline = new XAprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
         backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
         frontRight = hardwareMap.get(DcMotorEx.class, "motor3");

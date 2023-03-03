@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 
-import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
+import org.firstinspires.ftc.teamcode.sussy.*;
 
 @Autonomous
-public class Test extends PineappleSomething {
+public class XBlueBlue extends PineappleSomething {
 
     final int speed = 700;
 
@@ -21,8 +20,7 @@ public class Test extends PineappleSomething {
         backRight = hardwareMap.get(DcMotorEx.class, "motor4");
         g = hardwareMap.get(DcMotorEx.class, "g");
         thing = hardwareMap.get(CRServo.class, "thing");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
+        
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         
@@ -30,8 +28,21 @@ public class Test extends PineappleSomething {
         //// START
         waitForStart();
 
+        Move.straight(1400, forward, speed);
+        sleep(2000);
+        Move.straight(1400, back, speed);
+        sleep(2000);
+        Move.strafe(1500, left, speed);
+        sleep(2000);
+        //scoreLow();
+        // Stop motors from running to position
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Telemetry
         while (opModeIsActive()) {
-            telemetry.addData("Potentiometer value:", deeznuts.getVoltage());
+            telemetry.addData("Arm position", g.getCurrentPosition());
             telemetry.update();
         }
     }
