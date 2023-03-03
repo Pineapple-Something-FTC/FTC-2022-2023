@@ -110,6 +110,8 @@ public class PineappleBobot extends PineappleSomething {
         });
 
     }
+
+    // dont change this this is not used
     public double pidControl(double reference, double state) {
         double error = reference - state;
         integralSum += error * timer.seconds();
@@ -120,6 +122,8 @@ public class PineappleBobot extends PineappleSomething {
         double output = (error * kP) + (derivative * kD) + (integralSum * kI);
         return output;
     }
+
+    // change this if necessary
     public void followLine(double redOrBlue, double maxDistance) {
         double encoderCounts = 0;
         resetDriveEncoders();
@@ -127,7 +131,10 @@ public class PineappleBobot extends PineappleSomething {
         rightCSensor.setGain(20);
         NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
         NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
-
+        double blueRight = 0.155;
+        double blueLeft = 0.252;
+        double redRight = 0.14;
+        double redLeft = 0.23;
         if(redOrBlue == BLUE) {
 
             while(encoderCounts >= maxDistance) {
@@ -135,8 +142,8 @@ public class PineappleBobot extends PineappleSomething {
                 encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
                 colorsL = leftCSensor.getNormalizedColors();
                 colorsR = rightCSensor.getNormalizedColors();
-                double errorR = 0.155 - colorsR.blue;
-                double errorL = 0.252 - colorsL.blue;
+                double errorR = blueRight - colorsR.blue;
+                double errorL = blueLeft - colorsL.blue;
 
                 double derivativeR = (errorR - lastErrorR) / timerD.seconds();
                 double derivativeL = (errorL - lastErrorL) / timerD.seconds();
@@ -157,8 +164,8 @@ public class PineappleBobot extends PineappleSomething {
                 encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
                 colorsL = leftCSensor.getNormalizedColors();
                 colorsR = rightCSensor.getNormalizedColors();
-                double errorR = 0.14 - colorsR.red;
-                double errorL = 0.23 - colorsL.red;
+                double errorR = redRight - colorsR.red;
+                double errorL = redLeft - colorsL.red;
 
                 double derivativeR = (errorR - lastErrorR) / timerD.seconds();
                 double derivativeL = (errorL - lastErrorL) / timerD.seconds();

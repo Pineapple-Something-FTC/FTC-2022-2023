@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -42,7 +40,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Remove or comment out the @Disabled line to add this Op Mode to the Driver Station OpMode list
  */
 @Autonomous
-public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
+public class COLORSENSORVALUETEST extends LinearOpMode {
 
   /** The colorSensor field will contain a reference to our color sensor hardware object */
   NormalizedColorSensor colorL;
@@ -181,22 +179,13 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
       Color.colorToHSV(colorsL.toColor(), hsvValues);
       bobot.setModeNoEncoder();
 
+      // run code (timer off), center robot on the line and read the values
+      // corresponding to the color of the line, should
+      // cycle between right and left sensors
+      // change the values of redRight, redLeft, blueRight, and blueLeft IFFFFF needed
       while(opModeIsActive()) {
 
-//        encoderCounts = 0.25*(bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
-//        colorsL = colorL.getNormalizedColors();
-//        colorsR = colorR.getNormalizedColors();
-//        double errorR = 0.155 - colorsR.blue;
-//        double errorL = 0.252 - colorsL.blue;
-//
-//        double derivativeR = (errorR - lastErrorR) / timerD.seconds();
-//        double derivativeL = (errorL - lastErrorL) / timerD.seconds();
-//
-//        lastErrorL = errorL;
-//        lastErrorR = errorR;
-//        timerD.reset();
-//         bobot.frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
-//         bobot.frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
+
         telemetry.addLine()
                 .addData("Red RIGHT:", "%.3f", colorsR.red)
                 .addData("Green", "%.3f", colorsR.green)
@@ -206,6 +195,7 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
                 .addData("Saturation", "%.3f", hsvValues[1])
                 .addData("Value", "%.3f", hsvValues[2]);
         telemetry.update();
+        sleep(2000);
         telemetry.addLine()
                 .addData("Red LEFT:", "%.3f", colorsL.red)
                 .addData("Green", "%.3f", colorsL.green)
@@ -215,32 +205,9 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
                 .addData("Saturation", "%.3f", hsvValues[1])
                 .addData("Value", "%.3f", hsvValues[2]);
         telemetry.update();
-
+        sleep(2000);
       }
 
-
-//      if(colors.blue>0.21) {
-//        thing.setPower(1);
-//
-//      }
-//      else {
-//        thing.setPower(0);
-//      }
-//      if(colors.red>0.12 && colors.green<0.191) {
-//        thing.setPower(1);
-//      }
-//      else {
-//        thing.setPower(0);
-//      }
-//      if(colors.blue>0.22) {
-//        diagonal(69,bobot.left, 2000, 169);
-//      }
-//      else if(colors.blue<0.2) {
-//        diagonal(69, bobot.right, 2000, 169);
-//      }
-//      else {
-//        move(69,bobot.forward, 2000, 169);
-//      }
       telemetry.addData("Alpha", "%.3f", colorsR.alpha);
 
       /* If this color sensor also has a distance sensor, display the measured distance.
@@ -284,4 +251,20 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
     bobot.diagonal(ticks, leftOrRight, velocity);
     sleep(sleep);
   }
+  // pls dont touch this
+//        encoderCounts = 0.25*(bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
+//        colorsL = colorL.getNormalizedColors();
+//        colorsR = colorR.getNormalizedColors();
+//        double errorR = 0.155 - colorsR.blue;
+//        double errorL = 0.252 - colorsL.blue;
+//
+//        double derivativeR = (errorR - lastErrorR) / timerD.seconds();
+//        double derivativeL = (errorL - lastErrorL) / timerD.seconds();
+//
+//        lastErrorL = errorL;
+//        lastErrorR = errorR;
+//        timerD.reset();
+//         bobot.frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
+//         bobot.frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
+
 }
