@@ -10,7 +10,7 @@ import org.openftc.apriltag.AprilTagDetection;
 import java.util.ArrayList;
 
 @Autonomous
-public class AutoLeft11 extends LinearOpMode {
+public class AutoLeft11DONTRUN extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
 
 

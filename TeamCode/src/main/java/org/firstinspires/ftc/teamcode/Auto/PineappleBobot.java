@@ -28,7 +28,7 @@ public class PineappleBobot extends PineappleSomething {
     double integralSum = 0;
     double kP = 1.5;
     double kI = 0;
-    double kD = 0;
+    double kD = 71;
     float kPL = 2100;
     float kPR = 2100;
 
@@ -144,8 +144,8 @@ public class PineappleBobot extends PineappleSomething {
                 lastErrorL = errorL;
                 lastErrorR = errorR;
                 timerD.reset();
-                frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*10)+((errorL)*kPL + derivativeL*10)));
-                frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*10)-((errorL)*kPL + derivativeL*10)));
+                frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
+                frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
 
 
             }
@@ -153,7 +153,23 @@ public class PineappleBobot extends PineappleSomething {
         else if(redOrBlue == RED){
 
             while(encoderCounts >= maxDistance) {
-                ttuurrnn(pidControl(colorsL.red, colorsR.red));
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
+                colorsL = leftCSensor.getNormalizedColors();
+                colorsR = rightCSensor.getNormalizedColors();
+                double errorR = 0.14 - colorsR.red;
+                double errorL = 0.23 - colorsL.red;
+
+                double derivativeR = (errorR - lastErrorR) / timerD.seconds();
+                double derivativeL = (errorL - lastErrorL) / timerD.seconds();
+
+                lastErrorL = errorL;
+                lastErrorR = errorR;
+                timerD.reset();
+                frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
+                frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
+
+
             }
         }
 

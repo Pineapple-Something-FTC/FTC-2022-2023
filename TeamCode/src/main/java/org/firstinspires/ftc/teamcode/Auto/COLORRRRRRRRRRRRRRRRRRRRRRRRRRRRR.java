@@ -181,22 +181,22 @@ public class COLORRRRRRRRRRRRRRRRRRRRRRRRRRRRR extends LinearOpMode {
       Color.colorToHSV(colorsL.toColor(), hsvValues);
       bobot.setModeNoEncoder();
 
-      while(encoderCounts >= -1369) {
+      while(opModeIsActive()) {
 
-        encoderCounts = 0.25*(bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
-        colorsL = colorL.getNormalizedColors();
-        colorsR = colorR.getNormalizedColors();
-        double errorR = 0.155 - colorsR.blue;
-        double errorL = 0.252 - colorsL.blue;
-
-        double derivativeR = (errorR - lastErrorR) / timerD.seconds();
-        double derivativeL = (errorL - lastErrorL) / timerD.seconds();
-
-        lastErrorL = errorL;
-        lastErrorR = errorR;
-        timerD.reset();
-         bobot.frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
-         bobot.frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
+//        encoderCounts = 0.25*(bobot.frontLeft.getCurrentPosition() + bobot.frontRight.getCurrentPosition() + bobot.backLeft.getCurrentPosition() + bobot.backRight.getCurrentPosition());
+//        colorsL = colorL.getNormalizedColors();
+//        colorsR = colorR.getNormalizedColors();
+//        double errorR = 0.155 - colorsR.blue;
+//        double errorL = 0.252 - colorsL.blue;
+//
+//        double derivativeR = (errorR - lastErrorR) / timerD.seconds();
+//        double derivativeL = (errorL - lastErrorL) / timerD.seconds();
+//
+//        lastErrorL = errorL;
+//        lastErrorR = errorR;
+//        timerD.reset();
+//         bobot.frontLeft.setVelocity(-(420-((errorR)*kPR + derivativeR*kD)+((errorL)*kPL + derivativeL*kD)));
+//         bobot.frontRight.setVelocity(-(420+((errorR)*kPR + derivativeR*kD)-((errorL)*kPL + derivativeL*kD)));
         telemetry.addLine()
                 .addData("Red RIGHT:", "%.3f", colorsR.red)
                 .addData("Green", "%.3f", colorsR.green)
