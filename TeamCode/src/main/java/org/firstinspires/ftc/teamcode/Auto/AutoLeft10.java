@@ -119,7 +119,7 @@ public class AutoLeft10 extends LinearOpMode {
         move(2284+300, bobot.forward, 969,3269);
         move(300, bobot.back, 969, 1169);
         turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.right, 500, 2000);
-        move(365, bobot.forward,bobot.speed,690);
+        move(bobot.forwardFirstCone, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
         move(436-4, bobot.back,bobot.speed,690);

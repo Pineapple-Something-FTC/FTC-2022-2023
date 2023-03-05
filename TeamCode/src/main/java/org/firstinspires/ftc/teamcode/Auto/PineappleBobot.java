@@ -25,17 +25,14 @@ public class PineappleBobot extends PineappleSomething {
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime maxTimer = new ElapsedTime();
     ElapsedTime timerD = new ElapsedTime();
-    double integralSum = 0;
-    double kP = 1.5;
-    double kI = 0;
-    double kD = 71;
-    float kPL = 2100;
-    float kPR = 2100;
 
-    double kPLine = 10;
+
     double lastErrorL;
     double lastErrorR;
-
+    double lastErrorFR;
+    double lastErrorFL;
+    double lastErrorBR;
+    double lastErrorBL;
     // Define camera
     OpenCvCamera camera;
     XAprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -57,6 +54,9 @@ public class PineappleBobot extends PineappleSomething {
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
     public static final int speed = 900;
+    public static final int forwardFirstCone = 365;
+    public static final int forwardSecondCone = 321+4+2+1;
+    public static final int turnSecondCone = 0;
     // UNITS ARE METERS
     public static final double tagSize = 0.044;// Default value: 0.166
 
@@ -112,33 +112,215 @@ public class PineappleBobot extends PineappleSomething {
     }
 
     // dont change this this is not used
-    public double pidControl(double reference, double state) {
-        double error = reference - state;
-        integralSum += error * timer.seconds();
-        double derivative = (error - lastError) / timer.seconds();
-        lastError = error;
+//    public double pidControl(double reference, double state) {
+//        double error = reference - state;
+//        integralSum += error * timer.seconds();
+//        double derivative = (error - lastError) / timer.seconds();
+//        lastError = error;
+//
+//        timer.reset();
+//        double output = (error * kP) + (derivative * kD) + (integralSum * kI);
+//        return output;
+//    }
+
+    public void movePID(double distance, boolean forwardOrBack) {
+        ElapsedTime timer = new ElapsedTime();
+        double kD = 0.1;
+        double kP = 10;
+
+        double encoderCounts = 0;
+        resetDriveEncoders();
 
         timer.reset();
-        double output = (error * kP) + (derivative * kD) + (integralSum * kI);
-        return output;
-    }
+        timerD.reset();
+        if(forwardOrBack) {
 
+            while(timer.seconds() < 0.25) {
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
+
+                double errorFR = distance + frontRight.getCurrentPosition();
+                double errorFL = distance + frontLeft.getCurrentPosition();
+                double errorBR = distance + backRight.getCurrentPosition();
+                double errorBL = distance + backLeft.getCurrentPosition();
+
+                double derivativeFR = (errorFR + lastErrorR) / timerD.seconds();
+                double derivativeFL = (errorFL + lastErrorL) / timerD.seconds();
+                double derivativeBR = (errorBR + lastErrorR) / timerD.seconds();
+                double derivativeBL = (errorBL + lastErrorL) / timerD.seconds();
+
+
+                lastErrorFR = errorFR;
+                lastErrorFL = errorFL;
+                lastErrorBR = errorBR;
+                lastErrorBL = errorBL;
+
+                if(Math.abs(distance + encoderCounts) > 5) {
+                    timer.reset();
+                }
+
+                timerD.reset();
+                frontLeft.setVelocity(-(((errorFL)*kP - derivativeFL*kD)));
+                frontRight.setVelocity(-(((errorFR)*kP - derivativeFR*kD)));
+                backLeft.setVelocity(-(((errorBL)*kP - derivativeBL*kD)));
+                backRight.setVelocity(-(((errorBR)*kP - derivativeBR*kD)));
+
+
+            }
+            frontLeft.setVelocity(0);
+            frontRight.setVelocity(0);
+            backLeft.setVelocity(0);
+            backRight.setVelocity(0);
+
+        }
+        else if (!forwardOrBack) {
+            while(timer.seconds() < 0.25) {
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
+
+                double errorFR = distance - frontRight.getCurrentPosition();
+                double errorFL = distance - frontLeft.getCurrentPosition();
+                double errorBR = distance - backRight.getCurrentPosition();
+                double errorBL = distance - backLeft.getCurrentPosition();
+
+                double derivativeFR = (errorFR + lastErrorR) / timerD.seconds();
+                double derivativeFL = (errorFL + lastErrorL) / timerD.seconds();
+                double derivativeBR = (errorBR + lastErrorR) / timerD.seconds();
+                double derivativeBL = (errorBL + lastErrorL) / timerD.seconds();
+
+                lastErrorFR = errorFR;
+                lastErrorFL = errorFL;
+                lastErrorBR = errorBR;
+                lastErrorBL = errorBL;
+
+                if(Math.abs(distance - encoderCounts) > 5) {
+                    timer.reset();
+                }
+
+
+                timerD.reset();
+                frontLeft.setVelocity((((errorFL)*kP - derivativeFL*kD)));
+                frontRight.setVelocity((((errorFR)*kP - derivativeFR*kD)));
+                backLeft.setVelocity((((errorBL)*kP - derivativeBL*kD)));
+                backRight.setVelocity((((errorBR)*kP - derivativeBR*kD)));
+
+
+            }
+            frontLeft.setVelocity(0);
+            frontRight.setVelocity(0);
+            backLeft.setVelocity(0);
+            backRight.setVelocity(0);
+
+        }
+    }
+    public void turnPID(double degrees, boolean rightOrLeft) {
+        ElapsedTime timer = new ElapsedTime();
+        double kD = 0.05; // 0.08
+        double kP = 5;
+
+        double encoderCounts = 0;
+        resetDriveEncoders();
+
+        timer.reset();
+        timerD.reset();
+        if(rightOrLeft) { //left
+
+            while(timer.seconds() < 0.25) {
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() - frontRight.getCurrentPosition() + backLeft.getCurrentPosition() - backRight.getCurrentPosition());
+
+                double errorFR = degrees + frontRight.getCurrentPosition();
+                double errorFL = degrees - frontLeft.getCurrentPosition();
+                double errorBR = degrees + backRight.getCurrentPosition();
+                double errorBL = degrees - backLeft.getCurrentPosition();
+
+                double derivativeFR = (errorFR + lastErrorR) / timerD.seconds();
+                double derivativeFL = (errorFL - lastErrorL) / timerD.seconds();
+                double derivativeBR = (errorBR + lastErrorR) / timerD.seconds();
+                double derivativeBL = (errorBL - lastErrorL) / timerD.seconds();
+
+
+                lastErrorFR = errorFR;
+                lastErrorFL = errorFL;
+                lastErrorBR = errorBR;
+                lastErrorBL = errorBL;
+
+                if(Math.abs(degrees - encoderCounts) > 5) {
+                    timer.reset();
+                }
+
+                timerD.reset();
+                frontLeft.setVelocity((((errorFL)*kP - derivativeFL*kD)));
+                frontRight.setVelocity(-(((errorFR)*kP - derivativeFR*kD)));
+                backLeft.setVelocity((((errorBL)*kP - derivativeBL*kD)));
+                backRight.setVelocity(-(((errorBR)*kP - derivativeBR*kD)));
+
+
+            }
+            frontLeft.setVelocity(0);
+            frontRight.setVelocity(0);
+            backLeft.setVelocity(0);
+            backRight.setVelocity(0);
+
+        }
+        else if (!rightOrLeft) { //right
+            while(timer.seconds() < 0.25) {
+
+                encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
+
+                double errorFR = degrees + frontRight.getCurrentPosition();
+                double errorFL = degrees + frontLeft.getCurrentPosition();
+                double errorBR = degrees + backRight.getCurrentPosition();
+                double errorBL = degrees + backLeft.getCurrentPosition();
+
+                double derivativeFR = (errorFR + lastErrorR) / timerD.seconds();
+                double derivativeFL = (errorFL + lastErrorL) / timerD.seconds();
+                double derivativeBR = (errorBR + lastErrorR) / timerD.seconds();
+                double derivativeBL = (errorBL + lastErrorL) / timerD.seconds();
+
+                lastErrorFR = errorFR;
+                lastErrorFL = errorFL;
+                lastErrorBR = errorBR;
+                lastErrorBL = errorBL;
+
+                if(Math.abs(degrees - encoderCounts) > 5) {
+                    timer.reset();
+                }
+
+
+                timerD.reset();
+                frontLeft.setVelocity(-(((errorFL)*kP - derivativeFL*kD)));
+                frontRight.setVelocity((((errorFR)*kP - derivativeFR*kD)));
+                backLeft.setVelocity(-(((errorBL)*kP - derivativeBL*kD)));
+                backRight.setVelocity((((errorBR)*kP - derivativeBR*kD)));
+
+
+            }
+            frontLeft.setVelocity(0);
+            frontRight.setVelocity(0);
+            backLeft.setVelocity(0);
+            backRight.setVelocity(0);
+
+        }
+    }
     // change this if necessary
     public void followLine(double redOrBlue, double maxDistance) {
+        double kD = 71;
+        float kPL = 2100;
+        float kPR = 2100;
         double encoderCounts = 0;
         resetDriveEncoders();
         leftCSensor.setGain(20);
         rightCSensor.setGain(20);
+
         NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
         NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
-//        double blueRight = 0.155;
-//        double blueLeft = 0.252;
-//        double redRight = 0.14;
-//        double redLeft = 0.23;
-         double blueRight = 0.155;
+
+        double blueRight = 0.155;
         double blueLeft = 0.252;
         double redRight = 0.14;
         double redLeft = 0.23;
+        timerD.reset();
         if(redOrBlue == BLUE) {
 
             while(encoderCounts >= maxDistance) {
