@@ -136,7 +136,7 @@ public class AutoLeft11RED extends LinearOpMode {
         move(2169, bobot.back, 769, 3690);
         armThing(-2350, 1690, 569);
         turn((420+69+20+6+19+21+19+9+9+19), bobot.right, 2000, 769);
-        move(bobot.forwardSecondCone, bobot.forward, 2000, 542);
+        move(bobot.forwardSecondCone, bobot.forward, 2000, 569);
 
         intakeThing(bobot.OUT, 350);
         intakeThing(bobot.NEUTRAL, 50);

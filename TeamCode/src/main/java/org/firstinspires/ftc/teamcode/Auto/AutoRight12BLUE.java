@@ -113,7 +113,8 @@ public class AutoRight12BLUE extends LinearOpMode {
 
 
         bobot.resetEncoders();
-        turnPID(1000, bobot.left);
+
+        turnPID(90, bobot.left);
         intakeThing(bobot.IN, 1000);
 
 //

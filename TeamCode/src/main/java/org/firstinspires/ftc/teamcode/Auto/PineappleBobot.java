@@ -55,7 +55,7 @@ public class PineappleBobot extends PineappleSomething {
     public static final int NEUTRAL = 0;
     public static final int speed = 900;
     public static final int forwardFirstCone = 365;
-    public static final int forwardSecondCone = 321+4+2+1;
+    public static final int forwardSecondCone = 321+4+2+1+6+9;
     public static final int turnSecondCone = 0;
     // UNITS ARE METERS
     public static final double tagSize = 0.044;// Default value: 0.166
@@ -213,10 +213,12 @@ public class PineappleBobot extends PineappleSomething {
 
         }
     }
-    public void turnPID(double degrees, boolean rightOrLeft) {
+    public void turnPID(double degreees, boolean rightOrLeft) {
+        double ticksPerDegree = (20690-42-100+6+9+6+9+1+6+9+1+4+2-1+(690+69+69+69+69+6+9+4+2+4+2+6+4))/1800;
+        double degrees = degreees * ticksPerDegree;
         ElapsedTime timer = new ElapsedTime();
-        double kD = 0.05; // 0.08
-        double kP = 5;
+        double kD = 0.0; // 0.05
+        double kP = 7.5;
 
         double encoderCounts = 0;
         resetDriveEncoders();
@@ -268,14 +270,14 @@ public class PineappleBobot extends PineappleSomething {
 
                 encoderCounts = 0.25*(frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition());
 
-                double errorFR = degrees + frontRight.getCurrentPosition();
+                double errorFR = degrees - frontRight.getCurrentPosition();
                 double errorFL = degrees + frontLeft.getCurrentPosition();
-                double errorBR = degrees + backRight.getCurrentPosition();
+                double errorBR = degrees - backRight.getCurrentPosition();
                 double errorBL = degrees + backLeft.getCurrentPosition();
 
-                double derivativeFR = (errorFR + lastErrorR) / timerD.seconds();
+                double derivativeFR = (errorFR - lastErrorR) / timerD.seconds();
                 double derivativeFL = (errorFL + lastErrorL) / timerD.seconds();
-                double derivativeBR = (errorBR + lastErrorR) / timerD.seconds();
+                double derivativeBR = (errorBR - lastErrorR) / timerD.seconds();
                 double derivativeBL = (errorBL + lastErrorL) / timerD.seconds();
 
                 lastErrorFR = errorFR;
@@ -317,7 +319,7 @@ public class PineappleBobot extends PineappleSomething {
         NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
 
         double blueRight = 0.155;
-        double blueLeft = 0.252;
+        double blueLeft = 0.131;
         double redRight = 0.14;
         double redLeft = 0.23;
         timerD.reset();
@@ -329,6 +331,7 @@ public class PineappleBobot extends PineappleSomething {
                 colorsL = leftCSensor.getNormalizedColors();
                 colorsR = rightCSensor.getNormalizedColors();
                 double errorR = blueRight - colorsR.blue;
+                
                 double errorL = blueLeft - colorsL.blue;
 
                 double derivativeR = (errorR - lastErrorR) / timerD.seconds();

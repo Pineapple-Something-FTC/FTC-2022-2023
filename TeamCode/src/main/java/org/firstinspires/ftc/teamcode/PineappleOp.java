@@ -86,6 +86,10 @@ public class PineappleOp extends PineappleSomething {
                 intakeHeight();
             }
 
+            else if(gamepad2.right_bumper || gamepad1.right_bumper) {
+                wallHeight();
+
+            }
             else if (gamepad1.y || gamepad2.y) {
                 if(g.getTargetPosition()<g.getCurrentPosition()-20){
                     thing.setPower(0.4);
@@ -100,19 +104,19 @@ public class PineappleOp extends PineappleSomething {
 
 
             liftMotorPower();
-//            telemetry.addData("Arm position", g.getCurrentPosition());
-//            telemetry.addData("Target: ", g.getTargetPosition());
-//            telemetry.addData("Arm Power", g.getPower());
-//            telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-//            telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
-//            telemetry.addData("Right Trigger", gamepad2.right_trigger);
-//            telemetry.addData("Left Trigger", gamepad2.left_trigger);
-//            telemetry.addData("THING", thing.getPower());
-//            telemetry.addData("left stick button", gamepad2.left_stick_button);
-//            telemetry.addData("left stick button", frontRight.getCurrentPosition());
-//            telemetry.addData("left stick button", frontLeft.getCurrentPosition());
-//            telemetry.addData("left stick button", backRight.getCurrentPosition());
-//            telemetry.addData("left stick button", backLeft.getCurrentPosition());
+            telemetry.addData("Arm position", g.getCurrentPosition());
+            telemetry.addData("Target: ", g.getTargetPosition());
+            telemetry.addData("Arm Power", g.getPower());
+            telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+            telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+            telemetry.addData("Right Trigger", gamepad2.right_trigger);
+            telemetry.addData("Left Trigger", gamepad2.left_trigger);
+            telemetry.addData("THING", thing.getPower());
+            telemetry.addData("left stick button", gamepad2.left_stick_button);
+            telemetry.addData("frontright", frontRight.getCurrentPosition());
+            telemetry.addData("frontleft", frontLeft.getCurrentPosition());
+            telemetry.addData("backright", backRight.getCurrentPosition());
+            telemetry.addData("backleft", backLeft.getCurrentPosition());
 
         }
 
@@ -181,10 +185,13 @@ public class PineappleOp extends PineappleSomething {
             if(g.getTargetPosition()<g.getCurrentPosition()-20){
                 thing.setPower(0.4);
             }
+
             else
                 thing.setPower(0.5);
         }
-
+        else if(g.getTargetPosition() == -111) {
+            thing.setPower(0.5);
+        }
 
         else if (gamepad2.x || gamepad1.x)
             thing.setPower(-1);
@@ -197,9 +204,9 @@ public class PineappleOp extends PineappleSomething {
         j.setTargetPosition(-401);
     }
     public void scoreLow() {
-        g.setTargetPosition(-1017);
-        h.setTargetPosition(-1017);
-        j.setTargetPosition(-1017);
+        g.setTargetPosition(-969);
+        h.setTargetPosition(-969);
+        j.setTargetPosition(-969);
     }
     public void scoreMedium() {
         g.setTargetPosition(-1669-4-42-6-9-9);
@@ -221,7 +228,11 @@ public class PineappleOp extends PineappleSomething {
         h.setTargetPosition(-6);
         j.setTargetPosition(-6);
     }
-
+    public void wallHeight() {
+        g.setTargetPosition(-111);
+        h.setTargetPosition(-111);
+        j.setTargetPosition(-111);
+    }
     //Resets only the lift encoders
     //Makes sure the macros, min, and max height restrictions work
     public void resetLiftEncoders() {
