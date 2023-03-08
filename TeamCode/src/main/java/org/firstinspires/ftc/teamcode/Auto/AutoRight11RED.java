@@ -122,7 +122,7 @@ public class AutoRight11RED extends LinearOpMode {
         move(bobot.forwardFirstCone, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(436-4, bobot.back,bobot.speed,690);
+        move(bobot.backwardFirstCone, bobot.back,bobot.speed,690);
         armThing(-(769), 1500, 20);
         turn((969/2+969+4+2+19+19+19+4+1), bobot.right, 969, 2690);
         move(142, bobot.forward, bobot.speed, 690);

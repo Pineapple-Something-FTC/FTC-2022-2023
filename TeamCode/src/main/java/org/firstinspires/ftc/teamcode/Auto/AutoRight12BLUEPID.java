@@ -12,7 +12,7 @@ import org.openftc.apriltag.AprilTagDetection;
 import java.util.ArrayList;
 
 @Autonomous
-public class AutoRight11BLUE extends LinearOpMode {
+public class AutoRight12BLUEPID extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
     double encoderCounts = 0;
     float kPL = 3000;
@@ -114,49 +114,65 @@ public class AutoRight11BLUE extends LinearOpMode {
 
         bobot.resetEncoders();
 
+//        turnPID(90, bobot.left);
+//        intakeThing(bobot.IN, 1000);
+
+
         intakeThing(bobot.IN, 1200);
         armThing(-2350, 690+69+42+69+69+69+69+69, 100);
-        move(2284+300, bobot.forward, 969,3269);
-        move(300, bobot.back, 969, 1169);
-        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
+        movePID(2284+300, bobot.forward, 4, 15);
+        move(300, bobot.back, 2000, 690);
+        turn(969/2 + 4 + 2 + 6+4+9, bobot.left, 500, 2000);
         move(bobot.forwardFirstCone, bobot.forward,bobot.speed,690);
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(bobot.backwardFirstCone, bobot.back,bobot.speed,690);
+        move(bobot.backwardFirstCone-42, bobot.back,bobot.speed,690);
         armThing(-(769), 1500, 20);
-        turn((969/2+969+4+2+19+19+19+4+1), bobot.right, 969, 2690);
+        turn((969/2+969-4+19+9), bobot.right, 1500, 1690);
         move(142, bobot.forward, bobot.speed, 690);
         intakeThing(bobot.IN, 150);
-        followLine(bobot.BLUE, -699-6-9-4-2-69-19);
+        followLine(bobot.BLUE, -699-6-9-4-2-69-19-69-69);
 
 
-        armThing(-369, 1269, 690);
+        armThing(-369, 1269, 569);
         armThing(-769, 1269, 742);
 
-        move(2169, bobot.back, 769, 3690);
+        movePID(2169, bobot.back, 4, 15);
         armThing(-2350, 1690, 569);
         turn((420+69+20+6+19+21+19+9+9+42), bobot.left, 2000, 769);
-        move(bobot.forwardSecondCone, bobot.forward, 2000, 542);
+        move(369, bobot.forward, 2000, 542);
 
         intakeThing(bobot.OUT, 350);
         intakeThing(bobot.NEUTRAL, 50);
-        move(400-49, bobot.back, 2000, 469);
-        armThing(-(1), 1500, 10);
-        turn(420+69+69+9+42+4+2+1, bobot.right, 569, 1690);
+        move(400-48+69, bobot.back, 2000, 469);
+        armThing(-(769), 1500, 10);
+        turn(420+69+69+9+42, bobot.right, 569, 1690);
+        movePID(1669, bobot.forward, 5, 10);
+        intakeThing(bobot.IN, 150);
+        followLine(bobot.BLUE, -342);
 
+        armThing(-290, 1269, 642);
+        armThing(-769, 1269, 742);
 
+        movePID(869, bobot.back, 6, 10);
+        turn(690, bobot.right, 2000, 969);
+        move(269, bobot.forward, 2000, 369);
+        intakeThing(bobot.OUT, 500);
+        intakeThing(bobot.NEUTRAL, 50);
 
+        move(269, bobot.back, 2000, 369);
+        turn(690, bobot.left, 2000, 969);
         if(bobot.tagOfInterest.id==bobot.RIGHT) {
 
-            move(1869+42-2-4, bobot.forward, 2000, 6690);
+            movePID(969, bobot.forward, 10, 10);
 
         }
-        else if (bobot.tagOfInterest.id==bobot.MIDDLE) {
-            move(869+19+4+2, bobot.forward, 2000, 6690);
+        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+            movePID(969, bobot.back, 10, 10);
 
         }
         else {
-            move(100-4-2-6+1, bobot.back, 2000, 6690);
+            movePID(100-4-2-6-9-6, bobot.back, 10, 10);
         }
 
 
@@ -190,6 +206,13 @@ public class AutoRight11BLUE extends LinearOpMode {
     }
     public void followLine(double redOrBlue, double maxDistance) {
         bobot.followLine(redOrBlue, maxDistance);
+    }
+    public void movePID(double distance, boolean forwardOrBack, double customkP, double range) {
+        bobot.movePID(distance, forwardOrBack, customkP, range);
+
+    }
+    public void turnPID(double degrees, boolean rightOrLeft) {
+        bobot.turnPID(degrees, rightOrLeft);
     }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {

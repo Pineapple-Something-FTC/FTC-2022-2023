@@ -122,7 +122,7 @@ public class AutoRight11BLUEPID extends LinearOpMode {
         move(bobot.forwardFirstCone, bobot.forward, 969, 969);
         intakeThing(bobot.OUT, 500);
         intakeThing(bobot.NEUTRAL, 50);
-        move(436-4, bobot.back, 969, 1269);
+        move(bobot.backwardFirstCone, bobot.back, 969, 1269);
 
         turn((969/2+969+4+2+19+19+19+4+1+19), bobot.right, 969, 2690);
         armThing(-(769), 1500, 20);
@@ -193,7 +193,7 @@ public class AutoRight11BLUEPID extends LinearOpMode {
         bobot.followLine(redOrBlue, maxDistance);
     }
     public void movePID(double distance, boolean forwardOrBack) {
-        bobot.movePID(distance, forwardOrBack);
+        bobot.movePID(distance, forwardOrBack, 10, 5);
     }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {

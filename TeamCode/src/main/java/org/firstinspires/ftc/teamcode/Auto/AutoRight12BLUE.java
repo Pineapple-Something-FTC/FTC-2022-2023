@@ -114,68 +114,72 @@ public class AutoRight12BLUE extends LinearOpMode {
 
         bobot.resetEncoders();
 
-        turnPID(90, bobot.left);
-        intakeThing(bobot.IN, 1000);
+//        turnPID(90, bobot.left);
+//        intakeThing(bobot.IN, 1000);
 
-//
-//        intakeThing(bobot.IN, 1200);
-//        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
-//        move(2284+300, bobot.forward, 1500,2669);
-//        move(300, bobot.back, 2000, 690);
-//        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
-//        move(bobot.forwardFirstCone, bobot.forward,bobot.speed,690);
-//        intakeThing(bobot.OUT, 500);
-//        intakeThing(bobot.NEUTRAL, 50);
-//        move(436-4, bobot.back,bobot.speed,690);
-//        armThing(-(769), 1500, 20);
-//        turn((969/2+969+4+2), bobot.right, 1500, 1690);
-//        move(142, bobot.forward, bobot.speed, 690);
-//        intakeThing(bobot.IN, 150);
-//        followLine(bobot.BLUE, -699);
-//
-//
-//        armThing(-420, 1269, 569);
-//        armThing(-769, 1269, 742);
-//
-//        move(2169, bobot.back, 769, 3690);
-//        armThing(-2350, 1690, 569);
-//        turn((420+69+20+6+19+21+19+9+9+42), bobot.left, 2000, 769);
-//        move(369, bobot.forward, 2000, 542);
-//
-//        intakeThing(bobot.OUT, 350);
-//        intakeThing(bobot.NEUTRAL, 50);
-//        move(400-48+69, bobot.back, 2000, 469);
-//        armThing(-(769), 1500, 10);
-//        turn(420+69+69+9+42, bobot.right, 569, 1690);
-//        move(1669, bobot.forward, 2000, 1069);
-//        intakeThing(bobot.IN, 150);
-//        followLine(bobot.BLUE, -342);
-//
-//        armThing(-290, 1269, 642);
-//        armThing(-769, 1269, 742);
-//
-//        move(869, bobot.back, 2000, 1069);
-//        turn(690, bobot.right, 2000, 969);
-//        move(269, bobot.forward, 2000, 369);
-//        intakeThing(bobot.OUT, 500);
-//        intakeThing(bobot.NEUTRAL, 50);
-//
-//        move(269, bobot.back, 2000, 369);
-//        turn(690, bobot.left, 2000, 969);
-//        if(bobot.tagOfInterest.id==bobot.RIGHT) {
-//
-//            move(969, bobot.forward, 2000, 6690);
-//
-//        }
-//        else if (bobot.tagOfInterest.id==bobot.LEFT) {
-//            move(969, bobot.back, 2000, 6690);
-//
-//        }
-//        else {
-//            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
-//        }
-//
 
+        intakeThing(bobot.IN, 1342);
+        armThing(-2350, 690+69+42+69+69+69+69+69, 0);
+        move(2284+300, bobot.forward, 1500,2569);
+        move(300, bobot.back, 2000, 690);
+        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.left, 500, 2000);
+        move(bobot.forwardFirstCone, bobot.forward,bobot.speed,699);
+        intakeThing(bobot.OUT, 250);
+        intakeThing(bobot.NEUTRAL, 0);
+        move(bobot.backwardFirstCone, bobot.back,bobot.speed,699);
+        armThing(-(769), 1500, 0);
+        turn((969/2+969+4+19+9+4+2+6+19+9+6+4+2+1+4+2+1+2), bobot.right, 1500, 1690);
+        move(420, bobot.forward, bobot.speed, 569);
+        intakeThing(bobot.IN, 0);
+        followLine(bobot.BLUE, -699+69-6-9-6-9-4-2-1-4-2-1);
+
+        armThing(-369, 1269, 569);
+        armThing(-769, 1269, 742);
+
+        movePID(2169, bobot.back, 4.79, 24);
+        armThing(-2350, 1690, 569);
+        turn((420+69+20+6+19+21+19+9+9+42+6+9+4+2+1), bobot.left, 2000, 769);
+        move(369-42-42, bobot.forward, 2000, 542);
+
+        intakeThing(bobot.OUT, 250);
+        intakeThing(bobot.NEUTRAL, 0);
+        move(400-48+21+9-42-42, bobot.back, 2000, 469);
+        armThing(-(769), 1500, 10);
+        turn(420+69+69+9+42+6+9+7+2+4+2+1, bobot.right, 569, 1690);
+        move(1496, bobot.forward, 2000, 1069);
+        intakeThing(bobot.IN, 0);
+        followLine(bobot.BLUE, -469);
+
+        armThing(-290, 1269, 542);
+        armThing(-1042, 1269, 742);
+
+        move(869, bobot.back, 2000, 869);
+        turn(699+19, bobot.right, 2000, 642);
+        move(296, bobot.forward, 2000, 369-42-19-9-9);
+        intakeThing(bobot.OUT, 250);
+        intakeThing(bobot.NEUTRAL, 0);
+
+        move(142+42, bobot.back, 2000, 369-42-19-9-9-9-6);
+        armThing(-1, 2000, 0);
+        turn(699+19+4-1+2+19+19+9, bobot.left, 2000, 690);
+
+        if(bobot.tagOfInterest.id==bobot.RIGHT) {
+
+            move(742, bobot.forward, 3000, 6690);
+
+        }
+
+        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+
+            move(1296+42-6-9-4-2+1, bobot.back, 3000, 6690);
+
+        }
+
+        else {
+
+            move(369-4-2-6-9-6, bobot.back, 3000, 6690);
+
+        }
 
 
     }
@@ -207,12 +211,13 @@ public class AutoRight12BLUE extends LinearOpMode {
     public void followLine(double redOrBlue, double maxDistance) {
         bobot.followLine(redOrBlue, maxDistance);
     }
-    public void movePID(double distance, boolean forwardOrBack) {
-        bobot.movePID(distance, forwardOrBack);
 
-    }
     public void turnPID(double degrees, boolean rightOrLeft) {
         bobot.turnPID(degrees, rightOrLeft);
+    }
+    public void movePID(double distance, boolean forwardOrBack, double customkP, double range) {
+        bobot.movePID(distance, forwardOrBack, customkP, range);
+
     }
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {

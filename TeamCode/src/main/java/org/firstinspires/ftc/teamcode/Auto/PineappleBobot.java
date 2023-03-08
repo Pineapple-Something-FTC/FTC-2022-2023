@@ -54,7 +54,8 @@ public class PineappleBobot extends PineappleSomething {
     public static final int OUT = -1;
     public static final int NEUTRAL = 0;
     public static final int speed = 900;
-    public static final int forwardFirstCone = 365;
+    public static final int forwardFirstCone = 365+42;
+    public static final int backwardFirstCone = forwardFirstCone + (436-4-365);
     public static final int forwardSecondCone = 321+4+2+1+6+9;
     public static final int turnSecondCone = 0;
     // UNITS ARE METERS
@@ -123,10 +124,10 @@ public class PineappleBobot extends PineappleSomething {
 //        return output;
 //    }
 
-    public void movePID(double distance, boolean forwardOrBack) {
+    public void movePID(double distance, boolean forwardOrBack, double customkP, double range) {
         ElapsedTime timer = new ElapsedTime();
-        double kD = 0.1;
-        double kP = 10;
+        double kD = customkP/95;
+        double kP = customkP; // 10
 
         double encoderCounts = 0;
         resetDriveEncoders();
@@ -155,7 +156,7 @@ public class PineappleBobot extends PineappleSomething {
                 lastErrorBR = errorBR;
                 lastErrorBL = errorBL;
 
-                if(Math.abs(distance + encoderCounts) > 5) {
+                if(Math.abs(distance + encoderCounts) > range) { // 5
                     timer.reset();
                 }
 
@@ -193,7 +194,7 @@ public class PineappleBobot extends PineappleSomething {
                 lastErrorBR = errorBR;
                 lastErrorBL = errorBL;
 
-                if(Math.abs(distance - encoderCounts) > 5) {
+                if(Math.abs(distance - encoderCounts) > range) {
                     timer.reset();
                 }
 
@@ -214,7 +215,7 @@ public class PineappleBobot extends PineappleSomething {
         }
     }
     public void turnPID(double degreees, boolean rightOrLeft) {
-        double ticksPerDegree = (20690-42-100+6+9+6+9+1+6+9+1+4+2-1+(690+69+69+69+69+6+9+4+2+4+2+6+4))/1800;
+        double ticksPerDegree = (20690-42-100+6+9+6+9+1+6+9+1+4+2-1+(690+69+69+69+42))/1800;
         double degrees = degreees * ticksPerDegree;
         ElapsedTime timer = new ElapsedTime();
         double kD = 0.0; // 0.05
