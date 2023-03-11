@@ -12,7 +12,7 @@ import org.openftc.apriltag.AprilTagDetection;
 import java.util.ArrayList;
 
 @Autonomous
-public class AutoRight12RED extends LinearOpMode {
+public class AutoLEFT12RED extends LinearOpMode {
     public static final double FEET_PER_METER = 3.28084;
     double encoderCounts = 0;
     float kPL = 3000;
@@ -118,13 +118,13 @@ public class AutoRight12RED extends LinearOpMode {
         armThing(-2350, 690+69+42+69+69+69+69+69, 0);
         move(2284+300, bobot.forward, 1500,2569);
         move(300, bobot.back, 2000, 690);
-        turn(969/2 + 4 + 2 + 6+4+6+9, bobot.left, 500, 2000);
+        turn(969/2 + 4 + 2 + 6+4+6+9, bobot.right, 500, 2000);
         move(bobot.forwardFirstCone, bobot.forward,bobot.speed,699);
         intakeThing(bobot.OUT, 250);
         intakeThing(bobot.NEUTRAL, 0);
         move(bobot.backwardFirstCone-19-2-1, bobot.back,bobot.speed,699);
         armThing(-(769), 1500, 0);
-        turn((969/2+969+4+19+9+4+2+6+19+9+6+4+2 ), bobot.right, 1500, 1690);
+        turn((969/2+969+4+19+9+4+2+6+19+9+6+4+2+19), bobot.left, 1500, 1690);
         move(420, bobot.forward, bobot.speed, 569);
         intakeThing(bobot.IN, 0);
         followLine(bobot.RED, -699+69-6-9-6-9-4-2-1-4-2-1-19-9);
@@ -134,14 +134,14 @@ public class AutoRight12RED extends LinearOpMode {
 
         move(2169, bobot.back, 969, 2690);
         armThing(-2350, 1690, 569);
-        turn((420+69+20+6+19+21+19+9+9+42+6+9+4+2+1), bobot.left, 2000, 769);
-        move(369+21, bobot.forward, 2000, 542);
+        turn((420+69+20+6+19+21+19+9+9+42+6+9+4+2+1-19-9-4-2-1), bobot.right, 2000, 769);
+        move(369+21-42-42, bobot.forward, 2000, 542);
 
         intakeThing(bobot.OUT, 250);
         intakeThing(bobot.NEUTRAL, 0);
-        move(400-48+21+9-21, bobot.back, 2000, 469);
+        move(400-48+21+9-21-42-42, bobot.back, 2000, 469);
         armThing(-(769), 1500, 10);
-        turn(420+69+69+9+42+6+9+7+2+4+2+1, bobot.right, 969, 969);
+        turn(420+69+69+9+42+6+9+7+2+4+2+1+6+9+4-19+1-9-4-2-1, bobot.left, 969, 969);
         move(1496, bobot.forward, 2000, 1069);
         intakeThing(bobot.IN, 0);
         followLine(bobot.RED, -469);
@@ -150,24 +150,24 @@ public class AutoRight12RED extends LinearOpMode {
         armThing(-1042, 1269, 742);
 
         move(869, bobot.back, 2000, 869);
-        turn(699+19, bobot.right, 2000, 642);
-        move(296-69+2, bobot.forward, 2000, 369-42-19-9-9);
+        turn(699+19+4+2+19+2+19+9, bobot.left, 2000, 642);
+        move(296-69+2+19+4+2+6+2+1+4+2+19+9, bobot.forward, 2000, 369-42-19-9-9);
         intakeThing(bobot.OUT, 250);
         intakeThing(bobot.NEUTRAL, 0);
 
-        move(142+42+19+19+4+2, bobot.back, 3000, 369);
+        move(142+42+19+19+4+2+19+4+2+6+2+1+4+2+19+9, bobot.back, 3000, 369);
         armThing(-1, 2000, 0);
-        turn(699+9+4-1, bobot.left, 2000, 690);
+        turn(699+9+4-1+19+9, bobot.right, 2000, 690);
 
-        if(bobot.tagOfInterest.id==bobot.RIGHT) {
+        if(bobot.tagOfInterest.id==bobot.LEFT) {
 
             move(742, bobot.forward, 3000, 6690);
 
         }
 
-        else if (bobot.tagOfInterest.id==bobot.LEFT) {
+        else if (bobot.tagOfInterest.id==bobot.RIGHT) {
 
-            move(1269, bobot.back, 3000, 6690);
+            move(1242+6+1, bobot.back, 3000, 6690);
 
         }
 

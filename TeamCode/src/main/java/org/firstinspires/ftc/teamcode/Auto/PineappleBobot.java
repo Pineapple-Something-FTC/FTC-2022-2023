@@ -321,8 +321,8 @@ public class PineappleBobot extends PineappleSomething {
 
         double blueRight = 0.155;
         double blueLeft = 0.131;
-        double redRight = 0.14;
-        double redLeft = 0.23;
+        double redRight = 0.133; //0.14
+        double redLeft = 0.180; //0.23
         timerD.reset();
         if(redOrBlue == BLUE) {
 
