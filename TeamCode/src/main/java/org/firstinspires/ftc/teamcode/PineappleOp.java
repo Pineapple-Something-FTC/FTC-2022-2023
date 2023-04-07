@@ -8,20 +8,18 @@ import org.firstinspires.ftc.teamcode.Utility.Drive;
 import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
 
 @TeleOp
-public class PineappleOp extends PineappleSomething {
-    Drive drive = new Drive();
+class PineappleOp extends PineappleSomething {
     Arm arm = new Arm();
     final double DRIVE_SPEED_FACTOR = 0.69;
     final double ARM_POWER_FACTOR = 0.75;
 
     @Override public void runOpMode() {
-
         mapHardware();
 
         //// START
         waitForStart();
         resetEncoders();
-        drive.setModeRunEncoder();
+        Drive.setModeRunEncoder();
         arm.setTargetPosition(0);
         arm.runUsingEncoder();
         arm.setPower(ARM_POWER_FACTOR);
@@ -33,7 +31,7 @@ public class PineappleOp extends PineappleSomething {
                 arm.runUsingEncoder();
             }
             // Control intake with X,A,B
-            intakeControl(thing);
+            intakeControl(intakeServo);
 
             setDriveMotorPower();
 
@@ -58,22 +56,22 @@ public class PineappleOp extends PineappleSomething {
                 wallHeight();
             }
             else if (gamepad1.y || gamepad2.y) {
-                if(g.getTargetPosition()<g.getCurrentPosition()-20){
-                    thing.setPower(0.4);
+                if(armMotor1.getTargetPosition()< armMotor1.getCurrentPosition()-20){
+                    intakeServo.setPower(0.4);
                 }
-                else thing.setPower(0.5);
+                else intakeServo.setPower(0.5);
                 scoreCone();
             }
             // Manual control of the lift
             liftMotorPower();
-            telemetry.addData("Arm position", g.getCurrentPosition());
-            telemetry.addData("Target: ", g.getTargetPosition());
-            telemetry.addData("Arm Power", g.getPower());
+            telemetry.addData("Arm position", armMotor1.getCurrentPosition());
+            telemetry.addData("Target: ", armMotor1.getTargetPosition());
+            telemetry.addData("Arm Power", armMotor1.getPower());
             telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
             telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
             telemetry.addData("Right Trigger", gamepad2.right_trigger);
             telemetry.addData("Left Trigger", gamepad2.left_trigger);
-            telemetry.addData("THING", thing.getPower());
+            telemetry.addData("THING", intakeServo.getPower());
             telemetry.addData("left stick button", gamepad2.left_stick_button);
             telemetry.addData("front right", frontRight.getCurrentPosition());
             telemetry.addData("front left", frontLeft.getCurrentPosition());
@@ -116,34 +114,34 @@ public class PineappleOp extends PineappleSomething {
         int MAX_HEIGHT = -2369;
         // int MIN_HEIGHT = -2;
         // Sets a max height, so the lift does not pull the string too much
-        if(g.getCurrentPosition() <= MAX_HEIGHT && gamepad2.right_trigger > 0) {
+        if(armMotor1.getCurrentPosition() <= MAX_HEIGHT && gamepad2.right_trigger > 0) {
             arm.setTargetPosition(MAX_HEIGHT);
             telemetry.addData("no", "jo");
         }
         //Updates the lift's target position using the triggers
         else if (!gamepad2.right_bumper){
             if(gamepad2.right_trigger > 0) {
-                arm.setTargetPosition((g.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
+                arm.setTargetPosition((armMotor1.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
             }
             else if(gamepad2.left_trigger > 0) {
-                arm.setTargetPosition((g.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
+                arm.setTargetPosition((armMotor1.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
             }
         }
         //Sets the lift motors' power proportionally to its current-target position
-        int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
-        arm.setPower(-0.0052 * (average - g.getTargetPosition()));
+        int average = (armMotor1.getCurrentPosition() + armMotor2.getCurrentPosition() + armMotor3.getCurrentPosition())/3;
+        arm.setPower(-0.0052 * (average - armMotor1.getTargetPosition()));
     }
     //Controls the state of the intake using a, b, x
     public void intakeControl(CRServo thing) {
         if (gamepad2.b || gamepad1.b)
             thing.setPower(0);
         else if (gamepad2.a || gamepad1.a) {
-            if(g.getTargetPosition() < g.getCurrentPosition()-20){
+            if(armMotor1.getTargetPosition() < armMotor1.getCurrentPosition()-20){
                 thing.setPower(0.4);
             }
             else thing.setPower(0.5);
         }
-        else if (g.getTargetPosition() == -111) {
+        else if (armMotor1.getTargetPosition() == -111) {
             thing.setPower(0.5);
         }
         else if (gamepad2.x || gamepad1.x)

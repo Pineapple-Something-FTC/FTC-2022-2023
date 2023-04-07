@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Auto.old.X;
 
 import android.annotation.SuppressLint;
 
@@ -9,9 +9,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Auto.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.Utility.Arm;
 import org.firstinspires.ftc.teamcode.Utility.Drive;
 import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
-import org.firstinspires.ftc.teamcode.Utility.Arm;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class XAprilTagAutonomous_no extends PineappleSomething {
     static final double FEET_PER_METER = 3.28084;
     OpenCvCamera camera;
-    XAprilTagDetectionPipeline aprilTagDetectionPipeline;
+    AprilTagDetectionPipeline aprilTagDetectionPipeline;
     // Lens intrinsics
     // UNITS ARE PIXELS
     // NOTE: this calibration is for the C920 webcam at 800x448.
@@ -46,14 +47,14 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
     public void runOpMode() {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new XAprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
+        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
         backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
         frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
         backRight = hardwareMap.get(DcMotorEx.class, "motor4");
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        thing = hardwareMap.get(CRServo.class, "thing");
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
+        armMotor1 = hardwareMap.get(DcMotorEx.class, "g");
+        intakeServo = hardwareMap.get(CRServo.class, "thing");
+        potentiometer = hardwareMap.get(AnalogInput.class, "deez2");
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
@@ -75,7 +76,7 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
          * This REPLACES waitForStart!
          */
         while (!isStarted() && !isStopRequested()) {
-            telemetry.addData("Potentiometer Voltage:", deeznuts.getVoltage());
+            telemetry.addData("Potentiometer Voltage:", potentiometer.getVoltage());
 
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
@@ -134,40 +135,23 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
             telemetry.update();
         }
 
-        /* Actually do something useful */
-//        if(tagOfInterest == null || tagOfInterest.id == LEFT) {
-//            //trajectory
-//        } else if (tagOfInterest.id == MIDDLE) {
-//            //trajectory
-//        } else {
-//            //trajectory
-//        }
-
-        //// AUTONOMOUS CODE HERE:
-        //resetEncoders();
         Arm.executorFunc();
         sleep(2000);
         Arm.low();
+        Drive drive = new Drive();
         if (tagOfInterest.id == LEFT) {
-            Drive.strafe(1400, left, 700);
-            sleep(2000);
-            Drive.straight(1400, forward, 700, );
-            sleep(2000);
+            drive.strafe(1400, left, 700, 2000);
+            drive.straight(1400, forward, 700, 2000);
         } else if (tagOfInterest.id == MIDDLE) {
-            Drive.straight(1400, forward, 700, );
-            sleep(2000);
+            drive.straight(1400, forward, 700, 2000);
         } else {
-            Drive.strafe(800, right, 700);
+            drive.strafe(800, right, 700, 1000);
+            drive.straight(200, forward, 400, 1000);
+            intakeServo.setPower(-1);
             sleep(1000);
-            Drive.straight(200, forward, 400, );
-            sleep(1000);
-            thing.setPower(-1);
-            sleep(1000);
-            thing.setPower(0);
-            Drive.straight(200, back, 400, );
-            sleep(500);
-            Drive.strafe(800, left, 700);
-            sleep(1000);
+            intakeServo.setPower(0);
+            drive.straight(200, back, 400, 500);
+            drive.strafe(800, left, 700, 1000);
         }
     }
 

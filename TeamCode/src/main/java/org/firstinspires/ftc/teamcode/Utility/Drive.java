@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Utility;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class Drive extends PineappleSomething {
     public void straight(int ticks, boolean direction, int velocity, long sleep) {
@@ -94,10 +95,24 @@ public class Drive extends PineappleSomething {
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
-    public void setModeRunEncoder() {
+    public static void setModeRunEncoder() {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public static void setVelocity(double velocity) {
+        frontLeft.setVelocity(velocity);
+        frontRight.setVelocity(velocity);
+        backLeft.setVelocity(velocity);
+        backRight.setVelocity(velocity);
+    }
+    public static void resetDriveEncoders() {
+        // Resets encoders for drive motors
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 }

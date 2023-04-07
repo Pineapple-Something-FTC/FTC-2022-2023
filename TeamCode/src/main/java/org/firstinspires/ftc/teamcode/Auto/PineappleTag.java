@@ -13,11 +13,9 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 public class PineappleTag extends PineappleSomething {
-    Drive drive = new Drive();
-    /* Declare OpMode members. */
-
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
     public static final double fx = 578.272;
+    /* Declare OpMode members. */
     public static final double fy = 578.272;
     public static final double cx = 402.145;
     public static final double cy = 221.506;
@@ -40,14 +38,17 @@ public class PineappleTag extends PineappleSomething {
     public static final int LEFT = 1;
     public static final int MIDDLE = 2;
     public static final int RIGHT = 3;
+    public static final double FEET_PER_METER = 3.28084;
+    Drive drive = new Drive();
     // Define camera
     OpenCvCamera camera;
-    XAprilTagDetectionPipeline aprilTagDetectionPipeline;
+    AprilTagDetectionPipeline aprilTagDetectionPipeline;
     AprilTagDetection tagOfInterest = null;
-    public static final double FEET_PER_METER = 3.28084;
+
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public PineappleTag() {
     }
+
     public void mapCamera() {
         // Camera things
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
@@ -56,17 +57,20 @@ public class PineappleTag extends PineappleSomething {
         camera = OpenCvCameraFactory.getInstance().createWebcam(
                 hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId
         );
-        aprilTagDetectionPipeline = new XAprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
+        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
                 camera.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT);
             }
+
             @Override
-            public void onError(int errorCode) {}
+            public void onError(int errorCode) {
+            }
         });
     }
+
     public void justAprilTagThings() {
         /*
          * The INIT-loop:
@@ -128,6 +132,7 @@ public class PineappleTag extends PineappleSomething {
             telemetry.update();
         }
     }
+
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {
         telemetry.addLine("\nDetected tag ID: " + detection.id);
@@ -138,6 +143,7 @@ public class PineappleTag extends PineappleSomething {
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
+
     public void turnWithoutEncoder(double velocity) {
         drive.setModeNoEncoder();
         frontLeft.setVelocity(-(300 + 0.1 * velocity));

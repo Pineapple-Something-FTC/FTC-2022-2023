@@ -16,14 +16,14 @@ public class DrivePID extends PineappleSomething {
     double lastErrorBL;
     public static final int RED = 1;
     public static final int BLUE = 0;
-    public void straight(double distance, boolean forwardOrBack, double customkP, double range) {
+    public void straight(double distance, boolean forwardOrBack, double customKP, double range) {
         ElapsedTime timer = new ElapsedTime();
-        double kD = customkP / 95;
-        double kP = customkP; // 10
+        double kD = customKP / 95;
+        double kP = customKP; // 10
 
-        double encoderCounts = 0;
+        double encoderCounts;
 
-        resetDriveEncoders();
+        Drive.resetDriveEncoders();
 
         timer.reset();
         timerD.reset();
@@ -93,15 +93,15 @@ public class DrivePID extends PineappleSomething {
         backLeft.setVelocity(0);
         backRight.setVelocity(0);
     }
-    public void turn(double degreees, boolean rightOrLeft) {
-        double ticksPerDegree = 21539 / 1800;
-        double degrees = degreees * ticksPerDegree;
+    public void turn(double inputDegrees, boolean rightOrLeft) {
+        double ticksPerDegree = 21539.0 / 1800.0;
+        double degrees = inputDegrees * ticksPerDegree;
         ElapsedTime timer = new ElapsedTime();
         double kD = 0.0; // 0.05
         double kP = 7.5;
 
-        double encoderCounts = 0;
-        resetDriveEncoders();
+        double encoderCounts;
+        Drive.resetDriveEncoders();
 
         timer.reset();
         timerD.reset();
@@ -161,17 +161,13 @@ public class DrivePID extends PineappleSomething {
                 if (Math.abs(degrees - encoderCounts) > 5) {
                     timer.reset();
                 }
-
                 timerD.reset();
                 frontLeft.setVelocity(-(((errorFL) * kP - derivativeFL * kD)));
                 frontRight.setVelocity((((errorFR) * kP - derivativeFR * kD)));
                 backLeft.setVelocity(-(((errorBL) * kP - derivativeBL * kD)));
                 backRight.setVelocity((((errorBR) * kP - derivativeBR * kD)));
             }
-            frontLeft.setVelocity(0);
-            frontRight.setVelocity(0);
-            backLeft.setVelocity(0);
-            backRight.setVelocity(0);
+            Drive.setVelocity(0);
         }
     }
 
@@ -181,12 +177,12 @@ public class DrivePID extends PineappleSomething {
         float kPL = 2100;
         float kPR = 2100;
         double encoderCounts = 0;
-        resetDriveEncoders();
+        Drive.resetDriveEncoders();
         leftCSensor.setGain(20);
         rightCSensor.setGain(20);
 
-        NormalizedRGBA colorsL = leftCSensor.getNormalizedColors();
-        NormalizedRGBA colorsR = rightCSensor.getNormalizedColors();
+        NormalizedRGBA colorsL;
+        NormalizedRGBA colorsR;
 
         double blueRight = 0.155;
         double blueLeft = 0.131;

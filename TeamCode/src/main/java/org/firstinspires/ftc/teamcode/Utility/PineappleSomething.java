@@ -20,15 +20,15 @@ public class PineappleSomething extends LinearOpMode {
     public static DcMotorEx frontRight;
     public static DcMotorEx backRight;
     // Arm motors
-    public static DcMotorEx g;
-    public static DcMotorEx h;
-    public static DcMotorEx j;
+    public static DcMotorEx armMotor1;
+    public static DcMotorEx armMotor2;
+    public static DcMotorEx armMotor3;
     // Tape Measure Motor
-    public static DcMotorEx shutUpNathan;
+    public static DcMotorEx tapeMeasureMotor;
     // Intake
-    public static CRServo thing;
+    public static CRServo intakeServo;
     // Potentiometer
-    public static AnalogInput deeznuts;
+    public static AnalogInput potentiometer;
     public static ElapsedTime runtime = new ElapsedTime();
     // Color Sensor
     public static NormalizedColorSensor leftCSensor;
@@ -45,18 +45,18 @@ public class PineappleSomething extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
         // Arm motors
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        h = hardwareMap.get(DcMotorEx.class, "h");
-        j = hardwareMap.get(DcMotorEx.class, "j");
+        armMotor1 = hardwareMap.get(DcMotorEx.class, "g");
+        armMotor2 = hardwareMap.get(DcMotorEx.class, "h");
+        armMotor3 = hardwareMap.get(DcMotorEx.class, "j");
         // Etc
-        shutUpNathan = hardwareMap.get(DcMotorEx.class, "compliiiiant");
+        tapeMeasureMotor = hardwareMap.get(DcMotorEx.class, "compliiiiant");
 
         //// Servos
-        thing = hardwareMap.get(CRServo.class, "thing");
+        intakeServo = hardwareMap.get(CRServo.class, "thing");
 
         //// Sensors
         // Potentiometer
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
+        potentiometer = hardwareMap.get(AnalogInput.class, "deez2");
         // Camera
         leftCSensor = hardwareMap.get(NormalizedColorSensor.class, "deez");
         rightCSensor = hardwareMap.get(NormalizedColorSensor.class, "nuts");
@@ -81,17 +81,9 @@ public class PineappleSomething extends LinearOpMode {
 
     public void resetEncoders() {
         // Resets Encoders
-        g.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        h.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        j.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void resetDriveEncoders() {
-        // Resets Drive Encoders
+        armMotor1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor3.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
