@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
 import org.openftc.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;
@@ -63,7 +64,8 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
 //    AprilTagDetectionPipeline aprilTagDetectionPipeline;
 //    AprilTagDetection tagOfInterest = null;
 
-    PineappleBobot bobot = new PineappleBobot();
+    PineappleTag bobot = new PineappleTag();
+
     @Override
     public void runOpMode() {
 
@@ -90,19 +92,18 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
 
             ArrayList<AprilTagDetection> currentDetections = bobot.aprilTagDetectionPipeline.getLatestDetections();
 
-            if(currentDetections.size() != 0) {
+            if (currentDetections.size() != 0) {
                 boolean tagFound = false;
 
-                for(AprilTagDetection tag : currentDetections) {
+                for (AprilTagDetection tag : currentDetections) {
                     //// CHANGE FROM ORIGINAL
                     //if(tag.id == ID_TAG_OF_INTEREST)
-                    if (tag.id == bobot.LEFT || tag.id == bobot.MIDDLE || tag.id == bobot.RIGHT) {
+                    if (tag.id == PineappleTag.LEFT || tag.id == PineappleTag.MIDDLE || tag.id == PineappleTag.RIGHT) {
                         bobot.tagOfInterest = tag;
                         tagFound = true;
                         break;
-                    }
-                    else {
-                        tag.id = bobot.MIDDLE;
+                    } else {
+                        tag.id = PineappleTag.MIDDLE;
                         bobot.tagOfInterest = tag;
                         telemetry.addData("Don't see the tag, default is set to center, also sussy balls 69 afaf asoajfoia sLOL HeheheheHAW", " hi");
                         break;
@@ -110,13 +111,13 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
 
                 }
 
-                if(tagFound) {
+                if (tagFound) {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
                     tagToTelemetry(bobot.tagOfInterest);
                 } else {
                     telemetry.addLine("Don't see tag of interest :(");
 
-                    if(bobot.tagOfInterest == null) {
+                    if (bobot.tagOfInterest == null) {
                         telemetry.addLine("(The tag has never been seen)");
                     } else {
                         telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
@@ -126,14 +127,14 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
             } else {
                 telemetry.addLine("Don't see tag of interest :(");
 
-                if(bobot.tagOfInterest == null) {
+                if (bobot.tagOfInterest == null) {
                     telemetry.addLine("(The tag has never been seen)");
                 } else {
                     telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
                     tagToTelemetry(bobot.tagOfInterest);
                 }
             }
-            telemetry.addData("L BOZO: ", bobot.frontLeft.getCurrentPosition());
+            telemetry.addData("L BOZO: ", PineappleSomething.frontLeft.getCurrentPosition());
 
             telemetry.update();
             sleep(20);
@@ -145,7 +146,7 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
          */
 
         /* Update the telemetry */
-        if(bobot.tagOfInterest != null) {
+        if (bobot.tagOfInterest != null) {
             telemetry.addLine("Tag snapshot:\n");
             tagToTelemetry(bobot.tagOfInterest);
             telemetry.update();
@@ -162,49 +163,45 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
 
         bobot.resetEncoders();
 
-        intakeThing(bobot.IN, 1200);
-        armThing(-2350, 690+69+42+69+69+69+69+69, 100);
-        move(2284+300, bobot.forward, 1500,2969);
-        move(300, bobot.back, 2000, 690);
-        turn(969/2 + 4 + 2 + 6+4+6+9+6+9, bobot.right, 500, 2000);
-        move(369, bobot.forward,bobot.speed,690);
-        intakeThing(bobot.OUT, 500);
-        intakeThing(bobot.NEUTRAL, 50);
-        move(436, bobot.back,bobot.speed,690);
-        armThing(-(569+69+4+6+2+6+9), 690+69+42, 250);
-        turn(969/2+969+4+2+6+9+2+9+6+4+2+2+4+2+6+9+3+6+9+19+9+2, bobot.left, 769, 3690);
+        intakeThing(PineappleTag.IN, 1200);
+        armThing(-2350, 690 + 69 + 42 + 69 + 69 + 69 + 69 + 69, 100);
+        move(2284 + 300, PineappleTag.forward, 1500, 2969);
+        move(300, PineappleTag.back, 2000, 690);
+        turn(969 / 2 + 4 + 2 + 6 + 4 + 6 + 9 + 6 + 9, PineappleTag.right, 500, 2000);
+        move(369, PineappleTag.forward, PineappleTag.speed, 690);
+        intakeThing(PineappleTag.OUT, 500);
+        intakeThing(PineappleTag.NEUTRAL, 50);
+        move(436, PineappleTag.back, PineappleTag.speed, 690);
+        armThing(-(569 + 69 + 4 + 6 + 2 + 6 + 9), 690 + 69 + 42, 250);
+        turn(969 / 2 + 969 + 4 + 2 + 6 + 9 + 2 + 9 + 6 + 4 + 2 + 2 + 4 + 2 + 6 + 9 + 3 + 6 + 9 + 19 + 9 + 2, PineappleTag.left, 769, 3690);
 
-        intakeThing(bobot.IN, 150);
-        move(1242, bobot.forward, 869, 1690+42);
+        intakeThing(PineappleTag.IN, 150);
+        move(1242, PineappleTag.forward, 869, 1690 + 42);
         //  move(200, bobot.forward, 690, 300);
         armThing(-269, 750, 1200);
         armThing(-769, 969, 640);
 
-        move(2169, bobot.back, 769, 3690);
+        move(2169, PineappleTag.back, 769, 3690);
         armThing(-2350, 1690, 569);
-        turn((420+69+20+6+19+21+19+9), bobot.right, 2000, 690);
-        move(348, bobot.forward, bobot.speed, 542);
+        turn((420 + 69 + 20 + 6 + 19 + 21 + 19 + 9), PineappleTag.right, 2000, 690);
+        move(348, PineappleTag.forward, PineappleTag.speed, 542);
 
-        intakeThing(bobot.OUT, 500);
-        intakeThing(bobot.NEUTRAL, 50);
-        move(400, bobot.back, 2000, 469);
+        intakeThing(PineappleTag.OUT, 500);
+        intakeThing(PineappleTag.NEUTRAL, 50);
+        move(400, PineappleTag.back, 2000, 469);
         armThing(-(1), 969, 10);
-        turn(420+69+69, bobot.left, 569, 2690);
+        turn(420 + 69 + 69, PineappleTag.left, 569, 2690);
 
 
+        if (bobot.tagOfInterest.id == PineappleTag.MIDDLE) {
 
+            move(969, PineappleTag.forward, 2000, 6690);
 
-        if(bobot.tagOfInterest.id==bobot.MIDDLE) {
+        } else if (bobot.tagOfInterest.id == PineappleTag.LEFT) {
+            move(2169, PineappleTag.forward, 2000, 6690);
 
-            move(969, bobot.forward, 2000, 6690);
-
-        }
-        else if (bobot.tagOfInterest.id==bobot.LEFT) {
-            move(2169, bobot.forward, 2000, 6690);
-
-        }
-        else {
-            move(100-4-2-6-9-6, bobot.back, 2000, 6690);
+        } else {
+            move(100 - 4 - 2 - 6 - 9 - 6, PineappleTag.back, 2000, 6690);
         }
 
 //        bobot.resetEncoders();
@@ -301,28 +298,33 @@ public class XAutoLeft11DONTRUN extends LinearOpMode {
         bobot.move(ticks, forwardOrBackward, velocity);
         sleep(sleep);
     }
+
     public void turn(int degrees, boolean leftOrRight, int velocity, int sleep) {
         bobot.turn(degrees, leftOrRight, velocity);
         sleep(sleep);
     }
+
     public void strafe(int ticks, boolean leftOrRight, int velocity, int sleep) {
         bobot.strafe(ticks, leftOrRight, velocity);
         sleep(sleep);
     }
+
     public void armThing(int ticks, int speed, int sleep) {
         bobot.armThing(ticks, speed);
         sleep(sleep);
     }
+
     public void intakeThing(int state, int sleep) {
         bobot.intakeThing(state);
         sleep(sleep);
     }
+
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {
         telemetry.addLine("\nDetected tag ID: " + detection.id);
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y * FEET_PER_METER));
+        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z * FEET_PER_METER));
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));

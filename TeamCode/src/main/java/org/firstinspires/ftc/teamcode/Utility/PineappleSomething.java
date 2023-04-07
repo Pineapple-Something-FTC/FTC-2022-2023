@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.sussy;
+package org.firstinspires.ftc.teamcode.Utility;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -35,7 +34,35 @@ public class PineappleSomething extends LinearOpMode {
     public static NormalizedColorSensor leftCSensor;
     public static NormalizedColorSensor rightCSensor;
 
-    public static void runToPosition(int velocity) {
+    // Map all motors, servos, sensor, etc.
+    public void mapHardware() {
+        //// Motors
+        // Drive Motors
+        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
+        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
+        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
+        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        // Arm motors
+        g = hardwareMap.get(DcMotorEx.class, "g");
+        h = hardwareMap.get(DcMotorEx.class, "h");
+        j = hardwareMap.get(DcMotorEx.class, "j");
+        // Etc
+        shutUpNathan = hardwareMap.get(DcMotorEx.class, "compliiiiant");
+
+        //// Servos
+        thing = hardwareMap.get(CRServo.class, "thing");
+
+        //// Sensors
+        // Potentiometer
+        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
+        // Camera
+        leftCSensor = hardwareMap.get(NormalizedColorSensor.class, "deez");
+        rightCSensor = hardwareMap.get(NormalizedColorSensor.class, "nuts");
+    }
+
+    public void runToPosition(int velocity) {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -44,6 +71,12 @@ public class PineappleSomething extends LinearOpMode {
         frontRight.setVelocity(velocity);
         backLeft.setVelocity(velocity);
         backRight.setVelocity(velocity);
+    }
+    public void runToPosition() {
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void resetEncoders() {
@@ -64,25 +97,6 @@ public class PineappleSomething extends LinearOpMode {
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
-
-    public void mapHardwareAndReverseMotors() {
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
-        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
-        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
-        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
-        shutUpNathan = hardwareMap.get(DcMotorEx.class, "compliiiiant");
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        h = hardwareMap.get(DcMotorEx.class, "h");
-        j = hardwareMap.get(DcMotorEx.class, "j");
-        thing = hardwareMap.get(CRServo.class, "thing");
-        leftCSensor = hardwareMap.get(NormalizedColorSensor.class, "deez");
-        rightCSensor = hardwareMap.get(NormalizedColorSensor.class, "nuts");
-
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-    }
-
     @Override
     public void runOpMode() {
     }

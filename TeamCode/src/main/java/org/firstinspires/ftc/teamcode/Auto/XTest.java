@@ -6,14 +6,15 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
+import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
 
 @Autonomous
 public class XTest extends PineappleSomething {
 
     final int speed = 700;
 
-    @Override public void runOpMode() {
+    @Override
+    public void runOpMode() {
         //// INIT
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
         backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
@@ -25,7 +26,7 @@ public class XTest extends PineappleSomething {
         deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        
+
         //resetEncoders();
         //// START
         waitForStart();

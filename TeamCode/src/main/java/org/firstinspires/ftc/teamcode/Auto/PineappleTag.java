@@ -2,16 +2,9 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import android.annotation.SuppressLint;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Utility.Drive;
 import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
-import org.firstinspires.ftc.teamcode.Utility.Arm;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,79 +12,83 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous
-public class XAprilTagAutonomous_no extends PineappleSomething {
-    static final double FEET_PER_METER = 3.28084;
+public class PineappleTag extends PineappleSomething {
+    Drive drive = new Drive();
+    /* Declare OpMode members. */
+
+    // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
+    public static final double fx = 578.272;
+    public static final double fy = 578.272;
+    public static final double cx = 402.145;
+    public static final double cy = 221.506;
+    public static final boolean right = false;
+    public static final boolean left = true;
+    public static final boolean forward = true;
+    public static final boolean back = false;
+    public static final int IN = 1;
+    public static final int OUT = -1;
+    public static final int NEUTRAL = 0;
+    // tagOfInterest = 2;
+    // Define Drive constants.  Make them public so they CAN be used by the calling OpMode - no u
+    public static final int speed = 900;
+    public static final int forwardFirstCone = 407;
+    public static final int backwardFirstCone = forwardFirstCone + (67);
+    public static final int forwardSecondCone = 343;
+    public static final int turnSecondCone = 0;
+    // UNITS ARE METERS
+    public static final double tagSize = 0.044;// Default value: 0.166
+    public static final int LEFT = 1;
+    public static final int MIDDLE = 2;
+    public static final int RIGHT = 3;
+    // Define camera
     OpenCvCamera camera;
     XAprilTagDetectionPipeline aprilTagDetectionPipeline;
-    // Lens intrinsics
-    // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
-    // You will need to do your own calibration for other configurations!
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
-
-    // UNITS ARE METERS
-    double tagSize = 0.044;// Default value: 0.166
-
-    int LEFT = 1;
-    int MIDDLE = 2;
-    int RIGHT = 3;
-
     AprilTagDetection tagOfInterest = null;
-
-    @Override
-    public void runOpMode() {
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+    public static final double FEET_PER_METER = 3.28084;
+    // Define a constructor that allows the OpMode to pass a reference to itself.
+    public PineappleTag() {
+    }
+    public void mapCamera() {
+        // Camera things
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()
+        );
+        camera = OpenCvCameraFactory.getInstance().createWebcam(
+                hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId
+        );
         aprilTagDetectionPipeline = new XAprilTagDetectionPipeline(tagSize, fx, fy, cx, cy);
-        frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
-        backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
-        frontRight = hardwareMap.get(DcMotorEx.class, "motor3");
-        backRight = hardwareMap.get(DcMotorEx.class, "motor4");
-        g = hardwareMap.get(DcMotorEx.class, "g");
-        thing = hardwareMap.get(CRServo.class, "thing");
-        deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
                 camera.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT);
             }
-
             @Override
-            public void onError(int errorCode) {
-            }
+            public void onError(int errorCode) {}
         });
-        telemetry.setMsTransmissionInterval(50);
-
+    }
+    public void justAprilTagThings() {
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
          */
         while (!isStarted() && !isStopRequested()) {
-            telemetry.addData("Potentiometer Voltage:", deeznuts.getVoltage());
-
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if (currentDetections.size() != 0) {
                 boolean tagFound = false;
 
                 for (AprilTagDetection tag : currentDetections) {
-                    //// CHANGE FROM ORIGINAL
-                    //if(tag.id == ID_TAG_OF_INTEREST)
-                    if (tag.id == LEFT || tag.id == MIDDLE || tag.id == RIGHT) {
+                    if (tag.id == PineappleTag.LEFT || tag.id == PineappleTag.MIDDLE || tag.id == PineappleTag.RIGHT) {
                         tagOfInterest = tag;
                         tagFound = true;
-                        break;
+                    } else {
+                        tag.id = PineappleTag.MIDDLE;
+                        tagOfInterest = tag;
+                        telemetry.addData("Don't see the tag, default is set to center", tag);
                     }
+                    break;
                 }
-
                 if (tagFound) {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
                     tagToTelemetry(tagOfInterest);
@@ -118,13 +115,10 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
             telemetry.update();
             sleep(20);
         }
-
         /*
          * The START command just came in: now work off the latest snapshot acquired
          * during the init loop.
          */
-
-        /* Update the telemetry */
         if (tagOfInterest != null) {
             telemetry.addLine("Tag snapshot:\n");
             tagToTelemetry(tagOfInterest);
@@ -133,44 +127,7 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
             telemetry.update();
         }
-
-        /* Actually do something useful */
-//        if(tagOfInterest == null || tagOfInterest.id == LEFT) {
-//            //trajectory
-//        } else if (tagOfInterest.id == MIDDLE) {
-//            //trajectory
-//        } else {
-//            //trajectory
-//        }
-
-        //// AUTONOMOUS CODE HERE:
-        //resetEncoders();
-        Arm.executorFunc();
-        sleep(2000);
-        Arm.low();
-        if (tagOfInterest.id == LEFT) {
-            Drive.strafe(1400, left, 700);
-            sleep(2000);
-            Drive.straight(1400, forward, 700, );
-            sleep(2000);
-        } else if (tagOfInterest.id == MIDDLE) {
-            Drive.straight(1400, forward, 700, );
-            sleep(2000);
-        } else {
-            Drive.strafe(800, right, 700);
-            sleep(1000);
-            Drive.straight(200, forward, 400, );
-            sleep(1000);
-            thing.setPower(-1);
-            sleep(1000);
-            thing.setPower(0);
-            Drive.straight(200, back, 400, );
-            sleep(500);
-            Drive.strafe(800, left, 700);
-            sleep(1000);
-        }
     }
-
     @SuppressLint("DefaultLocale")
     void tagToTelemetry(AprilTagDetection detection) {
         telemetry.addLine("\nDetected tag ID: " + detection.id);
@@ -180,5 +137,12 @@ public class XAprilTagAutonomous_no extends PineappleSomething {
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+    }
+    public void turnWithoutEncoder(double velocity) {
+        drive.setModeNoEncoder();
+        frontLeft.setVelocity(-(300 + 0.1 * velocity));
+        frontRight.setVelocity(-(300 - 0.1 * velocity));
+        backLeft.setVelocity(-(300 + 0.1 * velocity));
+        backRight.setVelocity(-(300 - 0.1 * velocity));
     }
 }

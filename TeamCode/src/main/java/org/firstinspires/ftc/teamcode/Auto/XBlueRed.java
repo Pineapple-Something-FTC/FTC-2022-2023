@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.sussy.*;
+import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
+import org.firstinspires.ftc.teamcode.Utility.Arm;
 
 @Autonomous
 public class XBlueRed extends PineappleSomething {
     final int ticksTile = 1450;
-    @Override public void runOpMode() {
+
+    @Override
+    public void runOpMode() {
         //// INIT
         frontLeft = hardwareMap.get(DcMotorEx.class, "motor1");
         backLeft = hardwareMap.get(DcMotorEx.class, "motor2");
@@ -23,18 +25,18 @@ public class XBlueRed extends PineappleSomething {
         deeznuts = hardwareMap.get(AnalogInput.class, "deez2");
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        
+
         //resetEncoders();
         //// START
         waitForStart();
-       
+
 //        move(1270, forward, speed);
 //        sleep(2500);
 //        turn(615, right, speed);
 //        sleep(1500);
-        Score.executorFunc();
+        Arm.executorFunc();
         sleep(1500);
-        Score.low();
+        Arm.low();
 //        Move.straight(500, forward, speed);
 //        sleep(1000);
 //        thing.setPower(-1);

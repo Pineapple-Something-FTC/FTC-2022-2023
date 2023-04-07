@@ -1,108 +1,70 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 
-import org.firstinspires.ftc.teamcode.sussy.PineappleSomething;
+import org.firstinspires.ftc.teamcode.Utility.Arm;
+import org.firstinspires.ftc.teamcode.Utility.Drive;
+import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
 
 @TeleOp
 public class PineappleOp extends PineappleSomething {
+    Drive drive = new Drive();
+    Arm arm = new Arm();
+    final double DRIVE_SPEED_FACTOR = 0.69;
+    final double ARM_POWER_FACTOR = 0.75;
 
     @Override public void runOpMode() {
-        final double driveSpeedFactor = 0.69;
-        final double armPowerFactor = 0.75;
 
-        mapHardwareAndReverseMotors();
+        mapHardware();
 
         //// START
         waitForStart();
         resetEncoders();
-
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        g.setTargetPosition(0);
-        h.setTargetPosition(0);
-        j.setTargetPosition(0);
-
-        g.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        h.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        j.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        g.setPower(armPowerFactor);
-        h.setPower(armPowerFactor);
-        j.setPower(armPowerFactor);
+        drive.setModeRunEncoder();
+        arm.setTargetPosition(0);
+        arm.runUsingEncoder();
+        arm.setPower(ARM_POWER_FACTOR);
         while (opModeIsActive()) {
             if(gamepad1.right_stick_button || gamepad2.right_stick_button) {
-                resetLiftEncoders();
+                arm.resetEncoders();
             }
             else {
-                g.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-                h.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-                j.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-
+                arm.runUsingEncoder();
             }
-
-
             // Control intake with X,A,B
             intakeControl(thing);
-            // Set power of motors
-            frontLeft.setPower(
-                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x)
-            );
-            backLeft.setPower(driveSpeedFactor * (
-                    (gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x)
-            );
-            frontRight.setPower(
-                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) + gamepad1.right_stick_x)
-            );
-            backRight.setPower(
-                    driveSpeedFactor * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15*gamepad1.left_stick_x) - gamepad1.right_stick_x)
-            );
+
+            setDriveMotorPower();
 
             // Arm motor power
             // Raises arm to target junction height by pressing dpad button
             if(gamepad2.dpad_down ||gamepad1.dpad_down) {
                 scoreGround();
             }
-
             else if(gamepad2.dpad_left || gamepad1.dpad_left) {
                 scoreLow();
             }
-
             else if(gamepad2.dpad_right || gamepad1.dpad_right) {
                 scoreMedium();
             }
-
              else if (gamepad2.dpad_up || gamepad1.dpad_up) {
                 scoreHigh();
             }
-
             else if (gamepad2.left_bumper || gamepad1.left_bumper) {
                 intakeHeight();
             }
-
             else if(gamepad2.right_bumper || gamepad1.right_bumper) {
                 wallHeight();
-
             }
             else if (gamepad1.y || gamepad2.y) {
                 if(g.getTargetPosition()<g.getCurrentPosition()-20){
                     thing.setPower(0.4);
                 }
-                else
-                    thing.setPower(0.5);
+                else thing.setPower(0.5);
                 scoreCone();
-
             }
-
             // Manual control of the lift
-
-
             liftMotorPower();
             telemetry.addData("Arm position", g.getCurrentPosition());
             telemetry.addData("Target: ", g.getTargetPosition());
@@ -113,136 +75,100 @@ public class PineappleOp extends PineappleSomething {
             telemetry.addData("Left Trigger", gamepad2.left_trigger);
             telemetry.addData("THING", thing.getPower());
             telemetry.addData("left stick button", gamepad2.left_stick_button);
-            telemetry.addData("frontright", frontRight.getCurrentPosition());
-            telemetry.addData("frontleft", frontLeft.getCurrentPosition());
-            telemetry.addData("backright", backRight.getCurrentPosition());
-            telemetry.addData("backleft", backLeft.getCurrentPosition());
-
+            telemetry.addData("front right", frontRight.getCurrentPosition());
+            telemetry.addData("front left", frontLeft.getCurrentPosition());
+            telemetry.addData("back right", backRight.getCurrentPosition());
+            telemetry.addData("back left", backLeft.getCurrentPosition());
         }
+    }
 
+    private void setDriveMotorPower() {
+        // Set power of drive motors
+        frontLeft.setPower(
+                DRIVE_SPEED_FACTOR * (
+                        (gamepad1.left_stick_y + gamepad1.right_stick_y) -
+                                (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x
+                )
+        );
+        backLeft.setPower(
+                DRIVE_SPEED_FACTOR * (
+                    (gamepad1.left_stick_y + gamepad1.right_stick_y) -
+                            (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x
+                )
+        );
+        frontRight.setPower(
+                DRIVE_SPEED_FACTOR * (
+                        (gamepad1.left_stick_y + gamepad1.right_stick_y) +
+                                (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x
+                )
+        );
+        backRight.setPower(
+                DRIVE_SPEED_FACTOR * (
+                        (gamepad1.left_stick_y + gamepad1.right_stick_y) +
+                                (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x
+                )
+        );
     }
 
     //Sets the lift power based on the trigger value
     public void liftMotorPower() {
-        int lastPosition = g.getCurrentPosition();
+        // int lastPosition = g.getCurrentPosition();
         int MAX_HEIGHT = -2369;
-
-       int MIN_HEIGHT = -2;
-
-
-        //Sets a max height, so the lift does not pull the string too much
-//        if(g.getCurrentPosition()-lastPosition<42 && g.getCurrentPosition()<g.getTargetPosition()) {
-//            resetLiftEncoders();
-//
-//        }
+        // int MIN_HEIGHT = -2;
+        // Sets a max height, so the lift does not pull the string too much
         if(g.getCurrentPosition() <= MAX_HEIGHT && gamepad2.right_trigger > 0) {
-            g.setTargetPosition(MAX_HEIGHT);
-            h.setTargetPosition(MAX_HEIGHT);
-            j.setTargetPosition(MAX_HEIGHT);
+            arm.setTargetPosition(MAX_HEIGHT);
             telemetry.addData("no", "jo");
         }
-//        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
-//            g.setTargetPosition(MIN_HEIGHT);
-//            h.setTargetPosition(MIN_HEIGHT);
-//            j.setTargetPosition(MIN_HEIGHT);
-//        }
-        //Sets a min height, so the intake does not slam into the ground
-//        if(g.getCurrentPosition() >= MIN_HEIGHT && gamepad2.left_trigger > 0) {
-//            g.setTargetPosition(MIN_HEIGHT);
-//            h.setTargetPosition(MIN_HEIGHT);
-//            j.setTargetPosition(MIN_HEIGHT);
-//            telemetry.addData("bo", "what");
-//        }
-
         //Updates the lift's target position using the triggers
-        else if (gamepad2.right_bumper == false){
+        else if (!gamepad2.right_bumper){
             if(gamepad2.right_trigger > 0) {
-                g.setTargetPosition((g.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
-                h.setTargetPosition((h.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
-                j.setTargetPosition((j.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
-
+                arm.setTargetPosition((g.getTargetPosition() - (int) (69 * (gamepad2.right_trigger))));
             }
             else if(gamepad2.left_trigger > 0) {
-                g.setTargetPosition((g.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
-                h.setTargetPosition((h.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
-                j.setTargetPosition((j.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
-
+                arm.setTargetPosition((g.getTargetPosition() + (int) (69 * (gamepad2.left_trigger))));
             }
         }
-
         //Sets the lift motors' power proportionally to its current-target position
         int average = (g.getCurrentPosition() + h.getCurrentPosition() + j.getCurrentPosition())/3;
-        g.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
-        h.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
-        j.setPower(-0.0052*(average-g.getTargetPosition()) / 1);
+        arm.setPower(-0.0052 * (average - g.getTargetPosition()));
     }
-
     //Controls the state of the intake using a, b, x
     public void intakeControl(CRServo thing) {
         if (gamepad2.b || gamepad1.b)
             thing.setPower(0);
-        else if (gamepad2.a || gamepad1.a){
-            if(g.getTargetPosition()<g.getCurrentPosition()-20){
+        else if (gamepad2.a || gamepad1.a) {
+            if(g.getTargetPosition() < g.getCurrentPosition()-20){
                 thing.setPower(0.4);
             }
-
-            else
-                thing.setPower(0.5);
+            else thing.setPower(0.5);
         }
-        else if(g.getTargetPosition() == -111) {
+        else if (g.getTargetPosition() == -111) {
             thing.setPower(0.5);
         }
-
         else if (gamepad2.x || gamepad1.x)
             thing.setPower(-1);
     }
-
     //Sets lift motors' target position to junction height
     public void scoreGround() {
-        g.setTargetPosition(-401);
-        h.setTargetPosition(-401);
-        j.setTargetPosition(-401);
+        arm.setTargetPosition(-401);
     }
     public void scoreLow() {
-        g.setTargetPosition(-969);
-        h.setTargetPosition(-969);
-        j.setTargetPosition(-969);
+        arm.setTargetPosition(-969);
     }
     public void scoreMedium() {
-        g.setTargetPosition(-1669-4-42-6-9-9);
-        h.setTargetPosition(-1669-4-42-6-9-9);
-        j.setTargetPosition(-1669-4-42-6-9-9);
+        arm.setTargetPosition(-1739);
     }
     public void scoreHigh() {
-        g.setTargetPosition(-2315);
-        h.setTargetPosition(-2315);
-        j.setTargetPosition(-2315);
+        arm.setTargetPosition(-2315);
     }
     public void intakeHeight() {
-        g.setTargetPosition(-300);
-        h.setTargetPosition(-300);
-        j.setTargetPosition(-300);
+        arm.setTargetPosition(-300);
     }
     public void scoreCone() {
-        g.setTargetPosition(-6);
-        h.setTargetPosition(-6);
-        j.setTargetPosition(-6);
+        arm.setTargetPosition(-6);
     }
     public void wallHeight() {
-        g.setTargetPosition(-111);
-        h.setTargetPosition(-111);
-        j.setTargetPosition(-111);
-    }
-    //Resets only the lift encoders
-    //Makes sure the macros, min, and max height restrictions work
-    public void resetLiftEncoders() {
-        g.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        h.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        j.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        g.setTargetPosition(0);
-        h.setTargetPosition(0);
-        j.setTargetPosition(0);
+        arm.setTargetPosition(-111);
     }
 }
-
-
