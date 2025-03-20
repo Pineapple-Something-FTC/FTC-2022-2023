@@ -17,7 +17,15 @@ apply from: '../build.dependencies.gradle'
 //apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
+    packagingOptions {
+        jniLibs {
+            pickFirsts += ['**/*.so']
+        }
+    }
     namespace = 'org.firstinspires.ftc.teamcode'
+    androidResources {
+        noCompress 'tflite'
+    }
 }
 
 dependencies {
