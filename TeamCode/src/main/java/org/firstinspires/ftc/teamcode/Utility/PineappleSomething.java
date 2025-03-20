@@ -72,6 +72,7 @@ public class PineappleSomething extends LinearOpMode {
         backLeft.setVelocity(velocity);
         backRight.setVelocity(velocity);
     }
+
     public void runToPosition() {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -89,6 +90,7 @@ public class PineappleSomething extends LinearOpMode {
         frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+
     @Override
     public void runOpMode() {
     }

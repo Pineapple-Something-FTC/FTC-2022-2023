@@ -4,6 +4,28 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class Drive extends PineappleSomething {
+    public static void setModeRunEncoder() {
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public static void setVelocity(double velocity) {
+        frontLeft.setVelocity(velocity);
+        frontRight.setVelocity(velocity);
+        backLeft.setVelocity(velocity);
+        backRight.setVelocity(velocity);
+    }
+
+    public static void resetDriveEncoders() {
+        // Resets encoders for drive motors
+        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
     public void straight(int ticks, boolean direction, int velocity, long sleep) {
         if (direction) {
             // Drive forwards if `direction` is true
@@ -21,6 +43,7 @@ public class Drive extends PineappleSomething {
         runToPosition(velocity);
         sleep(sleep);
     }
+
     public void strafe(int ticks, boolean direction, int velocity, long sleep) {
         if (direction) {
             // Strafe left if `direction` is true
@@ -38,6 +61,7 @@ public class Drive extends PineappleSomething {
         runToPosition(velocity);
         sleep(sleep);
     }
+
     public void turn(int ticks, boolean direction, int velocity, long sleep) {
         if (direction) {
             // Tank turn left if `direction` is true
@@ -55,6 +79,7 @@ public class Drive extends PineappleSomething {
         runToPosition(velocity);
         sleep(sleep);
     }
+
     public void diagonal(int ticks, boolean direction, int velocity) {
         resetDriveEncoders();
         if (direction) {
@@ -89,30 +114,11 @@ public class Drive extends PineappleSomething {
             backRight.setVelocity(velocity);
         }
     }
+
     public void setModeNoEncoder() {
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-    public static void setModeRunEncoder() {
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public static void setVelocity(double velocity) {
-        frontLeft.setVelocity(velocity);
-        frontRight.setVelocity(velocity);
-        backLeft.setVelocity(velocity);
-        backRight.setVelocity(velocity);
-    }
-    public static void resetDriveEncoders() {
-        // Resets encoders for drive motors
-        frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 }

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DrivePID extends PineappleSomething {
+    public static final int RED = 1;
+    public static final int BLUE = 0;
     private final double lastError = 0;
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime maxTimer = new ElapsedTime();
@@ -14,8 +16,7 @@ public class DrivePID extends PineappleSomething {
     double lastErrorFL;
     double lastErrorBR;
     double lastErrorBL;
-    public static final int RED = 1;
-    public static final int BLUE = 0;
+
     public void straight(double distance, boolean forwardOrBack, double customKP, double range) {
         ElapsedTime timer = new ElapsedTime();
         double kD = customKP / 95;
@@ -31,7 +32,7 @@ public class DrivePID extends PineappleSomething {
             while (timer.seconds() < 0.25) {
                 encoderCounts = 0.25 * (
                         frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() +
-                        backLeft.getCurrentPosition() + backRight.getCurrentPosition()
+                                backLeft.getCurrentPosition() + backRight.getCurrentPosition()
                 );
 
                 double errorFR = distance + frontRight.getCurrentPosition();
@@ -93,6 +94,7 @@ public class DrivePID extends PineappleSomething {
         backLeft.setVelocity(0);
         backRight.setVelocity(0);
     }
+
     public void turn(double inputDegrees, boolean rightOrLeft) {
         double ticksPerDegree = 21539.0 / 1800.0;
         double degrees = inputDegrees * ticksPerDegree;
@@ -141,7 +143,7 @@ public class DrivePID extends PineappleSomething {
             while (timer.seconds() < 0.25) {
                 encoderCounts = 0.25 * (
                         frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() +
-                        backLeft.getCurrentPosition() + backRight.getCurrentPosition()
+                                backLeft.getCurrentPosition() + backRight.getCurrentPosition()
                 );
                 double errorFR = degrees - frontRight.getCurrentPosition();
                 double errorFL = degrees + frontLeft.getCurrentPosition();
