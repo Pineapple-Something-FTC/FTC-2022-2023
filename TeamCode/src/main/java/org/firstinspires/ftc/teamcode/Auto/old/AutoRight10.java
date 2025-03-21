@@ -112,7 +112,7 @@ public class AutoRight10 extends LinearOpMode {
 // code for scoring in front
 
 
-        bobot.resetEncoders();
+        bobot.stopAndResetEncoders();
 
         intakeThing(PineappleTag.IN, 1200);
         armThing(-2350, 690 + 69 + 42 + 69 + 69 + 69 + 69 + 69, 100);

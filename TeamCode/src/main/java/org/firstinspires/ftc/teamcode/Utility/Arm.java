@@ -50,7 +50,7 @@ public class Arm extends PineappleSomething {
 
     //Resets only the lift encoders
     //Makes sure the macros, min, and max height restrictions work
-    public void resetEncoders() {
+    public void stopAndResetEncoders() {
         armMotor1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         armMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         armMotor3.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);

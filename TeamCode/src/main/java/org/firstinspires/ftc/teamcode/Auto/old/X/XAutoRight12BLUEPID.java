@@ -112,7 +112,7 @@ public class XAutoRight12BLUEPID extends LinearOpMode {
 // code for scoring in front
 
 
-        bobot.resetEncoders();
+        bobot.stopAndResetEncoders();
 
 //        turnPID(90, bobot.left);
 //        intakeThing(bobot.IN, 1000);

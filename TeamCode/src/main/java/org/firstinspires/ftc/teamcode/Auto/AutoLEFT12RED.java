@@ -21,7 +21,7 @@ public class AutoLEFT12RED extends PineappleTag {
         telemetry.setMsTransmissionInterval(50);
 
         // code for scoring in front
-        drive.resetEncoders();
+        drive.stopAndResetEncoders();
 
         arm.intakeThing(PineappleTag.IN, 1342);
         arm.armThing(-2350, 1146, 0);

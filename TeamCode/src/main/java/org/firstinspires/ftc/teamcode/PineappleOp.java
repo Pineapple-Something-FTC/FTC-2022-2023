@@ -7,26 +7,44 @@ import org.firstinspires.ftc.teamcode.Utility.Arm;
 import org.firstinspires.ftc.teamcode.Utility.Drive;
 import org.firstinspires.ftc.teamcode.Utility.PineappleSomething;
 
-@TeleOp
+@TeleOp // Annotation telling the Driver Hub to put this in the TeleOp/Driver Control menu
 class PineappleOp extends PineappleSomething {
+    /// How much to affect the speed of the drive motors.
+    /// > Allows us to have different defaults for each driver.
+    /// > *Useful for testing!*
     final double DRIVE_SPEED_FACTOR = 0.69;
+    /// How much to affect the speed of the arm motors.
     final double ARM_POWER_FACTOR = 0.75;
     Arm arm = new Arm();
 
+    /// ## Entry point for any FTC OpMode.
+    /// Equivalent to `public static void main()`.
+    ///
+    /// ### INIT
+    /// Begins running code once the INIT button on the driver hub is tapped.
+    /// Runs all code before `waitForStart()`.
+    ///
+    /// > *Always* set up the hardware map here so it is ready before START.
+    ///
+    /// ### START
+    /// Runs the rest of the code once the START button on the driver hub is tapped.
     @Override
     public void runOpMode() {
-        mapHardware();
 
-        //// START
+        // INIT
+        mapHardware();
         waitForStart();
-        resetEncoders();
+
+        // START
+        stopAndResetEncoders();
         Drive.setModeRunEncoder();
         arm.setTargetPosition(0);
         arm.runUsingEncoder();
         arm.setPower(ARM_POWER_FACTOR);
+
         while (opModeIsActive()) {
             if (gamepad1.right_stick_button || gamepad2.right_stick_button) {
-                arm.resetEncoders();
+                arm.stopAndResetEncoders();
             } else {
                 arm.runUsingEncoder();
             }
@@ -75,35 +93,15 @@ class PineappleOp extends PineappleSomething {
 
     private void setDriveMotorPower() {
         // Set power of drive motors
-        frontLeft.setPower(
-                DRIVE_SPEED_FACTOR * (
-                        (gamepad1.left_stick_y + gamepad1.right_stick_y) -
-                                (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x
-                )
-        );
-        backLeft.setPower(
-                DRIVE_SPEED_FACTOR * (
-                        (gamepad1.left_stick_y + gamepad1.right_stick_y) -
-                                (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x
-                )
-        );
-        frontRight.setPower(
-                DRIVE_SPEED_FACTOR * (
-                        (gamepad1.left_stick_y + gamepad1.right_stick_y) +
-                                (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x
-                )
-        );
-        backRight.setPower(
-                DRIVE_SPEED_FACTOR * (
-                        (gamepad1.left_stick_y + gamepad1.right_stick_y) +
-                                (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x
-                )
-        );
+        frontLeft.setPower(DRIVE_SPEED_FACTOR * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x));
+        backLeft.setPower(DRIVE_SPEED_FACTOR * ((gamepad1.left_stick_y + gamepad1.right_stick_y) - (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x));
+        frontRight.setPower(DRIVE_SPEED_FACTOR * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15 * gamepad1.left_stick_x) + gamepad1.right_stick_x));
+        backRight.setPower(DRIVE_SPEED_FACTOR * ((gamepad1.left_stick_y + gamepad1.right_stick_y) + (1.15 * gamepad1.left_stick_x) - gamepad1.right_stick_x));
     }
 
-    //Sets the lift power based on the trigger value
+    /// Sets the lift power based on the trigger value
     public void liftMotorPower() {
-        // int lastPosition = g.getCurrentPosition();
+        /// int lastPosition = g.getCurrentPosition();
         int MAX_HEIGHT = -2369;
         // int MIN_HEIGHT = -2;
         // Sets a max height, so the lift does not pull the string too much
@@ -126,16 +124,14 @@ class PineappleOp extends PineappleSomething {
 
     //Controls the state of the intake using a, b, x
     public void intakeControl(CRServo thing) {
-        if (gamepad2.b || gamepad1.b)
-            thing.setPower(0);
+        if (gamepad2.b || gamepad1.b) thing.setPower(0);
         else if (gamepad2.a || gamepad1.a) {
             if (armMotor1.getTargetPosition() < armMotor1.getCurrentPosition() - 20) {
                 thing.setPower(0.4);
             } else thing.setPower(0.5);
         } else if (armMotor1.getTargetPosition() == -111) {
             thing.setPower(0.5);
-        } else if (gamepad2.x || gamepad1.x)
-            thing.setPower(-1);
+        } else if (gamepad2.x || gamepad1.x) thing.setPower(-1);
     }
 
     //Sets lift motors' target position to junction height

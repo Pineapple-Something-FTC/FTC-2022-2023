@@ -99,7 +99,7 @@ public class XAutoLeftDONTRUN extends LinearOpMode {
 // the numbers, the camera mount, better holding for electronics
 // code for scoring in front
 
-        bobot.resetEncoders();
+        bobot.stopAndResetEncoders();
 
         intakeThing(PineappleTag.IN, 1200);
         armThing(-2636, 690 + 69 + 42 + 69 + 69 + 69 + 69 + 69, 100);

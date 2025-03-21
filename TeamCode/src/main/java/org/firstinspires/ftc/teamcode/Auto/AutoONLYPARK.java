@@ -16,7 +16,7 @@ public class AutoONLYPARK extends PineappleTag {
         telemetry.setMsTransmissionInterval(50);
 
         // code for scoring in front
-        drive.resetEncoders();
+        drive.stopAndResetEncoders();
         drive.straight(1169, PineappleTag.forward, 2000, 2000);
 
         if (tagOfInterest.id == PineappleTag.LEFT) {
